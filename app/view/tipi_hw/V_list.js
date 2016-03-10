@@ -42,7 +42,7 @@ Ext.define('CL.view.tipi_hw.V_list', {
 
                 tbar: {
                     xtype: 'toolbar',
-                    height: 35,
+                    height: 38,
                     style: 'backgroundColor: #F5F5F5',
                     items: [
                         {

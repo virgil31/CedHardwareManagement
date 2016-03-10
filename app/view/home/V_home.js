@@ -5,7 +5,7 @@ Ext.define('CL.view.home.V_home', {
     alias: 'widget.home',
 
     bodyStyle: 'backgroundColor: transparent',  //per rendere il corpo invisibile
-    
+
     layout: {
         type: 'hbox',
         align: 'center',
@@ -20,7 +20,7 @@ Ext.define('CL.view.home.V_home', {
                 xtype: 'grid',
                 border: true,
                 //title: 'Richieste Nuovo Hardware',
-                store: 'S_user',            
+                store: 'S_user',
                 height: '98%',
                 //width: '60%',
                 flex: 60,
@@ -44,14 +44,14 @@ Ext.define('CL.view.home.V_home', {
 
                 tbar: {
                     xtype: 'toolbar',
-                    height: 35,
+                    height: 38,
                     style: 'backgroundColor: #F5F5F5',
                     items: [
                         {
                             xtype: 'button',
                             tooltip: 'Aggiorna lista richieste',
                             action: 'load_user',
-                            icon: 'resources/images/icon_refresh.gif'  
+                            icon: 'resources/images/icon_refresh.gif'
                         },
                         {
                             xtype: 'label',
@@ -91,25 +91,25 @@ Ext.define('CL.view.home.V_home', {
                 },
 
                 columns: [
-                    { 
-                        text: 'Nome', 
-                        dataIndex: 'first_name', 
+                    {
+                        text: 'Nome',
+                        dataIndex: 'first_name',
                         flex: 1,
                         editor: {
                             xtype: 'textfield'
                         }
                     },
-                    { 
-                        text: 'Cognome', 
-                        dataIndex: 'last_name', 
+                    {
+                        text: 'Cognome',
+                        dataIndex: 'last_name',
                         flex: 1,
                         editor: {
                             xtype: 'textfield'
                         }
                     },
-                    { 
-                        text: 'Email', 
-                        dataIndex: 'email_address', 
+                    {
+                        text: 'Email',
+                        dataIndex: 'email_address',
                         flex: 2,
                         editor: {
                             xtype: 'textfield'
@@ -119,7 +119,7 @@ Ext.define('CL.view.home.V_home', {
                         xtype:'actioncolumn',
                         width:60,
                         items: [
-                            {                        
+                            {
                                 iconCls: 'x-fa fa-edit',
                                 tooltip: 'Edit',
                                 handler: function(grid, rowIndex, colIndex) {
@@ -127,7 +127,7 @@ Ext.define('CL.view.home.V_home', {
                                     alert("Edit " + rec.get('last_name'));
                                 }
                             },
-                            {                        
+                            {
                                 iconCls: 'x-fa fa-remove',
                                 tooltip: 'Delete',
                                 handler: function(grid, rowIndex, colIndex) {
@@ -139,7 +139,7 @@ Ext.define('CL.view.home.V_home', {
                     }
                 ]
             },
-            {            
+            {
                 flex: 1
             },
             {
@@ -230,7 +230,7 @@ Ext.define('CL.view.home.V_home', {
                         width: '100%',
                         style: 'backgroundColor: #AD3636'
                     }
-                    
+
                 ]
             }
         ];
