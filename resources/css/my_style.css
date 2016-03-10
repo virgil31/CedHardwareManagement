@@ -10,3 +10,8 @@ max-width: calc(100% - 15px);
 .x-btn-icon-right > .x-btn-inner-default-toolbar-medium, .x-btn-icon-left > .x-btn-inner-default-toolbar-medium {
 max-width: calc(100% - 22px);
 }
+
+
+.x-action-col-icon {
+    margin-right: 10px;
+}
