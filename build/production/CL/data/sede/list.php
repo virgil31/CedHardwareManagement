@@ -17,11 +17,21 @@ $start = $_GET['start'];
 
 $total = 0;
 
+//LIST FULL
+if(isset($_GET["flag_full"])){
+	$statement = $pdo->prepare("
+		SELECT id, nome, COUNT(*) OVER() as total
+		FROM sede
+		ORDER BY $pro $dir
+	");
+}
+//LIST PAGINATO
 $statement = $pdo->prepare("
 	SELECT id, nome, COUNT(*) OVER() as total
 	FROM sede
 	ORDER BY $pro $dir LIMIT $limit OFFSET $start
 ");
+
 
 $statement->execute();
 $result = $statement->fetchAll();

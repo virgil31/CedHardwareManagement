@@ -14,7 +14,8 @@ Ext.application({
         'C_tbar',
 
         'C_tipi_hw',
-        'C_sede'
+        'C_sede',
+        'C_ufficio'
     ],
 
     // vv ROUTING

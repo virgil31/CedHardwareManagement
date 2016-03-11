@@ -158,7 +158,8 @@ Ext.define('CL.view.home.V_home', {
                         text: 'Cerca Richieste HW',
                         flex: 5,
                         width: '100%',
-                        style: 'backgroundColor: green'
+                        style: 'backgroundColor: green',
+                        disabled: true
                     },
 
                     {
@@ -172,42 +173,48 @@ Ext.define('CL.view.home.V_home', {
                         style: 'backgroundColor: #CC8D00',
                         handler: function(){
                             CL.app.getController('C_home').redirectTo("tipi_hw");
-                        }
+                        },
+                        disabled: true
                     },
                     {
                         xtype: 'button',
                         text: 'Marche HW',
                         flex: 1,
                         width: '100%',
-                        style: 'backgroundColor: #CC8D00'
+                        style: 'backgroundColor: #CC8D00',
+                        disabled: true
                     },
                     {
                         xtype: 'button',
                         text: 'Modelli HW',
                         flex: 1,
                         width: '100%',
-                        style: 'backgroundColor: #CC8D00'
+                        style: 'backgroundColor: #CC8D00',
+                        disabled: true
                     },
                     {
                         xtype: 'button',
                         text: 'Bolle',
                         flex: 1,
                         width: '100%',
-                        style: 'backgroundColor: #CC8D00'
+                        style: 'backgroundColor: #CC8D00',
+                        disabled: true
                     },
                     {
                         xtype: 'button',
                         text: 'Tipi Fornitori',
                         flex: 1,
                         width: '100%',
-                        style: 'backgroundColor: #333333'
+                        style: 'backgroundColor: #333333',
+                        disabled: true
                     },
                     {
                         xtype: 'button',
                         text: 'Fornitori',
                         flex: 1,
                         width: '100%',
-                        style: 'backgroundColor: #333333'
+                        style: 'backgroundColor: #333333',
+                        disabled: true
                     },
                     {
                         xtype: 'button',
@@ -224,14 +231,18 @@ Ext.define('CL.view.home.V_home', {
                         text: 'Uffici',
                         flex: 1,
                         width: '100%',
-                        style: 'backgroundColor: #AD3636'
+                        style: 'backgroundColor: #AD3636',
+                        handler: function(){
+                            CL.app.getController('C_home').redirectTo("uffici");
+                        }
                     },
                     {
                         xtype: 'button',
                         text: 'Utenti',
                         flex: 1,
                         width: '100%',
-                        style: 'backgroundColor: #AD3636'
+                        style: 'backgroundColor: #AD3636',
+                        disabled: true
                     }
                 ]
             }

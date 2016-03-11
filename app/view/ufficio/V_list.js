@@ -1,8 +1,8 @@
-Ext.define('CL.view.sede.V_list', {
+Ext.define('CL.view.ufficio.V_list', {
     extend: 'Ext.panel.Panel',
-    xtype: 'sede_list',
-    itemId: 'sede_list_id',
-    alias: 'widget.sede_list',
+    xtype: 'ufficio_list',
+    itemId: 'ufficio_list_id',
+    alias: 'widget.ufficio_list',
 
     bodyStyle: 'backgroundColor: transparent',  //per rendere il corpo invisibile
 
@@ -19,7 +19,7 @@ Ext.define('CL.view.sede.V_list', {
             {
                 xtype: 'grid',
                 border: true,
-                store: 'S_sede',
+                store: 'S_ufficio',
                 height: '98%',
                 flex: 60,
                 autoscroll: true,
@@ -28,10 +28,9 @@ Ext.define('CL.view.sede.V_list', {
 
                 disableSelection: true,
 
-
                 dockedItems: [{
                     xtype: 'pagingtoolbar',
-                    store: 'S_sede', // same store GridPanel is using
+                    store: 'S_ufficio', // same store GridPanel is using
                     dock: 'bottom',
                     displayInfo: true
                 }],
@@ -51,12 +50,11 @@ Ext.define('CL.view.sede.V_list', {
                         },
                         {
                             xtype: 'label',
-                            text: 'Sedi',
+                            text: 'Uffici',
                             style: 'color: #157fcc;font-size: 15px;font-weight: 300;font-family: helvetica, arial, verdana, sans-serif;line-height: 16px'
                         },
                         {
                             xtype: 'button',
-                            tooltip: 'Nuova richiesta Hardware',
                             icon: 'resources/images/icon_plus.gif',
                             action: 'on_create'
                         },
@@ -74,6 +72,11 @@ Ext.define('CL.view.sede.V_list', {
                     ]
                 },
 
+                /*listeners: {
+                    itemdblclick( this, record, item, index, e, eOpts )
+
+                },*/
+
                 columns: [
                     {
                         text: 'ID',
@@ -86,6 +89,11 @@ Ext.define('CL.view.sede.V_list', {
                         flex: 2
                     },
                     {
+                        text: 'Sede',
+                        dataIndex: 'sede_nome',
+                        flex: 2
+                    },
+                    {
                         xtype:'actioncolumn',
                         width:50,
                         items: [
@@ -94,7 +102,7 @@ Ext.define('CL.view.sede.V_list', {
                                 tooltip: 'Edit',
                                 handler: function(grid, rowIndex, colIndex) {
                                     var rec = grid.getStore().getAt(rowIndex);
-                                    CL.app.getController("C_sede").onEdit(this.el,rec);
+                                    CL.app.getController("C_ufficio").onEdit(this.el,rec);
                                 }
                             },
                             {
@@ -102,7 +110,7 @@ Ext.define('CL.view.sede.V_list', {
                                 tooltip: 'Delete',
                                 handler: function(grid, rowIndex, colIndex) {
                                     var rec = grid.getStore().getAt(rowIndex);
-                                    CL.app.getController("C_sede").onDestroy(rec);
+                                    CL.app.getController("C_ufficio").onDestroy(rec);
                                 }
                             }
                         ]
