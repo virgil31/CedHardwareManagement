@@ -20,7 +20,7 @@ Ext.define('CL.view.login.V_login', {
         }
     },
 
-
+    padding: 30,
 
     items: [
         {
@@ -28,7 +28,7 @@ Ext.define('CL.view.login.V_login', {
             src: 'resources/images/colonna.png',
             alt: " ",
             width: 300,
-            height: '70%'
+            height: 498
         },
         {
             xtype: 'form',
@@ -43,7 +43,7 @@ Ext.define('CL.view.login.V_login', {
                     name: 'username',
                     fieldLabel: 'Username',
                     allowBlank: false
-                }, 
+                },
                 {
                     xtype: 'textfield',
                     name: 'password',
@@ -65,9 +65,7 @@ Ext.define('CL.view.login.V_login', {
             src: 'resources/images/colonna.png',
             alt: " ",
             width: 300,
-            height: '70%'
+            height: 498
         }
     ]
 });
-
-

@@ -43,11 +43,11 @@ Ext.define('CL.controller.C_home', {
     //ROUTES
 
     showView: function(){
-        if(Ext.util.Cookies.get("user_id") !== null){
+        if(Ext.util.Cookies.get("ced_logged") !== null){
             if(Ext.ComponentQuery.query('home').length == 0)
                 Ext.ComponentQuery.query('viewport panel[name=card]')[0].add({xtype: 'home'});
 
-            Ext.ComponentQuery.query('viewport panel[name=card]')[0].getLayout().setActiveItem('home_id'); 
+            Ext.ComponentQuery.query('viewport panel[name=card]')[0].getLayout().setActiveItem('home_id');
         }
         else
             this.redirectTo('login');
@@ -60,7 +60,7 @@ Ext.define('CL.controller.C_home', {
     doLogout: function () {
         // Remove the localStorage key/value
         localStorage.removeItem('TutorialLoggedIn');
-        
+
         this.redirectTo('login');
     },
 
@@ -101,7 +101,7 @@ Ext.define('CL.controller.C_home', {
                             fieldLabel: 'Username',
                             width: '100%',
                             allowBlank: false
-                        }, 
+                        },
                         {
                             xtype: 'textfield',
                             name: 'password',
@@ -119,17 +119,17 @@ Ext.define('CL.controller.C_home', {
                         }
                     ]
                 }
-            ] 
+            ]
         });
     },
 
-    
+
     //GO TO OTHER VIEW
     goToSecondView: function(){
         var aaa = Math.floor((Math.random() * 100) + 1);
         var bbb = Math.floor((Math.random() * 100) + 1);
         this.redirectTo('second/'+aaa+"/"+bbb);
     }
-    
+
 
 });

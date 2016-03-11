@@ -17,7 +17,7 @@ Ext.define('CL.controller.C_tipi_hw', {
 
     /////////////////////////////////////////////////
     init: function () {
-        this.control({          
+        this.control({
 
         }, this);
     },
@@ -26,17 +26,17 @@ Ext.define('CL.controller.C_tipi_hw', {
     //ROUTES
 
     showView: function(){
-        if(Ext.util.Cookies.get("user_id") !== null){
+        if(Ext.util.Cookies.get("ced_logged") !== null){
             if(Ext.ComponentQuery.query('tipi_hw_list').length == 0)
                 Ext.ComponentQuery.query('viewport panel[name=card]')[0].add({xtype: 'tipi_hw_list'});
 
-            Ext.ComponentQuery.query('viewport panel[name=card]')[0].getLayout().setActiveItem('tipi_hw_list_id'); 
+            Ext.ComponentQuery.query('viewport panel[name=card]')[0].getLayout().setActiveItem('tipi_hw_list_id');
         }
         else
             this.redirectTo('login');
     }
 
     /////////////////////////////////////////////////
-    
+
 
 });

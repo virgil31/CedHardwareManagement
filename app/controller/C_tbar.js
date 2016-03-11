@@ -23,11 +23,11 @@ Ext.define('CL.controller.C_tbar', {
     },
     /////////////////////////////////////////////////
 
-    
+
 
     //DO LOGOUT
     doLogout: function () {
-        Ext.util.Cookies.clear("user_id");        
+        Ext.util.Cookies.clear("ced_logged");        
         location.reload();
     }
 

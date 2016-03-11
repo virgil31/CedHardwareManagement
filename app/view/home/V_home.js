@@ -211,13 +211,6 @@ Ext.define('CL.view.home.V_home', {
                     },
                     {
                         xtype: 'button',
-                        text: 'Utenti',
-                        flex: 1,
-                        width: '100%',
-                        style: 'backgroundColor: #AD3636'
-                    },
-                    {
-                        xtype: 'button',
                         text: 'Sedi',
                         flex: 1,
                         width: '100%',
@@ -229,8 +222,14 @@ Ext.define('CL.view.home.V_home', {
                         flex: 1,
                         width: '100%',
                         style: 'backgroundColor: #AD3636'
+                    },
+                    {
+                        xtype: 'button',
+                        text: 'Utenti',
+                        flex: 1,
+                        width: '100%',
+                        style: 'backgroundColor: #AD3636'
                     }
-
                 ]
             }
         ];

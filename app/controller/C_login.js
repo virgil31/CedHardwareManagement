@@ -30,9 +30,9 @@ Ext.define('CL.controller.C_login', {
 
     //SHOW VIEW
     showView: function(){
-        if(Ext.util.Cookies.get("user_id") == null){
+        if(Ext.util.Cookies.get("ced_logged") == null){
             if(Ext.ComponentQuery.query('login').length == 0)
-                Ext.ComponentQuery.query('viewport panel[name=card]')[0].add({xtype: 'login'});            
+                Ext.ComponentQuery.query('viewport panel[name=card]')[0].add({xtype: 'login'});
 
             Ext.ComponentQuery.query('viewport panel[name=card]')[0].getLayout().setActiveItem('login_id');
         }
@@ -41,9 +41,28 @@ Ext.define('CL.controller.C_login', {
     },
 
     //DO LOGIN
-    doLogin: function(btn){       
-        Ext.util.Cookies.set("user_id",123);
-        location.reload();
+    doLogin: function(btn){
+
+        Ext.Ajax.request({
+            url: 'data/session/login.php',
+            method: "POST",
+
+            params: {
+                username: Ext.ComponentQuery.query("login textfield[name=username]")[0].getValue(),
+                password: btoa(btoa(btoa(Ext.ComponentQuery.query("login textfield[name=password]")[0].getValue()))),
+            },
+
+            success: function(response, opts) {
+                var risposta = Ext.decode(response.responseText);
+                if(!risposta.success)
+                    Ext.Msg.alert("Attenzione",risposta.message);
+                else{
+                    Ext.util.Cookies.set("ced_logged", true);
+                    location.reload();
+                }
+            }
+        });
+
     }
 
 });

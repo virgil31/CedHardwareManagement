@@ -29,12 +29,12 @@ Ext.application({
         }
     },
 
-    onUnmatchedRoute: function(hash) {        
+    onUnmatchedRoute: function(hash) {
         //this.redirectTo('not_found');
         if(Ext.ComponentQuery.query('not_found').length == 0)
             Ext.ComponentQuery.query('viewport panel[name=card]')[0].add({xtype: 'not_found'});
 
-        Ext.ComponentQuery.query('viewport panel[name=card]')[0].getLayout().setActiveItem('not_found_id'); 
+        Ext.ComponentQuery.query('viewport panel[name=card]')[0].getLayout().setActiveItem('not_found_id');
     },
 
     // ^^
@@ -43,8 +43,8 @@ Ext.application({
 
         var item = document.getElementById("img_loader_id");
         item.parentNode.removeChild(item);
-        
-        
+
+
         this.applyOverrides();
 
         //previene la creazione dei context menu del browser
@@ -52,13 +52,14 @@ Ext.application({
         //     ev.preventDefault();
         //});
 
+
         Ext.create('Ext.container.Viewport',{
             layout: 'fit',
             items:[
                 {
                     xtype: 'panel',
                     scrollable: true,
-                    bodyStyle: "background: #3892D4",//  686868    963232 
+                    bodyStyle: "background: #3892D4",//  686868    963232
                     tbar: Ext.widget('tbar'),
                     layout: {
                         type: 'hbox',
@@ -68,16 +69,16 @@ Ext.application({
                         {
                             xtype: 'panel',
                             name: 'card',
-                            layout: 'card',                
+                            layout: 'card',
                             width: 960,
                             minHeight: window.innerHeight-88-88,
                             bodyStyle: 'backgroundColor: transparent'
                         }
                     ],
                     bbar: Ext.widget('bbar')
-                }                
-            ]            
-        });     
+                }
+            ]
+        });
 
         window.onresize = function(){
             Ext.ComponentQuery.query('viewport panel[name=card]')[0].minHeight = window.innerHeight-88-88;
@@ -193,5 +194,3 @@ Ext.application({
         //^^ fade animation card layout
     }
 });
-
-

@@ -59,18 +59,18 @@ Ext.define('CL.view.tbar.V_tbar', {
 					        	width: 80,
 					        	padding: 10,
 					        	margin: '0 2 0 0',
-					        	hidden: Ext.util.Cookies.get('user_id') == null
+					        	hidden: Ext.util.Cookies.get('ced_logged') == null
 					        }
 		            	]
 		            }
-		            
+
 		        ]
 		    },
-		    '->' 
+		    '->'
 		]
 
 
 		this.callParent(arguments);
     }
-	
+
 });
