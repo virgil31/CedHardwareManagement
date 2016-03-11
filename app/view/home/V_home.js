@@ -214,7 +214,10 @@ Ext.define('CL.view.home.V_home', {
                         text: 'Sedi',
                         flex: 1,
                         width: '100%',
-                        style: 'backgroundColor: #AD3636'
+                        style: 'backgroundColor: #AD3636',
+                        handler: function(){
+                            CL.app.getController('C_home').redirectTo("sedi");
+                        }
                     },
                     {
                         xtype: 'button',
