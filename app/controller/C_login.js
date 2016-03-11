@@ -49,7 +49,7 @@ Ext.define('CL.controller.C_login', {
 
             params: {
                 username: Ext.ComponentQuery.query("login textfield[name=username]")[0].getValue(),
-                password: btoa(btoa(btoa(Ext.ComponentQuery.query("login textfield[name=password]")[0].getValue()))),
+                password: btoa(btoa(btoa(Ext.ComponentQuery.query("login textfield[name=password]")[0].getValue())))
             },
 
             success: function(response, opts) {
