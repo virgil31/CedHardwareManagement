@@ -202,11 +202,13 @@ Ext.define('CL.view.home.V_home', {
                     },
                     {
                         xtype: 'button',
-                        text: 'Tipi Fornitori',
+                        text: 'Tipi Ditte',
                         flex: 1,
                         width: '100%',
                         style: 'backgroundColor: #333333',
-                        disabled: true
+                        handler: function(){
+                            CL.app.getController('C_home').redirectTo("tipi_ditte");
+                        }
                     },
                     {
                         xtype: 'button',

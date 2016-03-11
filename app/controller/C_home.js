@@ -43,6 +43,8 @@ Ext.define('CL.controller.C_home', {
     //ROUTES
 
     showView: function(){
+        Ext.ComponentQuery.query("window").forEach(function(win){win.destroy();});  //per eliminare le vecchie windows
+        
         if(Ext.util.Cookies.get("ced_logged") !== null){
             if(Ext.ComponentQuery.query('home').length == 0)
                 Ext.ComponentQuery.query('viewport panel[name=card]')[0].add({xtype: 'home'});

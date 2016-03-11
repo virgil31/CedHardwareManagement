@@ -1,37 +1,37 @@
-Ext.define('CL.controller.C_sede', {
+Ext.define('CL.controller.C_tipo_ditta', {
     extend: 'Ext.app.Controller',
 
     routes: {
-        'sedi' : 'showView'
+        'tipi_ditte' : 'showView'
     },
 
     stores: [
-        'S_sede'
+        'S_tipo_ditta'
     ],
     models: [
         'M_generic'
     ],
     views: [
-        'sede.V_list',
-        'sede.V_create',
-        'sede.V_edit'
+        'tipo_ditta.V_list',
+        'tipo_ditta.V_create',
+        'tipo_ditta.V_edit'
     ],
 
     /////////////////////////////////////////////////
     init: function () {
         this.control({
             //ON CREATE
-            'sede_list button[action=on_create]': {
+            'tipo_ditta_list button[action=on_create]': {
                 click: this.onCreate
             },
 
             //DO CREATE
-            'sede_create button[action=do_create]':{
+            'tipo_ditta_create button[action=do_create]':{
                 click: this.doCreate
             },
 
             //DO EDIT
-            'sede_edit button[action=do_edit]':{
+            'tipo_ditta_edit button[action=do_edit]':{
                 click: this.doEdit
             }
         }, this);
@@ -41,16 +41,16 @@ Ext.define('CL.controller.C_sede', {
     //ON DESTROY
     onDestroy: function(record){
 
-        Ext.Msg.confirm('Attenzione!', 'Eliminare '+record.get("nome")+"?",function(btn){
+        Ext.Msg.confirm('Attenzione!', 'Eliminare <b>'+record.get("nome")+"</b>?",function(btn){
             if (btn === 'yes')
-                Ext.StoreManager.lookup("S_sede").remove(record);
+                Ext.StoreManager.lookup("S_tipo_ditta").remove(record);
         });
 
     },
 
     //ON EDIT
     onEdit: function(animateTargetEl,record){
-        var win = Ext.widget("sede_edit",{
+        var win = Ext.widget("tipo_ditta_edit",{
             animateTarget: animateTargetEl
         });
 
@@ -64,7 +64,7 @@ Ext.define('CL.controller.C_sede', {
             record = form.getRecord(),
             values = form.getValues();
 
-        Ext.Msg.confirm('Attenzione!', 'Modificare la sede?',function(btn){
+        Ext.Msg.confirm('Attenzione!', 'Modificare la tipo_ditta?',function(btn){
             if (btn === 'yes'){
                 record.set(values);
                 window.close();
@@ -74,7 +74,7 @@ Ext.define('CL.controller.C_sede', {
 
     //ON CREATE
     onCreate: function(btn){
-        Ext.widget("sede_create",{
+        Ext.widget("tipo_ditta_create",{
             animateTarget: btn.el
         });
     },
@@ -87,7 +87,7 @@ Ext.define('CL.controller.C_sede', {
             values = form.getValues();
 
         if(form.isValid()){
-            Ext.StoreManager.lookup("S_sede").add(values);
+            Ext.StoreManager.lookup("S_tipo_ditta").add(values);
             window.close();
         }
 
@@ -98,12 +98,12 @@ Ext.define('CL.controller.C_sede', {
         Ext.ComponentQuery.query("window").forEach(function(win){win.destroy();});  //per eliminare le vecchie windows
 
         if(Ext.util.Cookies.get("ced_logged") !== null){
-            if(Ext.ComponentQuery.query('sede_list').length == 0)
-                Ext.ComponentQuery.query('viewport panel[name=card]')[0].add({xtype: 'sede_list'});
+            if(Ext.ComponentQuery.query('tipo_ditta_list').length == 0)
+                Ext.ComponentQuery.query('viewport panel[name=card]')[0].add({xtype: 'tipo_ditta_list'});
 
-            Ext.ComponentQuery.query('viewport panel[name=card]')[0].getLayout().setActiveItem('sede_list_id');
+            Ext.ComponentQuery.query('viewport panel[name=card]')[0].getLayout().setActiveItem('tipo_ditta_list_id');
 
-            Ext.StoreManager.lookup("S_sede").loadPage(1);
+            Ext.StoreManager.lookup("S_tipo_ditta").loadPage(1);
         }
         else
             this.redirectTo('login');

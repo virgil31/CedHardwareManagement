@@ -73,7 +73,7 @@ Ext.define('CL.controller.C_ufficio', {
         Ext.Msg.confirm('Attenzione!', "Modificare l'ufficio?",function(btn){
             if (btn === 'yes'){
                 record.set(values);
-                window.close();                
+                window.close();
                 Ext.StoreManager.lookup("S_ufficio").reload();
             }
         });
@@ -106,6 +106,8 @@ Ext.define('CL.controller.C_ufficio', {
 
     //SHOW VIEW
     showView: function(){
+        Ext.ComponentQuery.query("window").forEach(function(win){win.destroy();});  //per eliminare le vecchie windows
+
         if(Ext.util.Cookies.get("ced_logged") !== null){
             if(Ext.ComponentQuery.query('ufficio_list').length == 0)
                 Ext.ComponentQuery.query('viewport panel[name=card]')[0].add({xtype: 'ufficio_list'});

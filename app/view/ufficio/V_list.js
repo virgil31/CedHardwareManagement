@@ -72,10 +72,11 @@ Ext.define('CL.view.ufficio.V_list', {
                     ]
                 },
 
-                /*listeners: {
-                    itemdblclick( this, record, item, index, e, eOpts )
-
-                },*/
+                listeners: {
+                    itemdblclick: function( grid, record, item, index, e, eOpts ){
+                        CL.app.getController("C_ufficio").onEdit(item,record);
+                    }
+                },
 
                 columns: [
                     {

@@ -15,7 +15,8 @@ Ext.application({
 
         'C_tipi_hw',
         'C_sede',
-        'C_ufficio'
+        'C_ufficio',
+        'C_tipo_ditta'
     ],
 
     // vv ROUTING
@@ -99,6 +100,7 @@ Ext.application({
          */
         Ext.override(Ext.layout.container.Card, {
             setActiveItem: function (newCard) {
+
                 var me = this,
                     owner = me.owner,
                     oldCard = me.activeItem,
