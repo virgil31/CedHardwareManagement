@@ -34,11 +34,11 @@ $statement = $pdo->prepare("
 
 
 $statement->execute();
-$result = $statement->fetchAll();
+$result = $statement->fetchAll(PDO::FETCH_OBJ);
 
 
 if(count($result) != 0)
-	$total = $result[0]["total"];
+	$total = $result[0]->total;
 
 echo json_encode(array(
 	"result" => $result,
