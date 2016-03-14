@@ -16,7 +16,8 @@ Ext.application({
         'C_tipi_hw',
         'C_sede',
         'C_ufficio',
-        'C_tipo_ditta'
+        'C_tipo_ditta',
+        'C_fornitore'
     ],
 
     // vv ROUTING

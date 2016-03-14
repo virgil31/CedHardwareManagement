@@ -95,7 +95,7 @@ Ext.define('CL.controller.C_tipo_ditta', {
 
     //SHOW VIEW
     showView: function(){
-        Ext.ComponentQuery.query("window").forEach(function(win){win.destroy();});  //per eliminare le vecchie windows
+        //Ext.ComponentQuery.query("window").forEach(function(win){win.destroy();});  //per eliminare le vecchie windows
 
         if(Ext.util.Cookies.get("ced_logged") !== null){
             if(Ext.ComponentQuery.query('tipo_ditta_list').length == 0)

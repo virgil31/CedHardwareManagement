@@ -18,7 +18,6 @@ Ext.define('CL.store.S_user',{
             //update: 'data/us_document/edit.php',
             //destroy: 'data/us_document/destroy.php'
             //create: 'data/us/create.php',
-
         },
 
         reader:{
@@ -29,7 +28,8 @@ Ext.define('CL.store.S_user',{
         /*writer: {
             type: 'json',
             encode: true,
-            root: 'data'
+            root: 'data',
+            writeAllFields: true
         }*/
     }
 

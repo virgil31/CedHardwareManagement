@@ -1,7 +1,7 @@
 Ext.define('CL.store.S_tipo_ditta',{
     extend: 'Ext.data.Store',
 
-    //autoLoad: true,
+    autoLoad: true,
     autoSync: true,
 
     model: 'CL.model.M_generic',
@@ -29,7 +29,8 @@ Ext.define('CL.store.S_tipo_ditta',{
         writer: {
             type: 'json',
             encode: true,
-            rootProperty: 'data'
+            rootProperty: 'data',
+            writeAllFields: true
         }
     }
 

@@ -43,25 +43,31 @@ Ext.define('CL.controller.C_login', {
     //DO LOGIN
     doLogin: function(btn){
 
-        Ext.Ajax.request({
-            url: 'data/session/login.php',
-            method: "POST",
+        var form = btn.up('form').getForm();
 
-            params: {
-                username: Ext.ComponentQuery.query("login textfield[name=username]")[0].getValue(),
-                password: btoa(btoa(btoa(Ext.ComponentQuery.query("login textfield[name=password]")[0].getValue())))
-            },
+        if(form.isValid()){
+            Ext.Ajax.request({
+                url: 'data/session/login.php',
+                method: "POST",
 
-            success: function(response, opts) {
-                var risposta = Ext.decode(response.responseText);
-                if(!risposta.success)
-                    Ext.Msg.alert("Attenzione",risposta.message);
-                else{
-                    Ext.util.Cookies.set("ced_logged", true);
-                    location.reload();
+                params: {
+                    username: Ext.ComponentQuery.query("login textfield[name=username]")[0].getValue(),
+                    password: btoa(btoa(btoa(Ext.ComponentQuery.query("login textfield[name=password]")[0].getValue())))
+                },
+
+                success: function(response, opts) {
+                    var risposta = Ext.decode(response.responseText);
+                    if(!risposta.success)
+                        Ext.Msg.alert("Attenzione",risposta.message);
+                    else{
+                        Ext.util.Cookies.set("ced_logged", true);
+                        location.reload();
+                    }
                 }
-            }
-        });
+            });
+        }
+
+
 
     }
 

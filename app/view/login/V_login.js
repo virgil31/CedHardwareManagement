@@ -42,14 +42,30 @@ Ext.define('CL.view.login.V_login', {
                     xtype: 'textfield',
                     name: 'username',
                     fieldLabel: 'Username',
-                    allowBlank: false
+                    allowBlank: false,
+                    listeners: {
+                        specialkey: function(field, e){
+                            if (e.getKey() == e.ENTER){
+                                var btn = Ext.ComponentQuery.query("login button[action=do_login]")[0];
+                                btn.fireEvent("click",btn);
+                            }
+                        }
+                    }
                 },
                 {
                     xtype: 'textfield',
                     name: 'password',
                     fieldLabel: 'Password',
                     inputType: 'password',
-                    allowBlank: false
+                    allowBlank: false,
+                    listeners: {
+                        specialkey: function(field, e){
+                            if (e.getKey() == e.ENTER){
+                                var btn = Ext.ComponentQuery.query("login button[action=do_login]")[0];
+                                btn.fireEvent("click",btn);
+                            }
+                        }
+                    }
                 }
             ],
             buttons: [

@@ -1,24 +1,23 @@
-Ext.define('CL.store.S_sede',{
+Ext.define('CL.store.S_fornitore',{
     extend: 'Ext.data.Store',
 
     //autoLoad: true,
     autoSync: true,
 
-    model: 'CL.model.M_generic',
+    model: 'CL.model.M_fornitore',
 
     pageSize: 50,
 
     remoteSort: true,
     sorters: { property: 'nome', direction : 'ASC' }, //lo ordiniamo per id
 
-
     proxy:{
         type:'ajax',
         api: {
-            read: 'data/sede/list.php',
-            create: 'data/sede/create.php',
-            destroy: 'data/sede/destroy.php',
-            update: 'data/sede/edit.php'
+            read: 'data/fornitore/list.php',
+            create: 'data/fornitore/create.php',
+            destroy: 'data/fornitore/destroy.php',
+            update: 'data/fornitore/edit.php'
         },
 
         reader:{

@@ -216,7 +216,9 @@ Ext.define('CL.view.home.V_home', {
                         flex: 1,
                         width: '100%',
                         style: 'backgroundColor: #333333',
-                        disabled: true
+                        handler: function(){
+                            CL.app.getController('C_home').redirectTo("fornitori");
+                        }
                     },
                     {
                         xtype: 'button',

@@ -29,7 +29,8 @@ Ext.define('CL.store.S_ufficio',{
         writer: {
             type: 'json',
             encode: true,
-            rootProperty: 'data'
+            rootProperty: 'data',
+            writeAllFields: true
         }
     }
 
