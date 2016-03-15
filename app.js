@@ -18,7 +18,8 @@ Ext.application({
         'C_tipo_ditta',
         'C_fornitore',
         'C_utente',
-        'C_tipo_hardware'
+        'C_tipo_hardware',
+        'C_marca_hardware'
     ],
 
     // vv ROUTING
