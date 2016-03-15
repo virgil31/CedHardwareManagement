@@ -28,16 +28,41 @@ Ext.define('CL.view.fornitore.V_create', {
                         allowBlank: false
                     },
                     {
-                        xtype: 'combobox',
-                        fieldLabel: 'Tipo',
-                        name: 'tipo_id',
-                        allowBlank: false,
-                        store: 'S_tipo_ditta',
-                        queryMode: 'local',
-                        anyMatch: true,
-                        displayField: 'nome',
-                        valueField: 'id',
-                        editable: false
+                        xtype: 'panel',
+                        layout: 'hbox',
+                        margin: '0 0 5 0',
+                        items:[
+                            {
+                                xtype: 'combobox',
+                                fieldLabel: 'Tipo',
+                                name: 'tipo_id',
+                                allowBlank: false,
+                                store: 'S_tipo_ditta',
+                                queryMode: 'local',
+                                anyMatch: true,
+                                displayField: 'nome',
+                                valueField: 'id',
+                                editable: false
+                            },
+                            {
+                                xtype: 'button',
+                                text: '+',
+                                tooltip: 'Crea e assegna',
+                                listeners:{
+                                    click: function(btn){
+                                        Ext.widget("tipo_ditta_create",{
+                                            animateTarget: btn.el,
+                                            callbackOnCreated: function(){
+                                                var tipi_ditta = Ext.StoreManager.lookup("S_tipo_ditta").getRange(),
+                                                    tipo_ditta_creato = tipi_ditta[tipi_ditta.length-1];
+
+                                                Ext.ComponentQuery.query("fornitore_create combobox[name=tipo_id]")[0].setValue(tipo_ditta_creato.get("id"));
+                                            }
+                                        });
+                                    }
+                                }
+                            }
+                        ]
                     },
                     {
                         xtype: 'textfield',

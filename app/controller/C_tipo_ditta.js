@@ -88,6 +88,10 @@ Ext.define('CL.controller.C_tipo_ditta', {
 
         if(form.isValid()){
             Ext.StoreManager.lookup("S_tipo_ditta").add(values);
+
+            if(window.callbackOnCreated != null)
+                window.callbackOnCreated();
+                
             window.close();
         }
 

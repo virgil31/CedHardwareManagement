@@ -98,9 +98,10 @@ Ext.define('CL.controller.C_ufficio', {
         if(form.isValid()){
             Ext.StoreManager.lookup("S_ufficio").add(values);
             window.close();
-            Ext.StoreManager.lookup("S_ufficio").reload();
+            setTimeout(function(){
+                Ext.StoreManager.lookup("S_ufficio").reload();
+            }, 250);
         }
-
     },
 
 

@@ -28,16 +28,42 @@ Ext.define('CL.view.ufficio.V_create', {
                         allowBlank: false
                     },
                     {
-                        xtype: 'combobox',
-                        fieldLabel: 'Sede',
-                        name: 'sede_id',
-                        allowBlank: false,
-                        store: 'S_sede',
-                        queryMode: 'local',
-                        anyMatch: true,
-                        displayField: 'nome',
-                        valueField: 'id'
+                        xtype: 'panel',
+                        layout: 'hbox',
+                        margin: '0 0 5 0',
+                        items:[
+                            {
+                                xtype: 'combobox',
+                                fieldLabel: 'Sedeee',
+                                name: 'sede_id',
+                                allowBlank: false,
+                                store: 'S_sede',
+                                queryMode: 'local',
+                                anyMatch: true,
+                                displayField: 'nome',
+                                valueField: 'id'
+                            },
+                            {
+                                xtype: 'button',
+                                text: '+',
+                                tooltip: 'Crea e assegna',
+                                listeners:{
+                                    click: function(btn){
+                                        Ext.widget("sede_create",{
+                                            animateTarget: btn.el,
+                                            callbackOnCreated: function(){
+                                                var sedi = Ext.StoreManager.lookup("S_sede").getRange(),
+                                                    sede_creata = sedi[sedi.length-1];
+
+                                                Ext.ComponentQuery.query("ufficio_create combobox[name=sede_id]")[0].setValue(sede_creata.get("id"));
+                                            }
+                                        });
+                                    }
+                                }
+                            }
+                        ]
                     }
+
                 ],
                 buttons: [
                     {

@@ -88,9 +88,12 @@ Ext.define('CL.controller.C_sede', {
 
         if(form.isValid()){
             Ext.StoreManager.lookup("S_sede").add(values);
+
+            if(window.callbackOnCreated != null)
+                window.callbackOnCreated();
+
             window.close();
         }
-
     },
 
     //SHOW VIEW

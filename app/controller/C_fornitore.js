@@ -100,9 +100,10 @@ Ext.define('CL.controller.C_fornitore', {
         if(form.isValid()){
             Ext.StoreManager.lookup("S_fornitore").add(values);
             window.close();
-            Ext.StoreManager.lookup("S_fornitore").reload();
+            setTimeout(function(){
+                Ext.StoreManager.lookup("S_fornitore").reload();
+            }, 250);
         }
-
     },
 
 
