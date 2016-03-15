@@ -1,8 +1,8 @@
-Ext.define('CL.view.fornitore.V_list', {
+Ext.define('CL.view.utente.V_list', {
     extend: 'Ext.panel.Panel',
-    xtype: 'fornitore_list',
-    itemId: 'fornitore_list_id',
-    alias: 'widget.fornitore_list',
+    xtype: 'utente_list',
+    itemId: 'utente_list_id',
+    alias: 'widget.utente_list',
 
     bodyStyle: 'backgroundColor: transparent',  //per rendere il corpo invisibile
 
@@ -19,7 +19,7 @@ Ext.define('CL.view.fornitore.V_list', {
             {
                 xtype: 'grid',
                 border: true,
-                store: 'S_fornitore',
+                store: 'S_utente',
                 height: '98%',
                 flex: 60,
                 autoscroll: true,
@@ -28,9 +28,10 @@ Ext.define('CL.view.fornitore.V_list', {
 
                 disableSelection: true,
 
+
                 dockedItems: [{
                     xtype: 'pagingtoolbar',
-                    store: 'S_fornitore', // same store GridPanel is using
+                    store: 'S_utente', // same store GridPanel is using
                     dock: 'bottom',
                     displayInfo: true
                 }],
@@ -50,11 +51,12 @@ Ext.define('CL.view.fornitore.V_list', {
                         },
                         {
                             xtype: 'label',
-                            text: 'Fornitori',
+                            text: 'Utenti',
                             style: 'color: #157fcc;font-size: 15px;font-weight: 300;font-family: helvetica, arial, verdana, sans-serif;line-height: 16px'
                         },
                         {
                             xtype: 'button',
+                            tooltip: 'Nuova richiesta Hardware',
                             icon: 'resources/images/icon_plus.gif',
                             action: 'on_create'
                         },
@@ -74,7 +76,7 @@ Ext.define('CL.view.fornitore.V_list', {
 
                 listeners: {
                     itemdblclick: function( grid, record, item, index, e, eOpts ){
-                        CL.app.getController("C_fornitore").onEdit(item,record);
+                        CL.app.getController("C_utente").onEdit(item,record);
                     }
                 },
 
@@ -85,14 +87,22 @@ Ext.define('CL.view.fornitore.V_list', {
                         flex: 1
                     },
                     {
+                        text: 'Cognome',
+                        dataIndex: 'cognome',
+                        flex: 2
+                    },
+                    {
                         text: 'Nome',
                         dataIndex: 'nome',
                         flex: 2
                     },
                     {
-                        text: 'Tipo',
-                        dataIndex: 'tipo_name',
-                        flex: 2
+                        text: 'Funzionario?',
+                        dataIndex: 'funzionario',
+                        flex: 2,
+                        renderer: function(value){
+                            return '<input type="checkbox" disabled '+((value==true)?'checked':'')+'>';
+                        }
                     },
                     {
                         xtype:'actioncolumn',
@@ -103,7 +113,7 @@ Ext.define('CL.view.fornitore.V_list', {
                                 tooltip: 'Edit',
                                 handler: function(grid, rowIndex, colIndex) {
                                     var rec = grid.getStore().getAt(rowIndex);
-                                    CL.app.getController("C_fornitore").onEdit(this.el,rec);
+                                    CL.app.getController("C_utente").onEdit(this.el,rec);
                                 }
                             },
                             {
@@ -111,7 +121,7 @@ Ext.define('CL.view.fornitore.V_list', {
                                 tooltip: 'Delete',
                                 handler: function(grid, rowIndex, colIndex) {
                                     var rec = grid.getStore().getAt(rowIndex);
-                                    CL.app.getController("C_fornitore").onDestroy(rec);
+                                    CL.app.getController("C_utente").onDestroy(rec);
                                 }
                             }
                         ]
