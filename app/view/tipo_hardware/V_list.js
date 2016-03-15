@@ -1,8 +1,8 @@
-Ext.define('CL.view.tipi_hw.V_list', {
+Ext.define('CL.view.tipo_hardware.V_list', {
     extend: 'Ext.panel.Panel',
-    xtype: 'tipi_hw_list',
-    itemId: 'tipi_hw_list_id',
-    alias: 'widget.tipi_hw_list',
+    xtype: 'tipo_hardware_list',
+    itemId: 'tipo_hardware_list_id',
+    alias: 'widget.tipo_hardware_list',
 
     bodyStyle: 'backgroundColor: transparent',  //per rendere il corpo invisibile
 
@@ -19,7 +19,7 @@ Ext.define('CL.view.tipi_hw.V_list', {
             {
                 xtype: 'grid',
                 border: true,
-                store: 'S_user',
+                store: 'S_tipo_hardware',
                 height: '98%',
                 flex: 60,
                 autoscroll: true,
@@ -28,14 +28,10 @@ Ext.define('CL.view.tipi_hw.V_list', {
 
                 disableSelection: true,
 
-                plugins: {
-                    ptype: 'rowediting',
-                    clicksToEdit: 2
-                },
 
                 dockedItems: [{
                     xtype: 'pagingtoolbar',
-                    store: 'S_user', // same store GridPanel is using
+                    store: 'S_tipo_hardware', // same store GridPanel is using
                     dock: 'bottom',
                     displayInfo: true
                 }],
@@ -50,18 +46,19 @@ Ext.define('CL.view.tipi_hw.V_list', {
                             text: 'Indietro',
                             icon: 'resources/images/icon_back.png',
                             handler: function(){
-                                CL.app.getController('C_tipi_hw').redirectTo('home');
+                                CL.app.getController('C_tipo_hardware').redirectTo('home');
                             }
                         },
                         {
                             xtype: 'label',
-                            text: 'Tipi Hardware',
+                            text: 'Tipi di Hardware',
                             style: 'color: #157fcc;font-size: 15px;font-weight: 300;font-family: helvetica, arial, verdana, sans-serif;line-height: 16px'
                         },
                         {
                             xtype: 'button',
                             tooltip: 'Nuova richiesta Hardware',
-                            icon: 'resources/images/icon_plus.gif'
+                            icon: 'resources/images/icon_plus.gif',
+                            action: 'on_create'
                         },
                         '->',
                         {
@@ -77,6 +74,12 @@ Ext.define('CL.view.tipi_hw.V_list', {
                     ]
                 },
 
+                listeners: {
+                    itemdblclick: function( grid, record, item, index, e, eOpts ){
+                        CL.app.getController("C_tipo_hardware").onEdit(item,record);
+                    }
+                },
+
                 columns: [
                     {
                         text: 'ID',
@@ -84,12 +87,9 @@ Ext.define('CL.view.tipi_hw.V_list', {
                         flex: 1
                     },
                     {
-                        text: 'Email',
-                        dataIndex: 'email_address',
-                        flex: 2,
-                        editor: {
-                            xtype: 'textfield'
-                        }
+                        text: 'Nome',
+                        dataIndex: 'nome',
+                        flex: 2
                     },
                     {
                         xtype:'actioncolumn',
@@ -100,7 +100,7 @@ Ext.define('CL.view.tipi_hw.V_list', {
                                 tooltip: 'Edit',
                                 handler: function(grid, rowIndex, colIndex) {
                                     var rec = grid.getStore().getAt(rowIndex);
-                                    alert("Edit " + rec.get('last_name'));
+                                    CL.app.getController("C_tipo_hardware").onEdit(this.el,rec);
                                 }
                             },
                             {
@@ -108,7 +108,7 @@ Ext.define('CL.view.tipi_hw.V_list', {
                                 tooltip: 'Delete',
                                 handler: function(grid, rowIndex, colIndex) {
                                     var rec = grid.getStore().getAt(rowIndex);
-                                    alert("Edit " + rec.get('last_name'));
+                                    CL.app.getController("C_tipo_hardware").onDestroy(rec);
                                 }
                             }
                         ]

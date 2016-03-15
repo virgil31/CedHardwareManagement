@@ -46,7 +46,7 @@ Ext.define('CL.view.tipo_ditta.V_list', {
                             text: 'Indietro',
                             icon: 'resources/images/icon_back.png',
                             handler: function(){
-                                CL.app.getController('C_tipi_hw').redirectTo('home');
+                                CL.app.getController('C_tipo_hardware').redirectTo('home');
                             }
                         },
                         {

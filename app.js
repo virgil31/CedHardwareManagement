@@ -13,12 +13,12 @@ Ext.application({
         'C_bbar',
         'C_tbar',
 
-        'C_tipi_hw',
         'C_sede',
         'C_ufficio',
         'C_tipo_ditta',
         'C_fornitore',
-        'C_utente'
+        'C_utente',
+        'C_tipo_hardware'
     ],
 
     // vv ROUTING
