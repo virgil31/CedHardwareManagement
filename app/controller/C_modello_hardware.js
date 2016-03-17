@@ -2,7 +2,7 @@ Ext.define('CL.controller.C_modello_hardware', {
     extend: 'Ext.app.Controller',
 
     routes: {
-        'fornitori' : 'showView'
+        'modelli_hardware' : 'showView'
     },
 
     stores: [
