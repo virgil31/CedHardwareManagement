@@ -34,9 +34,10 @@ Ext.define('CL.view.ufficio.V_create', {
                         items:[
                             {
                                 xtype: 'combobox',
-                                fieldLabel: 'Sedeee',
+                                fieldLabel: 'Sede',
                                 name: 'sede_id',
                                 allowBlank: false,
+                                forceSelection: true,
                                 store: 'S_sede',
                                 queryMode: 'local',
                                 anyMatch: true,

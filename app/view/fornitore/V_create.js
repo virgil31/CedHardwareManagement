@@ -37,6 +37,7 @@ Ext.define('CL.view.fornitore.V_create', {
                                 fieldLabel: 'Tipo',
                                 name: 'tipo_id',
                                 allowBlank: false,
+                                forceSelection: true,
                                 store: 'S_tipo_ditta',
                                 queryMode: 'local',
                                 anyMatch: true,

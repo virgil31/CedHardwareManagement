@@ -32,6 +32,7 @@ Ext.define('CL.view.ufficio.V_edit', {
                         fieldLabel: 'Sede',
                         name: 'sede_id',
                         allowBlank: false,
+                        forceSelection: true,
                         store: 'S_sede',
                         queryMode: 'local',
                         anyMatch: true,
