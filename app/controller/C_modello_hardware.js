@@ -73,7 +73,7 @@ Ext.define('CL.controller.C_modello_hardware', {
 
             console.log(record);
 
-        Ext.Msg.confirm('Attenzione!', "Modificare il modello_hardware?",function(btn){
+        Ext.Msg.confirm('Attenzione!', "Modificare il Modello di Hardware?",function(btn){
             if (btn === 'yes'){
                 record.set(values);
                 window.close();

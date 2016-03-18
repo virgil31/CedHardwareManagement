@@ -34,16 +34,16 @@ Ext.define('CL.view.modello_hardware.V_create', {
                         items:[
                             {
                                 xtype: 'combobox',
-                                fieldLabel: 'Tipo',
-                                name: 'tipo_id',
+                                fieldLabel: 'Marca',
+                                name: 'marca_id',
                                 allowBlank: false,
                                 forceSelection: true,
-                                store: 'S_tipo_ditta',
+                                store: 'S_marca_hardware',
                                 queryMode: 'local',
                                 anyMatch: true,
                                 displayField: 'nome',
-                                valueField: 'id',
-                                editable: false
+                                valueField: 'id'
+                                //editable: false
                             },
                             {
                                 xtype: 'button',
@@ -51,13 +51,13 @@ Ext.define('CL.view.modello_hardware.V_create', {
                                 tooltip: 'Crea e assegna',
                                 listeners:{
                                     click: function(btn){
-                                        Ext.widget("tipo_ditta_create",{
+                                        Ext.widget("marca_hardware_create",{
                                             animateTarget: btn.el,
                                             callbackOnCreated: function(){
-                                                var tipi_ditta = Ext.StoreManager.lookup("S_tipo_ditta").getRange(),
-                                                    tipo_ditta_creato = tipi_ditta[tipi_ditta.length-1];
+                                                var records = Ext.StoreManager.lookup("S_marca_hardware").getRange(),
+                                                    created_record = records[records.length-1];
 
-                                                Ext.ComponentQuery.query("modello_hardware_create combobox[name=tipo_id]")[0].setValue(tipo_ditta_creato.get("id"));
+                                                Ext.ComponentQuery.query("modello_hardware_create combobox[name=marca_id]")[0].setValue(created_record.get("id"));
                                             }
                                         });
                                     }
@@ -66,34 +66,42 @@ Ext.define('CL.view.modello_hardware.V_create', {
                         ]
                     },
                     {
-                        xtype: 'textfield',
-                        fieldLabel: 'Indirizzo',
-                        name: 'indirizzo'
-                    },
-                    {
-                        xtype: 'textfield',
-                        fieldLabel: 'Telefono',
-                        name: 'telefono'
-                    },
-                    {
-                        xtype: 'textfield',
-                        fieldLabel: 'Fax',
-                        name: 'fax'
-                    },
-                    {
-                        xtype: 'textfield',
-                        fieldLabel: 'Email',
-                        name: 'email'
-                    },
-                    {
-                        xtype: 'textfield',
-                        fieldLabel: 'Partita IVA',
-                        name: 'partita_iva'
-                    },
-                    {
-                        xtype: 'textfield',
-                        fieldLabel: 'Codice Fiscale',
-                        name: 'codice_fiscale'
+                        xtype: 'panel',
+                        layout: 'hbox',
+                        margin: '0 0 5 0',
+                        items:[
+                            {
+                                xtype: 'combobox',
+                                fieldLabel: 'Tipo',
+                                name: 'tipo_id',
+                                allowBlank: false,
+                                forceSelection: true,
+                                store: 'S_tipo_hardware',
+                                queryMode: 'local',
+                                anyMatch: true,
+                                displayField: 'nome',
+                                valueField: 'id'
+                                //editable: false
+                            },
+                            {
+                                xtype: 'button',
+                                text: '+',
+                                tooltip: 'Crea e assegna',
+                                listeners:{
+                                    click: function(btn){
+                                        Ext.widget("tipo_hardware_create",{
+                                            animateTarget: btn.el,
+                                            callbackOnCreated: function(){
+                                                var records = Ext.StoreManager.lookup("S_tipo_hardware").getRange(),
+                                                    created_record = records[records.length-1];
+
+                                                Ext.ComponentQuery.query("modello_hardware_create combobox[name=tipo_id]")[0].setValue(created_record.get("id"));
+                                            }
+                                        });
+                                    }
+                                }
+                            }
+                        ]
                     }
                 ],
                 buttons: [

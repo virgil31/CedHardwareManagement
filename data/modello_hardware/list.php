@@ -18,7 +18,7 @@ $start = $_GET['start'];
 $total = 0;
 
 $statement = $pdo->prepare("
-	SELECT A.id,A.nome,A.tipo_id,B.nome as tipo_name,C.nome as marca_name, COUNT(*) OVER() as total
+	SELECT A.id,A.nome,A.tipo_id,B.nome as tipo_name,A.marca_id,C.nome as marca_name, COUNT(*) OVER() as total
 	FROM modello_hardware A
 		LEFT JOIN tipo_hardware B ON B.id = A.tipo_id
 		LEFT JOIN marca_hardware C ON C.id = A.marca_id

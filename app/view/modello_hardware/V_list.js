@@ -90,6 +90,11 @@ Ext.define('CL.view.modello_hardware.V_list', {
                         flex: 2
                     },
                     {
+                        text: 'Marca',
+                        dataIndex: 'marca_name',
+                        flex: 2
+                    },
+                    {
                         text: 'Tipo',
                         dataIndex: 'tipo_name',
                         flex: 2
