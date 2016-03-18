@@ -104,7 +104,7 @@ Ext.define('CL.view.modello_hardware.V_list', {
                     },
                     {
                         xtype:'actioncolumn',
-                        width: 75,
+                        width: 76,
                         items: [
                             {
                                 iconCls: 'x-fa fa-edit',
