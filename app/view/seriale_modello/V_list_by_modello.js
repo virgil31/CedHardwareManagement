@@ -1,16 +1,24 @@
-Ext.define('CL.view.modello_hardware.V_list', {
-    extend: 'Ext.panel.Panel',
-    xtype: 'modello_hardware_list',
-    itemId: 'modello_hardware_list_id',
-    alias: 'widget.modello_hardware_list',
+Ext.define('CL.view.seriale_modello.V_list_by_modello', {
+    extend: 'Ext.window.Window',
+    xtype: 'seriale_modello_list_by_modello',
+    itemId: 'seriale_modello_list_by_modello_id',
+    alias: 'widget.seriale_modello_list_by_modello',
 
     bodyStyle: 'backgroundColor: transparent',  //per rendere il corpo invisibile
 
-    layout: {
+    /*layout: {
         type: 'hbox',
         align: 'center',
         pack: 'center'
-    },
+    },*/
+
+    autoShow: true,
+    constrain: true,
+    modal: true,
+
+    height: 500,
+    width: 600,
+    title: 'Lista Seriali',
 
     initComponent: function() {
         var this_view = this;
@@ -22,7 +30,7 @@ Ext.define('CL.view.modello_hardware.V_list', {
                     enableTextSelection: true
                 },
                 border: true,
-                store: 'S_modello_hardware',
+                store: 'S_seriale_modello',
                 height: '98%',
                 flex: 60,
                 autoscroll: true,
@@ -31,31 +39,11 @@ Ext.define('CL.view.modello_hardware.V_list', {
 
                 disableSelection: true,
 
-                dockedItems: [{
-                    xtype: 'pagingtoolbar',
-                    store: 'S_modello_hardware', // same store GridPanel is using
-                    dock: 'bottom',
-                    displayInfo: true
-                }],
-
                 tbar: {
                     xtype: 'toolbar',
                     height: 38,
                     style: 'backgroundColor: #F5F5F5',
                     items: [
-                        {
-                            xtype: 'button',
-                            text: 'Indietro',
-                            icon: 'resources/images/icon_back.png',
-                            handler: function(){
-                                CL.app.getController('C_tipo_hardware').redirectTo('home');
-                            }
-                        },
-                        {
-                            xtype: 'label',
-                            text: 'Modelli Hardware',
-                            style: 'color: #157fcc;font-size: 15px;font-weight: 300;font-family: helvetica, arial, verdana, sans-serif;line-height: 16px'
-                        },
                         {
                             xtype: 'button',
                             icon: 'resources/images/icon_plus.gif',
@@ -83,28 +71,27 @@ Ext.define('CL.view.modello_hardware.V_list', {
 
                 columns: [
                     {
-                        text: 'ID',
-                        dataIndex: 'id',
+                        text: 'Seriale',
+                        dataIndex: 'seriale',
                         flex: 1
                     },
                     {
-                        text: 'Nome',
-                        dataIndex: 'nome',
-                        flex: 2
+                        text: 'Modello',
+                        dataIndex: 'modello_name',
+                        flex: 1,
+                        renderer: function (value, metaData, record) {
+                            //return '<a href="#" onclick="alert(\'yo\');return false;">'+value+'</a>';
+                            return value;
+                        }
                     },
                     {
-                        text: 'Marca',
-                        dataIndex: 'marca_name',
-                        flex: 2
-                    },
-                    {
-                        text: 'Tipo',
-                        dataIndex: 'tipo_name',
-                        flex: 2
+                        text: 'Fattura',
+                        dataIndex: 'fattura_name',
+                        flex: 1
                     },
                     {
                         xtype:'actioncolumn',
-                        width: 75,
+                        width: 50,
                         items: [
                             {
                                 iconCls: 'x-fa fa-edit',
@@ -112,25 +99,6 @@ Ext.define('CL.view.modello_hardware.V_list', {
                                 handler: function(grid, rowIndex, colIndex) {
                                     var rec = grid.getStore().getAt(rowIndex);
                                     CL.app.getController("C_modello_hardware").onEdit(this.el,rec);
-                                }
-                            },
-                            {
-                                iconCls: 'x-fa fa-list',
-                                tooltip: 'Lista seriali',
-                                handler: function(grid, rowIndex, colIndex) {
-                                    var rec = grid.getStore().getAt(rowIndex),
-                                        btn = this;
-
-                                    Ext.widget("seriale_modello_list_by_modello",{
-                                        title: 'Lista Seriali - <b>'+rec.get("nome")+'</b>',
-                                        animateTarget: btn.el
-                                    });
-
-                                    var store = Ext.StoreManager.lookup("S_seriale_modello");
-
-                                    store.getProxy().extraParams.modello_id = rec.get("id");
-
-                                    store.load();
                                 }
                             },
                             {

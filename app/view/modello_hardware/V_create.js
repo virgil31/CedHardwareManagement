@@ -10,7 +10,7 @@ Ext.define('CL.view.modello_hardware.V_create', {
 
     bodyStyle: 'backgroundColor: transparent',  //per rendere il corpo invisibile
 
-    title: 'Nuovo modello_hardware',
+    title: 'Nuovo Modello di Hardware',
 
     padding: 10,
 
