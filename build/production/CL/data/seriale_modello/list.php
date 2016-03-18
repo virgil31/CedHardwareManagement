@@ -17,21 +17,16 @@ $start = $_GET['start'];
 
 $total = 0;
 
-//LIST FULL
-if(isset($_GET["flag_full"])){
-	$statement = $pdo->prepare("
-		SELECT id, nome, cognome, funzionario, COUNT(*) OVER() as total
-		FROM utente
-		ORDER BY $pro $dir,nome
-	");
-}
-//LIST PAGINATO
-$statement = $pdo->prepare("
-	SELECT id, nome, cognome, funzionario, COUNT(*) OVER() as total
-	FROM utente
-	ORDER BY $pro $dir,nome LIMIT $limit OFFSET $start
-");
+$modello_id = $_GET["modello_id"];
 
+$statement = $pdo->prepare("
+	SELECT A.id,A.seriale,A.modello_id, B.nome as modello_name,C.codice as fattura_name, A.fattura_id, COUNT(*) OVER() as total
+	FROM seriale_modello A
+		LEFT JOIN modello_hardware B ON B.id = A.modello_id
+		LEFT JOIN fattura C ON C.id = A.fattura_id
+	WHERE A.modello_id = $modello_id
+	ORDER BY A.$pro $dir LIMIT $limit OFFSET $start
+");
 
 $statement->execute();
 $result = $statement->fetchAll(PDO::FETCH_OBJ);

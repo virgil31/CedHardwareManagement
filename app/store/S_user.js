@@ -8,7 +8,7 @@ Ext.define('CL.store.S_user',{
     pageSize: 50,
 
     remoteSort: true,
-    sorters: { property: 'first_name', direction : 'ASC' }, //lo ordiniamo per id
+    sorters: { property: 'last_name', direction : 'ASC' }, //lo ordiniamo per id
 
 
     proxy:{

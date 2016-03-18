@@ -22,14 +22,14 @@ if(isset($_GET["flag_full"])){
 	$statement = $pdo->prepare("
 		SELECT id, nome, cognome, funzionario, COUNT(*) OVER() as total
 		FROM utente
-		ORDER BY $pro $dir
+		ORDER BY $pro $dir,nome
 	");
 }
 //LIST PAGINATO
 $statement = $pdo->prepare("
 	SELECT id, nome, cognome, funzionario, COUNT(*) OVER() as total
 	FROM utente
-	ORDER BY $pro $dir LIMIT $limit OFFSET $start
+	ORDER BY $pro $dir,nome LIMIT $limit OFFSET $start
 ");
 
 

@@ -1,23 +1,24 @@
-Ext.define('CL.store.S_utente',{
+Ext.define('CL.store.S_fattura',{
     extend: 'Ext.data.Store',
 
     //autoLoad: true,
     autoSync: true,
 
-    model: 'CL.model.M_utente',
+    model: 'CL.model.M_fattura',
 
     pageSize: 50,
 
     remoteSort: true,
-    sorters: { property: 'cognome', direction : 'ASC' }, //lo ordiniamo per id
+    sorters: { property: 'fornitore_name', direction : 'ASC' }, //lo ordiniamo per id
+
 
     proxy:{
         type:'ajax',
         api: {
-            read: 'data/utente/list.php',
-            create: 'data/utente/create.php',
-            destroy: 'data/utente/destroy.php',
-            update: 'data/utente/edit.php'
+            read: 'data/fattura/list.php',
+            create: 'data/fattura/create.php',
+            destroy: 'data/fattura/destroy.php',
+            update: 'data/fattura/edit.php'
         },
 
         reader:{

@@ -17,21 +17,12 @@ $start = $_GET['start'];
 
 $total = 0;
 
-//LIST FULL
-if(isset($_GET["flag_full"])){
-	$statement = $pdo->prepare("
-		SELECT id, nome, cognome, funzionario, COUNT(*) OVER() as total
-		FROM utente
-		ORDER BY $pro $dir,nome
-	");
-}
-//LIST PAGINATO
 $statement = $pdo->prepare("
-	SELECT id, nome, cognome, funzionario, COUNT(*) OVER() as total
-	FROM utente
-	ORDER BY $pro $dir,nome LIMIT $limit OFFSET $start
+	SELECT A.id, A.codice, A.fornitore_id, B.nome as fornitore_name,data, COUNT(*) OVER() as total
+	FROM fattura A
+		LEFT JOIN fornitore B ON B.id = A.fornitore_id
+	ORDER BY $pro $dir LIMIT $limit OFFSET $start
 ");
-
 
 $statement->execute();
 $result = $statement->fetchAll(PDO::FETCH_OBJ);
