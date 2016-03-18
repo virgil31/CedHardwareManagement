@@ -11,7 +11,7 @@ $data = json_decode($_POST['data'],true);
 
 
 $s = $pdo->prepare("
-	DELETE FROM modello_hardware
+	DELETE FROM seriale_modello
 	WHERE id = :id
 ");
 

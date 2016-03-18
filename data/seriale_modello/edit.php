@@ -11,19 +11,19 @@ $data = json_decode($_POST['data'],true);
 
 
 $s = $pdo->prepare("
-	UPDATE modello_hardware
-	SET nome = :nome,
-		tipo_id = :tipo_id,
-		marca_id = :marca_id
+	UPDATE seriale_modello
+	SET seriale = :seriale,
+		modello_id = :modello_id,
+		fattura_id = :fattura_id
 
 	WHERE id = :id
 ");
 
 $params = array(
 	'id' => $data["id"],
-	'nome' => $data['nome'],
-	'tipo_id' => $data['tipo_id'],,
-	'marca_id' => $data['marca_id']
+	'seriale' => $data['seriale'],
+	'modello_id' => $data['modello_id'],
+	'fattura_id' => $data['fattura_id']
 );
 
 $success = $s->execute($params);

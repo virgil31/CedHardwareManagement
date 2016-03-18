@@ -98,7 +98,7 @@ Ext.define('CL.view.seriale_modello.V_list_by_modello', {
                                 tooltip: 'Edit',
                                 handler: function(grid, rowIndex, colIndex) {
                                     var rec = grid.getStore().getAt(rowIndex);
-                                    CL.app.getController("C_modello_hardware").onEdit(this.el,rec);
+                                    CL.app.getController("C_seriale_modello").onEdit(this.el,rec);
                                 }
                             },
                             {
@@ -106,7 +106,7 @@ Ext.define('CL.view.seriale_modello.V_list_by_modello', {
                                 tooltip: 'Delete',
                                 handler: function(grid, rowIndex, colIndex) {
                                     var rec = grid.getStore().getAt(rowIndex);
-                                    CL.app.getController("C_modello_hardware").onDestroy(rec);
+                                    CL.app.getController("C_seriale_modello").onDestroy(rec);
                                 }
                             }
                         ]
