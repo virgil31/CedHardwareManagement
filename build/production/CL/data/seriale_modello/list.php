@@ -25,7 +25,7 @@ $statement = $pdo->prepare("
 		LEFT JOIN modello_hardware B ON B.id = A.modello_id
 		LEFT JOIN fattura C ON C.id = A.fattura_id
 	WHERE A.modello_id = $modello_id
-	ORDER BY A.$pro $dir LIMIT $limit OFFSET $start
+	ORDER BY $pro $dir LIMIT $limit OFFSET $start
 ");
 
 $statement->execute();

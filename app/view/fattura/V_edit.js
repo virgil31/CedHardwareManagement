@@ -69,7 +69,8 @@ Ext.define('CL.view.fattura.V_edit', {
                         xtype: 'datefield',
                         fieldLabel: 'Data',
                         name: 'data',
-                        format: 'd-m-Y'
+                        format: 'd-m-Y',
+                        allowBlank: false
                     }
                 ],
                 buttons: [

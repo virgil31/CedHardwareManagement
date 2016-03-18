@@ -87,7 +87,10 @@ Ext.define('CL.view.fattura.V_list', {
                     {
                         text: 'Fornitore',
                         dataIndex: 'fornitore_name',
-                        flex: 2
+                        flex: 2,
+                        renderer: function (value, metaData, record) {
+                            return '<a href="#" onclick="CL.app.getController(\'C_fornitore\').onEditById(this,'+record.get('fornitore_id')+');return false;">'+value+'</a>';
+                        }
                     },
                     {
                         text: 'Codice',

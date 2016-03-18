@@ -99,13 +99,13 @@ Ext.define('CL.view.seriale_modello.V_create', {
                                 tooltip: 'Crea e assegna',
                                 listeners:{
                                     click: function(btn){
-                                        Ext.widget("fornitore_create",{
+                                        Ext.widget("fattura_create",{
                                             animateTarget: btn.el,
                                             callbackOnCreated: function(){
-                                                var records = Ext.StoreManager.lookup("S_fornitore").getRange(),
+                                                var records = Ext.StoreManager.lookup("S_fattura").getRange(),
                                                     created_record = records[records.length-1];
 
-                                                Ext.ComponentQuery.query("fattura_create combobox[name=fornitore_id]")[0].setValue(created_record.get("id"));
+                                                Ext.ComponentQuery.query("fattura_create combobox[name=fattura_id]")[0].setValue(created_record.get("id"));
                                             }
                                         });
                                     }

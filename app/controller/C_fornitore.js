@@ -97,14 +97,7 @@ Ext.define('CL.controller.C_fornitore', {
             form = window.down("form").getForm(),
             values = form.getValues();
 
-        /*
-        if(form.isValid()){
-            Ext.StoreManager.lookup("S_fornitore").add(values);
-            window.close();
-            setTimeout(function(){
-                Ext.StoreManager.lookup("S_fornitore").reload();
-            }, 250);
-        }*/
+
         if(form.isValid()){
             Ext.StoreManager.lookup("S_fornitore").add(values);
 
@@ -112,6 +105,9 @@ Ext.define('CL.controller.C_fornitore', {
                 window.callbackOnCreated();
 
             window.close();
+            setTimeout(function(){
+                Ext.StoreManager.lookup("S_fornitore").reload();
+            }, 250);
         }
 
     },
@@ -131,6 +127,15 @@ Ext.define('CL.controller.C_fornitore', {
         }
         else
             this.redirectTo('login');
+    },
+
+
+    // per gli hyperlink
+    onEditById: function(animateTargetEl,id){
+        var my_controller = this;
+        var record = Ext.StoreManager.lookup("S_fornitore").getById(id);
+
+        my_controller.onEdit(animateTargetEl,record);
     }
 
 

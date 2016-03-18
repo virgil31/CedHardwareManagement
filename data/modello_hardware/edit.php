@@ -22,7 +22,7 @@ $s = $pdo->prepare("
 $params = array(
 	'id' => $data["id"],
 	'nome' => $data['nome'],
-	'tipo_id' => $data['tipo_id'],,
+	'tipo_id' => $data['tipo_id'],
 	'marca_id' => $data['marca_id']
 );
 

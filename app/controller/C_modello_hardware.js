@@ -71,8 +71,6 @@ Ext.define('CL.controller.C_modello_hardware', {
             record = form.getRecord(),
             values = form.getValues();
 
-            console.log(record);
-
         Ext.Msg.confirm('Attenzione!', "Modificare il Modello di Hardware?",function(btn){
             if (btn === 'yes'){
                 record.set(values);
@@ -121,6 +119,15 @@ Ext.define('CL.controller.C_modello_hardware', {
         }
         else
             this.redirectTo('login');
+    },
+
+
+    // per gli hyperlink
+    onEditById: function(animateTargetEl,id){
+        var my_controller = this;
+        var record = Ext.StoreManager.lookup("S_modello_hardware").getById(id);
+
+        my_controller.onEdit(animateTargetEl,record);
     }
 
 

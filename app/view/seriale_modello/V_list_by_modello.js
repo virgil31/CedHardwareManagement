@@ -65,7 +65,7 @@ Ext.define('CL.view.seriale_modello.V_list_by_modello', {
 
                 listeners: {
                     itemdblclick: function( grid, record, item, index, e, eOpts ){
-                        CL.app.getController("C_modello_hardware").onEdit(item,record);
+                        CL.app.getController("C_seriale_modello").onEdit(item,record);
                     }
                 },
 
@@ -80,14 +80,16 @@ Ext.define('CL.view.seriale_modello.V_list_by_modello', {
                         dataIndex: 'modello_name',
                         flex: 1,
                         renderer: function (value, metaData, record) {
-                            //return '<a href="#" onclick="alert(\'yo\');return false;">'+value+'</a>';
-                            return value;
+                            return '<a href="#" onclick="CL.app.getController(\'C_modello_hardware\').onEditById(this,'+record.get('modello_id')+');return false;">'+value+'</a>';
                         }
                     },
                     {
                         text: 'Fattura',
                         dataIndex: 'fattura_name',
-                        flex: 1
+                        flex: 1,
+                        renderer: function (value, metaData, record) {
+                            return '<a href="#" onclick="CL.app.getController(\'C_fattura\').onEditById(this,'+record.get('fattura_id')+');return false;">'+value+'</a>';
+                        }
                     },
                     {
                         xtype:'actioncolumn',

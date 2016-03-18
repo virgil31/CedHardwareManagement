@@ -97,6 +97,10 @@ Ext.define('CL.controller.C_fattura', {
 
         if(form.isValid()){
             Ext.StoreManager.lookup("S_fattura").add(values);
+
+            if(window.callbackOnCreated != null)
+                window.callbackOnCreated();
+
             window.close();
             setTimeout(function(){
                 Ext.StoreManager.lookup("S_fattura").reload();
@@ -124,6 +128,15 @@ Ext.define('CL.controller.C_fattura', {
         }
         else
             this.redirectTo('login');
+    },
+
+
+    // per gli hyperlink
+    onEditById: function(animateTargetEl,id){
+        var my_controller = this;
+        var record = Ext.StoreManager.lookup("S_fattura").getById(id);
+
+        my_controller.onEdit(animateTargetEl,record);
     }
 
 

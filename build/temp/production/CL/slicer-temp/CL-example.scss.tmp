@@ -56,6 +56,8 @@ $include-cl-view-second-v_second: dynamic(true);;
 $include-cl-view-sede-v_create: dynamic(true);;
 $include-cl-view-sede-v_edit: dynamic(true);;
 $include-cl-view-sede-v_list: dynamic(true);;
+$include-cl-view-seriale_modello-v_create: dynamic(true);;
+$include-cl-view-seriale_modello-v_edit: dynamic(true);;
 $include-cl-view-seriale_modello-v_list_by_modello: dynamic(true);;
 $include-cl-view-tbar-v_tbar: dynamic(true);;
 $include-cl-view-tipo_ditta-v_create: dynamic(true);;

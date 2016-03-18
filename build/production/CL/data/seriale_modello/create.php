@@ -11,20 +11,20 @@ $data = json_decode($_POST['data'],true);
 
 
 $s = $pdo->prepare("
-	INSERT INTO modello_hardware(nome,tipo_id,marca_id)
-	VALUES(:nome,:tipo_id,:marca_id)
+	INSERT INTO seriale_modello(seriale,modello_id,fattura_id)
+	VALUES(:seriale,:modello_id,:fattura_id)
 ");
 
 $params = array(
-	'nome' => $data['nome'],
-	'tipo_id' => $data['tipo_id'],
-	'marca_id' => $data['marca_id']
+	'seriale' => $data['seriale'],
+	'modello_id' => $data['modello_id'],
+	'fattura_id' => $data['fattura_id']
 );
 
 $success = $s->execute($params);
 
 
-$last_id = $pdo->lastInsertId("modello_hardware_id_seq");
+$last_id = $pdo->lastInsertId("seriale_modello_id_seq");
 
 //sleep(1.5);
 
