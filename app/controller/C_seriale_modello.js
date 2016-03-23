@@ -57,6 +57,8 @@ Ext.define('CL.controller.C_seriale_modello', {
         });
 
         win.down("form").loadRecord(record);
+
+        win.down("combobox[name=modello_id]").disable();
     },
 
     //DO EDIT
@@ -70,17 +72,21 @@ Ext.define('CL.controller.C_seriale_modello', {
             if (btn === 'yes'){
                 record.set(values);
                 window.close();
-                Ext.StoreManager.lookup("S_seriale_modello").reload();
+
+                setTimeout(function(){
+                    Ext.StoreManager.lookup("S_seriale_modello").reload();
+                }, 250);
             }
         });
     },
 
     //ON CREATE
     onCreate: function(btn){
-        Ext.widget("seriale_modello_create",{
+        var win = Ext.widget("seriale_modello_create",{
             animateTarget: btn.el
         });
 
+        win.down("combobox[name=modello_id]").disable();
 
     },
 

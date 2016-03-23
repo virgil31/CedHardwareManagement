@@ -110,7 +110,7 @@ Ext.define('CL.view.fattura.V_list', {
                         items: [
                             {
                                 iconCls: 'x-fa fa-edit',
-                                tooltip: 'Edit',
+                                tooltip: 'Modifica',
                                 handler: function(grid, rowIndex, colIndex) {
                                     var rec = grid.getStore().getAt(rowIndex);
                                     CL.app.getController("C_fattura").onEdit(this.el,rec);
@@ -118,7 +118,7 @@ Ext.define('CL.view.fattura.V_list', {
                             },
                             {
                                 iconCls: 'x-fa fa-remove',
-                                tooltip: 'Delete',
+                                tooltip: 'Rimuovi',
                                 handler: function(grid, rowIndex, colIndex) {
                                     var rec = grid.getStore().getAt(rowIndex);
                                     CL.app.getController("C_fattura").onDestroy(rec);

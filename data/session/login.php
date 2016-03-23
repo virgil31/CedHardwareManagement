@@ -23,7 +23,7 @@
 
         $is_in_group = false;
         foreach ($groups as $group) {
-            if(stripos($group, "administrator") !== false || stripos($group, "ced") !== false)
+            if(stripos($group, "administrator") !== false || stripos($group, "ced") !== false  || stripos($group, "eis") !== false)
                 $is_in_group = true;
         }
 

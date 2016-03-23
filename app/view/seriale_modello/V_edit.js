@@ -32,12 +32,6 @@ Ext.define('CL.view.seriale_modello.V_edit', {
                 xtype: 'form',
                 items: [
                     {
-                        xtype: 'textfield',
-                        fieldLabel: 'Seriale',
-                        name: 'seriale',
-                        allowBlank: false
-                    },
-                    {
                         xtype: 'panel',
                         layout: 'hbox',
                         margin: '0 0 5 0',
@@ -55,26 +49,32 @@ Ext.define('CL.view.seriale_modello.V_edit', {
                                 valueField: 'id',
                                 forceSelection: true,
                                 value: modello_id
-                            },
+                            }/*,
                             {
                                 xtype: 'button',
                                 text: '+',
                                 tooltip: 'Crea e assegna',
                                 listeners:{
                                     click: function(btn){
-                                        Ext.widget("fornitore_create",{
+                                        Ext.widget("modello_hardware_create",{
                                             animateTarget: btn.el,
                                             callbackOnCreated: function(){
-                                                var records = Ext.StoreManager.lookup("S_fornitore").getRange(),
+                                                var records = Ext.StoreManager.lookup("S_modello_hardware").getRange(),
                                                     created_record = records[records.length-1];
 
-                                                Ext.ComponentQuery.query("fattura_create combobox[name=fornitore_id]")[0].setValue(created_record.get("id"));
+                                                Ext.ComponentQuery.query("seriale_modello_edit combobox[name=modello_id]")[0].setValue(created_record.get("id"));
                                             }
                                         });
                                     }
                                 }
-                            }
+                            }*/
                         ]
+                    },
+                    {
+                        xtype: 'textfield',
+                        fieldLabel: 'Seriale',
+                        name: 'seriale',
+                        allowBlank: false
                     },
                     {
                         xtype: 'panel',
@@ -99,13 +99,15 @@ Ext.define('CL.view.seriale_modello.V_edit', {
                                 tooltip: 'Crea e assegna',
                                 listeners:{
                                     click: function(btn){
-                                        Ext.widget("fornitore_create",{
+                                        Ext.StoreManager.lookup("S_fornitore").load();
+
+                                        Ext.widget("fattura_create",{
                                             animateTarget: btn.el,
                                             callbackOnCreated: function(){
-                                                var records = Ext.StoreManager.lookup("S_fornitore").getRange(),
+                                                var records = Ext.StoreManager.lookup("S_fattura").getRange(),
                                                     created_record = records[records.length-1];
 
-                                                Ext.ComponentQuery.query("fattura_create combobox[name=fornitore_id]")[0].setValue(created_record.get("id"));
+                                                Ext.ComponentQuery.query("seriale_modello_edit combobox[name=fattura_id]")[0].setValue(created_record.get("id"));
                                             }
                                         });
                                     }

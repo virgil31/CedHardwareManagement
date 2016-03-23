@@ -74,6 +74,7 @@ Ext.define('CL.controller.C_fattura', {
             if (btn === 'yes'){
                 record.set(values);
                 window.close();
+
                 Ext.StoreManager.lookup("S_fattura").reload();
             }
         });

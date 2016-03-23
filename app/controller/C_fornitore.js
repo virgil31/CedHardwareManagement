@@ -77,7 +77,12 @@ Ext.define('CL.controller.C_fornitore', {
             if (btn === 'yes'){
                 record.set(values);
                 window.close();
-                Ext.StoreManager.lookup("S_fornitore").reload();
+
+
+                setTimeout(function(){
+                    Ext.StoreManager.lookup("S_fornitore").reload();
+                    Ext.StoreManager.lookup("S_fattura").reload();
+                }, 250);
             }
         });
     },
