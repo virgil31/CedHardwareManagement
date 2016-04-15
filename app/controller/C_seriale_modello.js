@@ -71,16 +71,18 @@ Ext.define('CL.controller.C_seriale_modello', {
             record = form.getRecord(),
             values = form.getValues();
 
-        Ext.Msg.confirm('Attenzione!', "Modificare il Seriale?",function(btn){
-            if (btn === 'yes'){
-                record.set(values);
-                window.close();
+        if(form.isValid()){
+            Ext.Msg.confirm('Attenzione!', "Modificare il Seriale?",function(btn){
+                if (btn === 'yes'){
+                    record.set(values);
+                    window.close();
 
-                setTimeout(function(){
-                    Ext.StoreManager.lookup("S_seriale_modello").load();
-                }, 250);
-            }
-        });
+                    setTimeout(function(){
+                        Ext.StoreManager.lookup("S_seriale_modello").load();
+                    }, 250);
+                }
+            });
+        }
     },
 
     //ON CREATE

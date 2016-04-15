@@ -78,19 +78,22 @@ Ext.define('CL.view.seriale_modello.V_create', {
                         allowBlank: false,
                         validator: function(value){
                             var to_return;
+                            try{
+                                Ext.Ajax.request({
+                                    async: false,
+                                    url: 'data/seriale_modello/checkDuplicato.php',
+                                    params:{
+                                        seriale: value,
+                                        modello_id: modello_id
+                                    },
+                                    success: function(response) {
+                                        var risposta = Ext.JSON.decode(response.responseText);
 
-                            Ext.Ajax.request({
-                                async: false,
-                                url: 'data/seriale_modello/checkDuplicato.php',
-                                params:{
-                                    seriale: value
-                                },
-                                success: function(response) {
-                                    var risposta = Ext.JSON.decode(response.responseText);
+                                        to_return = (risposta["result"]) ?  "E' già presente un seriale legato a questo modello." : true ;
+                                    }
+                                });
+                            }catch(e){}
 
-                                    to_return = (risposta["result"]) ?  "E' già presente un seriale legato a questo modello." : true ;
-                                }
-                            });
                             return to_return;
                     	}
                     },
