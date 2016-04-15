@@ -121,16 +121,18 @@ Ext.define('CL.view.modello_hardware.V_list', {
                                     var rec = grid.getStore().getAt(rowIndex),
                                         btn = this;
 
-                                    Ext.widget("seriale_modello_list_by_modello",{
-                                        title: 'Lista Seriali - <b>'+rec.get("nome")+'</b>',
-                                        animateTarget: btn.el
-                                    });
-
                                     var store = Ext.StoreManager.lookup("S_seriale_modello");
 
                                     store.getProxy().extraParams.modello_id = rec.get("id");
 
-                                    store.load();
+                                    store.load({
+                                        callback: function(){
+                                            Ext.widget("seriale_modello_list_by_modello",{
+                                                title: 'Lista Seriali ('+this.getTotalCount()+') - <b>'+rec.get("nome")+'</b>',
+                                                animateTarget: btn.el
+                                            });
+                                        }
+                                    });
                                 }
                             },
                             {

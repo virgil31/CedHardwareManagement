@@ -75,7 +75,24 @@ Ext.define('CL.view.seriale_modello.V_create', {
                         xtype: 'textfield',
                         fieldLabel: 'Seriale',
                         name: 'seriale',
-                        allowBlank: false
+                        allowBlank: false,
+                        validator: function(value){
+                            var to_return;
+
+                            Ext.Ajax.request({
+                                async: false,
+                                url: 'data/seriale_modello/checkDuplicato.php',
+                                params:{
+                                    seriale: value
+                                },
+                                success: function(response) {
+                                    var risposta = Ext.JSON.decode(response.responseText);
+
+                                    to_return = (risposta["result"]) ?  "E' già presente un seriale legato a questo modello." : true ;
+                                }
+                            });
+                            return to_return;
+                    	}
                     },
                     {
                         xtype: 'panel',
@@ -101,7 +118,7 @@ Ext.define('CL.view.seriale_modello.V_create', {
                                 listeners:{
                                     click: function(btn){
                                         Ext.StoreManager.lookup("S_fornitore").load();
-                                        
+
                                         Ext.widget("fattura_create",{
                                             animateTarget: btn.el,
                                             callbackOnCreated: function(){

@@ -12,6 +12,8 @@ Ext.define('CL.view.seriale_modello.V_list_by_modello', {
         pack: 'center'
     },*/
 
+    layout: 'fit',
+
     autoShow: true,
     constrain: true,
     modal: true,
@@ -31,9 +33,8 @@ Ext.define('CL.view.seriale_modello.V_list_by_modello', {
                 },
                 border: true,
                 store: 'S_seriale_modello',
-                height: '98%',
-                flex: 60,
-                autoscroll: true,
+
+                //height: 470,
                 overflowX: 'hidden',
                 overflowY: 'auto',
 
@@ -108,7 +109,7 @@ Ext.define('CL.view.seriale_modello.V_list_by_modello', {
                                 tooltip: 'Delete',
                                 handler: function(grid, rowIndex, colIndex) {
                                     var rec = grid.getStore().getAt(rowIndex);
-                                    CL.app.getController("C_seriale_modello").onDestroy(rec);
+                                    CL.app.getController("C_seriale_modello").onDestroy(rec);                                   
                                 }
                             }
                         ]
