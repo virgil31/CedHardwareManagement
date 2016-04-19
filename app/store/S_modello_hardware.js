@@ -9,7 +9,7 @@ Ext.define('CL.store.S_modello_hardware',{
     pageSize: 50,
 
     remoteSort: true,
-    sorters: { property: 'nome', direction : 'ASC' }, //lo ordiniamo per id
+    sorters: [{ property: 'marca_name', direction : 'ASC' },{ property: 'tipo_name', direction : 'ASC' }],
 
     proxy:{
         type:'ajax',

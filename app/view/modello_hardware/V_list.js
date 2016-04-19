@@ -109,16 +109,16 @@ Ext.define('CL.view.modello_hardware.V_list', {
                     }
                 },
 
+                multiColumnSort: true,
+                plugins: {
+                    ptype: 'bufferedrenderer'
+                },
+
                 columns: [
                     {
                         text: 'ID',
                         dataIndex: 'id',
                         flex: 1
-                    },
-                    {
-                        text: 'Nome',
-                        dataIndex: 'nome',
-                        flex: 2
                     },
                     {
                         text: 'Marca',
@@ -128,6 +128,11 @@ Ext.define('CL.view.modello_hardware.V_list', {
                     {
                         text: 'Tipo',
                         dataIndex: 'tipo_name',
+                        flex: 2
+                    },
+                    {
+                        text: 'Nome',
+                        dataIndex: 'nome',
                         flex: 2
                     },
                     {

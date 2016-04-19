@@ -8,18 +8,23 @@ $ini_array = parse_ini_file("../config.ini");
 $pdo=new PDO("pgsql:host=".$ini_array['pdo_host'].";port=".$ini_array['pdo_port']."; dbname=".$ini_array['pdo_db'].";",$ini_array['pdo_user'],$ini_array['pdo_psw']);
 
 $sort = (isset($_GET['sort']) ? $_GET['sort'] : $_GET['sort']);
-$tmp = json_decode($sort,true);
-$pro = $tmp[0]['property'];
-$dir = $tmp[0]['direction'];
+$array_sort = json_decode($sort,true);
 
 $limit = $_GET['limit'];
 $start = $_GET['start'];
+
+$order_str = " ";
+foreach ($array_sort as $sort)
+	$order_str .= " ".$sort["property"]." ".$sort["direction"].",";
+
+$order_str = rtrim($order_str,",");
 
 $total = 0;
 
 // LIST PAGINATO CON QUERY
 if(isset($_GET["query"])){
 	$query = $_GET["query"];
+	$query = trim($query);
 
 	$array_query = explode(" ",$query);
 	$query_str = " 1 = 0 ";
@@ -33,7 +38,7 @@ if(isset($_GET["query"])){
 			LEFT JOIN tipo_hardware B ON B.id = A.tipo_id
 			LEFT JOIN marca_hardware C ON C.id = A.marca_id
 		WHERE $query_str
-		ORDER BY $pro $dir LIMIT $limit OFFSET $start
+		ORDER BY $order_str LIMIT $limit OFFSET $start
 	");
 }
 // LIST PAGINATO NORMALE
@@ -43,7 +48,7 @@ else{
 		FROM modello_hardware A
 			LEFT JOIN tipo_hardware B ON B.id = A.tipo_id
 			LEFT JOIN marca_hardware C ON C.id = A.marca_id
-		ORDER BY $pro $dir LIMIT $limit OFFSET $start
+		ORDER BY $order_str LIMIT $limit OFFSET $start
 	");
 }
 
