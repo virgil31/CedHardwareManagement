@@ -10,7 +10,8 @@ $seriale = $_POST["seriale"];
 $modello_id = $_POST["modello_id"];
 
 
-//il controllo cambia quando sto editando
+//il controllo cambia quando sto editando:
+// NON CONTO il seriale stesso che sto modificando
 if(isset($_POST["seriale_id"])){
     $seriale_id = $_POST["seriale_id"];
 

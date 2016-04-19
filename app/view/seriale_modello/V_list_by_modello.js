@@ -50,7 +50,7 @@ Ext.define('CL.view.seriale_modello.V_list_by_modello', {
                             icon: 'resources/images/icon_plus.gif',
                             action: 'on_create'
                         },
-                        '->',
+                        '->',                        
                         {
                             xtype: 'button',
                             text: 'Cerca',
@@ -109,7 +109,7 @@ Ext.define('CL.view.seriale_modello.V_list_by_modello', {
                                 tooltip: 'Delete',
                                 handler: function(grid, rowIndex, colIndex) {
                                     var rec = grid.getStore().getAt(rowIndex);
-                                    CL.app.getController("C_seriale_modello").onDestroy(rec);                                   
+                                    CL.app.getController("C_seriale_modello").onDestroy(rec);
                                 }
                             }
                         ]

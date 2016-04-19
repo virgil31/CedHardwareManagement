@@ -17,17 +17,38 @@ $start = $_GET['start'];
 
 $total = 0;
 
-$statement = $pdo->prepare("
-	SELECT A.id,A.nome,A.tipo_id,B.nome as tipo_name,A.marca_id,C.nome as marca_name, COUNT(*) OVER() as total
-	FROM modello_hardware A
-		LEFT JOIN tipo_hardware B ON B.id = A.tipo_id
-		LEFT JOIN marca_hardware C ON C.id = A.marca_id
-	ORDER BY A.$pro $dir LIMIT $limit OFFSET $start
-");
+// LIST PAGINATO CON QUERY
+if(isset($_GET["query"])){
+	$query = $_GET["query"];
+
+	$array_query = explode(" ",$query);
+	$query_str = " 1 = 0 ";
+	foreach ($array_query as $word) {
+		$query_str .= " OR A.nome ilike '%$word%'  OR C.nome ilike '%$word%' ";
+	}
+
+	$statement = $pdo->prepare("
+		SELECT A.id,A.nome,A.tipo_id,B.nome as tipo_name,A.marca_id,C.nome as marca_name, COUNT(*) OVER() as total
+		FROM modello_hardware A
+			LEFT JOIN tipo_hardware B ON B.id = A.tipo_id
+			LEFT JOIN marca_hardware C ON C.id = A.marca_id
+		WHERE $query_str
+		ORDER BY $pro $dir LIMIT $limit OFFSET $start
+	");
+}
+// LIST PAGINATO NORMALE
+else{
+	$statement = $pdo->prepare("
+		SELECT A.id,A.nome,A.tipo_id,B.nome as tipo_name,A.marca_id,C.nome as marca_name, COUNT(*) OVER() as total
+		FROM modello_hardware A
+			LEFT JOIN tipo_hardware B ON B.id = A.tipo_id
+			LEFT JOIN marca_hardware C ON C.id = A.marca_id
+		ORDER BY $pro $dir LIMIT $limit OFFSET $start
+	");
+}
 
 $statement->execute();
 $result = $statement->fetchAll(PDO::FETCH_OBJ);
-
 
 if(count($result) != 0)
 	$total = $result[0]->total;

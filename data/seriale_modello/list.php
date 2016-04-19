@@ -1,6 +1,5 @@
 <?php
 
-
 header('Content-Type: application/json');
 
 $ini_array = parse_ini_file("../config.ini");

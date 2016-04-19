@@ -63,14 +63,42 @@ Ext.define('CL.view.modello_hardware.V_list', {
                         },
                         '->',
                         {
+                            xtype: 'textfield',
+                            name: 'query',
+                            emptyText: "Epson, Galaxy Tab, HP ...",
+                            listeners:{
+                                specialkey: function(field, e){
+                                    if (e.getKey() == e.ENTER){
+                                        var btn = Ext.ComponentQuery.query("modello_hardware_list button[action=cerca]")[0];
+                                        btn.fireEvent("click");
+                                    }
+                                }
+                            }
+                        },
+                        {
                             xtype: 'button',
                             text: 'Cerca',
-                            icon: 'resources/images/icon_search.png'
+                            action: 'cerca',
+                            icon: 'resources/images/icon_search.png',
+                            listeners:{
+                                click: function(){
+                                    var query = Ext.ComponentQuery.query("modello_hardware_list textfield[name=query]")[0].getValue();
+                                    var store = Ext.StoreManager.lookup("S_modello_hardware");
+                                    store.proxy.extraParams.query = query;
+                                    store.loadPage(1);
+                                }
+                            }
                         },
                         {
                             xtype: 'button',
                             tooltip: 'Pulisci filtri',
-                            icon: 'resources/images/icon_clear.png'
+                            icon: 'resources/images/icon_clear.png',
+                            handler: function(){
+                                Ext.ComponentQuery.query("modello_hardware_list textfield[name=query]")[0].reset();
+                                var store = Ext.StoreManager.lookup("S_modello_hardware");
+                                delete store.proxy.extraParams.query;
+                                store.loadPage(1);
+                            }
                         }
                     ]
                 },
