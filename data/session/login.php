@@ -16,23 +16,38 @@
         ldap_sort($ldap,$result,"sn");
         $info = ldap_get_entries($ldap, $result);
 
-        $groups = $info[0]["memberof"];
-        $groups = array_slice($groups, 1);
+        if (array_key_exists('memberof', $info[0])) {
 
-        @ldap_close($ldap);
+            $groups = $info[0]["memberof"];
+            $groups = array_slice($groups, 1);
 
-        $is_in_group = false;
-        foreach ($groups as $group) {
-            if(stripos($group, "administrator") !== false || stripos($group, "ced") !== false  || stripos($group, "eis") !== false)
-                $is_in_group = true;
-        }
+            @ldap_close($ldap);
 
-        if($is_in_group){
-            echo json_encode(
-                array(
-                    "success" => true
-                )
-            );
+            $is_in_group = false;
+            foreach ($groups as $group) {
+                if(stripos($group, "administrator") !== false || stripos($group, "ced") !== false  || stripos($group, "eis") !== false)
+                    $is_in_group = true;
+            }
+
+            if($is_in_group){
+                //$cognome = $info[0]["sn"][0];
+                //$nome = $info[0]["givenname"][0];
+                echo json_encode(
+                    array(
+                        "success" => true//,
+                        //"cognome" => $cognome,
+                        //"nome" => $nome
+                    )
+                );
+            }
+            else{
+                echo json_encode(
+                    array(
+                        "success" => false,
+                        "message" => "Non è nel gruppo abilitato"
+                    )
+                );
+            }
         }
         else{
             echo json_encode(

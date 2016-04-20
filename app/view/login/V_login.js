@@ -12,13 +12,6 @@ Ext.define('CL.view.login.V_login', {
         pack: 'center'
     },
 
-    listeners: {
-        afterRender: function(thisForm, options){
-            this.keyNav = Ext.create('Ext.util.KeyNav', this.el, {
-                enter: function(){Ext.ComponentQuery.query('login button[action=do_login]')[0].fireEvent("click")}
-            });
-        }
-    },
 
     padding: 30,
 
@@ -31,48 +24,121 @@ Ext.define('CL.view.login.V_login', {
             height: 498
         },
         {
-            xtype: 'form',
-            title: 'Login',
-
-            border: true,
-
-            bodyPadding: 10,
-            items: [
+            xtype: 'panel',
+            bodyStyle:{
+                background: "transparent"
+            },
+            layout: {
+                type: 'vbox',
+                align: 'center',
+                pack: 'center'
+            },
+            items:[
                 {
-                    xtype: 'textfield',
-                    name: 'username',
-                    fieldLabel: 'Username',
-                    allowBlank: false,
-                    listeners: {
-                        specialkey: function(field, e){
-                            if (e.getKey() == e.ENTER){
-                                var btn = Ext.ComponentQuery.query("login button[action=do_login]")[0];
-                                btn.fireEvent("click",btn);
-                            }
-                        }
-                    }
+                    html: '<br><br><br><br><br>'
                 },
                 {
-                    xtype: 'textfield',
-                    name: 'password',
-                    fieldLabel: 'Password',
-                    inputType: 'password',
-                    allowBlank: false,
-                    listeners: {
-                        specialkey: function(field, e){
-                            if (e.getKey() == e.ENTER){
-                                var btn = Ext.ComponentQuery.query("login button[action=do_login]")[0];
-                                btn.fireEvent("click",btn);
+                    xtype: 'form',
+                    title: 'Login Amministratori',
+                    border: true,
+                    bodyPadding: 10,
+                    items: [
+                        {
+                            xtype: 'textfield',
+                            name: 'username',
+                            fieldLabel: 'Username',
+                            allowBlank: false,
+                            listeners: {
+                                specialkey: function(field, e){
+                                    if (e.getKey() == e.ENTER){
+                                        var btn = Ext.ComponentQuery.query("login button[action=do_login]")[0];
+                                        btn.fireEvent("click",btn);
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            xtype: 'textfield',
+                            name: 'password',
+                            fieldLabel: 'Password',
+                            inputType: 'password',
+                            allowBlank: false,
+                            listeners: {
+                                specialkey: function(field, e){
+                                    if (e.getKey() == e.ENTER){
+                                        var btn = Ext.ComponentQuery.query("login button[action=do_login]")[0];
+                                        btn.fireEvent("click",btn);
+                                    }
+                                }
                             }
                         }
-                    }
-                }
-            ],
-            buttons: [
+                    ],
+                    buttons: [
+                        {
+                            text: 'Login',
+                            formBind: true,
+                            action: 'do_login'
+                        }
+                    ]
+                },
                 {
-                    text: 'Login',
-                    formBind: true,
-                    action: 'do_login'
+                    xtype: 'button',
+                    margin: '20 0 0 0',
+                    text: 'Richiesta Hardware',
+                    padding: 40,
+                    scale: 'large',
+                    style: {
+                        background: "#5CC25C"
+                    },
+                    handler: function(){
+                        var btn = this;
+                        Ext.create("Ext.window.Window",{
+                            autoShow: true,
+                            modal: true,
+                            resizable: false,
+                            constrain: true,
+                            animateTarget: btn.el,
+                            width: 330,
+                            title: 'Accesso per le richieste',
+                            padding: 10,
+                            items: [
+                                {
+                                    xtype: 'form',
+                                    items: [
+                                        {
+                                            xtype: 'label',
+                                            html: 'Per richiedere del nuovo hardware è necessario fare accesso con le proprie credenziali di dominio. <br><br><b>NB! </b>La richiesta che verrà scaturita di seguito sarà automaticamente assegnata a tali credenziali!'
+                                        },
+                                        {
+                                            xtype: 'textfield',
+                                            name: 'username',
+                                            fieldLabel: 'Username',
+                                            width: '100%',
+                                            allowBlank: false,
+                                            margin: '10 0 0 0'
+                                        },
+                                        {
+                                            xtype: 'textfield',
+                                            name: 'password',
+                                            fieldLabel: 'Password',
+                                            inputType: 'password',
+                                            width: '100%',
+                                            allowBlank: false,
+                                            margin: '10 0 10 0'
+                                        }
+                                    ],
+                                    buttons: [
+                                        {
+                                            text: 'Login',
+                                            formBind: true,
+                                            action: 'do_login_richiesta'
+                                        }
+                                    ]
+                                }
+                            ]
+
+                        });
+                    }
                 }
             ]
         },

@@ -22,8 +22,10 @@ Ext.application({
         'C_marca_hardware',
         'C_modello_hardware',
         'C_seriale_modello',
-        
-        'C_fattura'
+
+        'C_fattura',
+
+        'C_richiesta'
     ],
 
     // vv ROUTING

@@ -22,6 +22,11 @@ Ext.define('CL.controller.C_login', {
             //DO LOGIN
             'login button[action=do_login]':{
                 click: this.doLogin
+            },
+
+            //DO LOGIN RICHIESTA
+            'window button[action=do_login_richiesta]':{
+                click: this.doLoginRichiesta
             }
 
         }, this);
@@ -42,9 +47,7 @@ Ext.define('CL.controller.C_login', {
 
     //DO LOGIN
     doLogin: function(btn){
-
-        var form = btn.up('form').getForm();
-
+        var form = btn.up("form");
         if(form.isValid()){
             Ext.Ajax.request({
                 url: 'data/session/login.php',
@@ -66,9 +69,36 @@ Ext.define('CL.controller.C_login', {
                 }
             });
         }
+    },
 
+    //DO LOGIN RICHIESTA
+    doLoginRichiesta: function(btn){
+        var form = btn.up("form");
+        if(form.isValid()){
+            var values = form.getValues();
+            Ext.Ajax.request({
+                url: 'data/session/login_richiesta.php',
+                method: "POST",
 
+                params: {
+                    username: values.username,
+                    password: btoa(btoa(btoa(values.password)))
+                },
 
+                success: function(response, opts) {
+                    var risposta = Ext.decode(response.responseText);
+                    if(!risposta.success)
+                        Ext.Msg.alert("Attenzione",risposta.message);
+                    else{
+                        Ext.util.Cookies.set("richiesta_logged", true);
+                        Ext.util.Cookies.set("nome", risposta.nome);
+                        Ext.util.Cookies.set("cognome", risposta.cognome);
+                        btn.up("window").close();
+                        CL.app.getController("C_login").redirectTo("richiesta");
+                    }
+                }
+            });
+        }
     }
 
 });

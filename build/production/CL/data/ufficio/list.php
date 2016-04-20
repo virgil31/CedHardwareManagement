@@ -17,12 +17,38 @@ $start = $_GET['start'];
 
 $total = 0;
 
-$statement = $pdo->prepare("
-	SELECT A.id, A.nome, A.sede_id, B.nome as sede_nome, COUNT(*) OVER() as total
-	FROM ufficio A
-		LEFT JOIN sede B ON B.id = A.sede_id
-	ORDER BY A.$pro $dir LIMIT $limit OFFSET $start
-");
+
+//LIST FULL BY SEDE
+if(isset($_GET["sede_id"])){
+	$sede_id = $_GET["sede_id"];
+
+	$statement = $pdo->prepare("
+		SELECT A.id, A.nome, A.sede_id, B.nome as sede_nome, COUNT(*) OVER() as total
+		FROM ufficio A
+			LEFT JOIN sede B ON B.id = A.sede_id
+		WHERE sede_id = $sede_id
+		ORDER BY A.$pro $dir
+   ");
+}
+//LIST FULL
+else if(isset($_GET["flag_full"])){
+	$statement = $pdo->prepare("
+		SELECT A.id, A.nome, A.sede_id, B.nome as sede_nome, COUNT(*) OVER() as total
+		FROM ufficio A
+			LEFT JOIN sede B ON B.id = A.sede_id
+		ORDER BY A.$pro $dir
+	");
+}
+else{
+	//LIST PAGINATO
+	$statement = $pdo->prepare("
+		SELECT A.id, A.nome, A.sede_id, B.nome as sede_nome, COUNT(*) OVER() as total
+		FROM ufficio A
+			LEFT JOIN sede B ON B.id = A.sede_id
+		ORDER BY A.$pro $dir LIMIT $limit OFFSET $start
+	");
+}
+
 
 $statement->execute();
 $result = $statement->fetchAll(PDO::FETCH_OBJ);
