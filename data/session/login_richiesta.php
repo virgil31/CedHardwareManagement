@@ -16,13 +16,21 @@
         ldap_sort($ldap,$result,"sn");
         $info = ldap_get_entries($ldap, $result);
 
-        if (array_key_exists('memberof', $info[0])) {
 
-
+        if(!array_key_exists('sn', $info[0]) || !array_key_exists('givenname', $info[0])){
+            echo json_encode(
+                array(
+                    "success" => false,
+                    "message" => "Prima di procedere, contattare il CED. <b>Codice errore: 01</b>.<br>Altrimenti tentare con le credenziali del proprio funzionario responsabile."
+                )
+            );
+        }
+        else{
             @ldap_close($ldap);
 
             $cognome = $info[0]["sn"][0];
             $nome = $info[0]["givenname"][0];
+
             echo json_encode(
                 array(
                     "success" => true,
@@ -31,6 +39,9 @@
                 )
             );
         }
+
+
+
 
     }
     else {
@@ -41,5 +52,3 @@
             )
         );
     }
-
-?>

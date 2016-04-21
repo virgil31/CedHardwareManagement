@@ -20,7 +20,7 @@ Ext.define('CL.view.home.V_home', {
                 xtype: 'grid',
                 border: true,
                 //title: 'Richieste Nuovo Hardware',
-                store: 'S_user',
+                store: 'S_richiesta',
                 height: '98%',
                 //width: '60%',
                 flex: 60,
@@ -37,7 +37,7 @@ Ext.define('CL.view.home.V_home', {
 
                 dockedItems: [{
                     xtype: 'pagingtoolbar',
-                    store: 'S_user', // same store GridPanel is using
+                    store: 'S_richiesta',//'S_user', // same store GridPanel is using
                     dock: 'bottom',
                     displayInfo: true
                 }],
@@ -50,20 +50,16 @@ Ext.define('CL.view.home.V_home', {
                         {
                             xtype: 'button',
                             tooltip: 'Aggiorna lista richieste',
-                            action: 'load_user',
-                            icon: 'resources/images/icon_refresh.gif'
+                            icon: 'resources/images/icon_refresh.gif',
+                            handler: function(){
+                                Ext.ComponentQuery.query("home grid")[0].getStore().loadPage(1);
+                            }
                         },
                         {
                             xtype: 'label',
                             text: 'Richieste Hardware',
                             style: 'color: #157fcc;font-size: 15px;font-weight: 300;font-family: helvetica, arial, verdana, sans-serif;line-height: 16px'
                         },
-                        {
-                            xtype: 'button',
-                            tooltip: 'Nuova richiesta Hardware',
-                            icon: 'resources/images/icon_plus.gif'
-                        },
-
                         '->',
                         {
                             xtype: 'combobox',
@@ -92,28 +88,25 @@ Ext.define('CL.view.home.V_home', {
 
                 columns: [
                     {
-                        text: 'Nome',
-                        dataIndex: 'first_name',
-                        flex: 1,
-                        editor: {
-                            xtype: 'textfield'
-                        }
+                        text: 'Richiesta da',
+                        dataIndex: 'full_nome',
+                        sortable: false,
+                        flex: 0.8
                     },
                     {
-                        text: 'Cognome',
-                        dataIndex: 'last_name',
-                        flex: 1,
-                        editor: {
-                            xtype: 'textfield'
-                        }
+                        text: 'Sede',
+                        dataIndex: 'sede_name',
+                        flex: 1
                     },
                     {
-                        text: 'Email',
-                        dataIndex: 'email_address',
-                        flex: 2,
-                        editor: {
-                            xtype: 'textfield'
-                        }
+                        xtype: 'datecolumn',
+                        text: 'Richiesta il',
+                        dataIndex: 'richiesta_il',
+                        flex: 1
+                    },
+                    {
+                        dataIndex: 'stato',
+                        flex: 0.5
                     },
                     {
                         xtype:'actioncolumn',

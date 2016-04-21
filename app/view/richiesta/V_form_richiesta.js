@@ -21,7 +21,7 @@ Ext.define('CL.view.richiesta.V_form_richiesta', {
         this_view.items = [
             {
                 xtype: 'form',
-                title: 'Richiesta Materiale Informatico - CED',
+                title: '<b>Richiesta Materiale Informatico - CED</b>',
                 style: {
                     borderRadius: "20px"
                 },
@@ -120,7 +120,7 @@ Ext.define('CL.view.richiesta.V_form_richiesta', {
                     {
                         xtype: 'grid',
                         store: Ext.create('Ext.data.Store', {
-                            fields: ['tipo_hardware_id','tipo_hardware_name','note']
+                            fields: ['id','nome','note']
                         }),
                         height: 150,
                         border: true,
@@ -183,12 +183,12 @@ Ext.define('CL.view.richiesta.V_form_richiesta', {
                                                                         form = window.down("form"),
                                                                         values = form.getValues();
 
-                                                                    values.tipo_hardware_name = Ext.ComponentQuery.query("window[name=add_tipo_hardware] combobox[name=tipo_hardware_id]")[0].getRawValue();
+                                                                    values.nome = Ext.ComponentQuery.query("window[name=add_tipo_hardware] combobox[name=tipo_hardware_id]")[0].getRawValue();
 
                                                                     if(form.isValid()){
                                                                         Ext.ComponentQuery.query("form_richiesta grid")[0].getStore().add({
-                                                                            tipo_hardware_id: values.tipo_hardware_id,
-                                                                            tipo_hardware_name: values.tipo_hardware_name,
+                                                                            id: values.tipo_hardware_id,
+                                                                            nome: values.nome,
                                                                             note: values.note
                                                                         });
                                                                         window.close();
@@ -206,7 +206,7 @@ Ext.define('CL.view.richiesta.V_form_richiesta', {
                             '->'
                         ],
                         columns: [
-                            { text: 'Materiale',    dataIndex: 'tipo_hardware_name', flex: 1 },
+                            { text: 'Materiale',    dataIndex: 'nome', flex: 1 },
                             { text: 'Note',         dataIndex: 'note', flex: 1 },
                             {
                                 xtype:'actioncolumn',
@@ -228,6 +228,7 @@ Ext.define('CL.view.richiesta.V_form_richiesta', {
                         xtype     : 'textareafield',
                         name      : 'motivazione',
                         fieldLabel: 'Motivazione Richiesta',
+                        allowBlank: false,
                         height: 75,
                         minLength: 50
                     },
@@ -245,6 +246,7 @@ Ext.define('CL.view.richiesta.V_form_richiesta', {
                 buttons:[
                     {
                         text: "Invia Richiesta",
+                        formBind: true,
                         scale: 'large',
                         action: 'doRichiesta',
                         allowBlank: false,

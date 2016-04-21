@@ -6,10 +6,10 @@ Ext.define('CL.controller.C_richiesta', {
     },
 
     stores: [
-        //
+        'S_richiesta'
     ],
     models: [
-        //
+        'M_richiesta'
     ],
     views: [
         'richiesta.V_form_richiesta'
@@ -49,15 +49,37 @@ Ext.define('CL.controller.C_richiesta', {
             var tipi_hardware = [];
             Ext.ComponentQuery.query("form_richiesta grid")[0].getStore().each(function(tipo_hardware_richiesto){
                 tipi_hardware.push({
-                    tipo_hardware_id: tipo_hardware_richiesto.get("tipo_hardware_id"),
+                    id: tipo_hardware_richiesto.get("id"),
                     note: tipo_hardware_richiesto.get("note")
                 });
             });
+            if(tipi_hardware.length == 0){
+                Ext.alert("Attenzione!","Indicare il materiale richiesto facendo click su '+Aggiungi Hardware alla Richiesta+'")
+            }
+            else{
+                values.tipi_hardware = tipi_hardware;
 
-            values.tipi_hardware = tipi_hardware;
-            alert("Values del form in CONSOLE!!!");
-            console.log(values);
+                console.log(values);
 
+                var store = Ext.StoreManager.lookup("S_richiesta");
+
+
+                store.add(values);
+                Ext.getBody().mask("Invio richiesta in corso...");
+                store.sync({
+                    failure: function(){
+                        Ext.getBody().unmask();
+                        store.rejectChanges();
+                        Ext.Msg.alert("Attenzione!","Errore interno. Si è pregati di riprovare in seguito.")
+                    },
+                    success: function(){
+                        Ext.getBody().unmask();
+                        Ext.Msg.alert("Successo!","La registrazione è stata correttamente effettuata!<br>A breve riceverà una mail di conferma su <b>"+(values.email)+"</b> con codice di 'tracciabilità'.",function(){
+                            //CL.app.getController("C_richiesta").redirectTo("login");
+                        });
+                    }
+                });
+            }
         }
     }
 
