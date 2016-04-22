@@ -24,6 +24,20 @@ $params = array(
 
 $success = $s->execute($params);
 
+// rendo il suddetto seriale come NON DISPONIBILE vv
+$s = $pdo->prepare("
+	UPDATE seriale_modello
+	SET disponibile = :disponibile
+
+	WHERE id = :id
+");
+$params = array(
+	'id' => $data['seriale_id'],
+	'disponibile' => 'f'
+);
+$success = $s->execute($params);
+// ^^
+
 
 if ($success) {
     echo json_encode(array(

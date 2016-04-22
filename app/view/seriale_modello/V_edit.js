@@ -134,6 +134,13 @@ Ext.define('CL.view.seriale_modello.V_edit', {
                                 }
                             }
                         ]
+                    },
+                    {
+                        xtype: 'checkbox',
+                        inputValue: true,
+                        uncheckedValue: false,
+                        name: "disponibile",
+                        boxLabel  : 'Il seriale è assegnabile.'
                     }
                 ],
                 buttons: [

@@ -50,7 +50,7 @@ Ext.define('CL.view.seriale_modello.V_list_by_modello', {
                             icon: 'resources/images/icon_plus.gif',
                             action: 'on_create'
                         },
-                        '->',                        
+                        '->',
                         {
                             xtype: 'button',
                             text: 'Cerca',
@@ -90,6 +90,13 @@ Ext.define('CL.view.seriale_modello.V_list_by_modello', {
                         flex: 1,
                         renderer: function (value, metaData, record) {
                             return '<a href="#" onclick="CL.app.getController(\'C_fattura\').onEditById(this,'+record.get('fattura_id')+');return false;">'+value+'</a>';
+                        }
+                    },
+                    {
+                        text: 'Disponibile',
+                        dataIndex: 'disponibile',
+                        renderer: function(value){
+                            return (value === "true") ? 'Sì' : 'No'
                         }
                     },
                     {

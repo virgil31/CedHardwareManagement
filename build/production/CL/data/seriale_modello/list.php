@@ -18,14 +18,32 @@ $total = 0;
 
 $modello_id = $_GET["modello_id"];
 
-$statement = $pdo->prepare("
-	SELECT A.id,A.seriale,A.modello_id, B.nome as modello_name,C.codice as fattura_name, A.fattura_id, COUNT(*) OVER() as total
-	FROM seriale_modello A
-		LEFT JOIN modello_hardware B ON B.id = A.modello_id
-		LEFT JOIN fattura C ON C.id = A.fattura_id
-	WHERE A.modello_id = $modello_id
-	ORDER BY $pro $dir LIMIT $limit OFFSET $start
-");
+
+
+//LIST FULL by modello_id & SOLO DISPONIBILI
+if(isset($_GET["solo_disponibili"])){
+	$statement = $pdo->prepare("
+		SELECT A.id,A.seriale,A.modello_id, B.nome as modello_name,C.codice as fattura_name, A.fattura_id, disponibile, COUNT(*) OVER() as total
+		FROM seriale_modello A
+			LEFT JOIN modello_hardware B ON B.id = A.modello_id
+			LEFT JOIN fattura C ON C.id = A.fattura_id
+		WHERE A.modello_id = $modello_id
+		AND disponibile = 't'
+		ORDER BY $pro $dir
+	");
+}
+
+// LIST PAGINATO by modello_id
+else{
+	$statement = $pdo->prepare("
+		SELECT A.id,A.seriale,A.modello_id, B.nome as modello_name,C.codice as fattura_name, A.fattura_id, disponibile, COUNT(*) OVER() as total
+		FROM seriale_modello A
+			LEFT JOIN modello_hardware B ON B.id = A.modello_id
+			LEFT JOIN fattura C ON C.id = A.fattura_id
+		WHERE A.modello_id = $modello_id
+		ORDER BY $pro $dir LIMIT $limit OFFSET $start
+	");
+}
 
 $statement->execute();
 $result = $statement->fetchAll(PDO::FETCH_OBJ);

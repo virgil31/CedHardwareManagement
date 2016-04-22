@@ -14,7 +14,8 @@ $s = $pdo->prepare("
 	UPDATE seriale_modello
 	SET seriale = :seriale,
 		modello_id = :modello_id,
-		fattura_id = :fattura_id
+		fattura_id = :fattura_id,
+		disponibile = :disponibile
 
 	WHERE id = :id
 ");
@@ -23,7 +24,8 @@ $params = array(
 	'id' => $data["id"],
 	'seriale' => $data['seriale'],
 	'modello_id' => $data['modello_id'],
-	'fattura_id' => $data['fattura_id']
+	'fattura_id' => $data['fattura_id'],
+	'disponibile' => $data['disponibile']
 );
 
 $success = $s->execute($params);

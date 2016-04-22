@@ -45,6 +45,7 @@ Ext.define('CL.view.assegnazione.V_edit', {
 
                                 Ext.StoreManager.lookup("S_seriale_modello").load({
                                     params:{
+                                        solo_disponibili: true,
                                         modello_id: modello_id
                                     }
                                 });

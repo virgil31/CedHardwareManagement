@@ -8,6 +8,7 @@ Ext.define('CL.model.M_seriale_modello', {
         {name: 'modello_name',             type: 'string'},
 
         {name: 'fattura_id',               type: 'int'},
-        {name: 'fattura_name',             type: 'string'}
+        {name: 'fattura_name',             type: 'string'},
+        {name: 'disponibile',              type: 'string'}
     ]
 });

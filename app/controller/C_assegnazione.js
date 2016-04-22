@@ -62,6 +62,7 @@ Ext.define('CL.controller.C_assegnazione', {
             callback: function(){
                 Ext.StoreManager.lookup("S_seriale_modello").load({
                     params:{
+                        solo_disponibili: true,
                         modello_id: record.get("modello_id")
                     },
                     callback: function(){
