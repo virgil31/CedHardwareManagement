@@ -36,10 +36,16 @@ if(isset($_GET["solo_disponibili"])){
 // LIST PAGINATO by modello_id
 else{
 	$statement = $pdo->prepare("
-		SELECT A.id,A.seriale,A.modello_id, B.nome as modello_name,C.codice as fattura_name, A.fattura_id, disponibile, COUNT(*) OVER() as total
+		SELECT A.id,A.seriale,A.modello_id, B.nome as modello_name,C.codice as fattura_name, A.fattura_id, disponibile,CONCAT('<b>',E.nome,' ',E.cognome,'</b> - ',F.nome,' (',G.nome,')') as assegnato_a, COUNT(*) OVER() as total
 		FROM seriale_modello A
 			LEFT JOIN modello_hardware B ON B.id = A.modello_id
 			LEFT JOIN fattura C ON C.id = A.fattura_id
+
+			LEFT JOIN richiesta_tipo_hardware D ON D.seriale_id = A.id
+			LEFT JOIN richiesta E ON E.id = D.richiesta_id
+
+			LEFT JOIN sede F ON F.id = E.sede_id
+			LEFT JOIN ufficio G ON G.id = E.ufficio_id
 		WHERE A.modello_id = $modello_id
 		ORDER BY $pro $dir LIMIT $limit OFFSET $start
 	");

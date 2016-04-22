@@ -19,7 +19,7 @@ Ext.define('CL.view.seriale_modello.V_list_by_modello', {
     modal: true,
 
     height: 500,
-    width: 600,
+    width: 700,
     title: 'Lista Seriali',
 
     initComponent: function() {
@@ -67,6 +67,10 @@ Ext.define('CL.view.seriale_modello.V_list_by_modello', {
                 listeners: {
                     itemdblclick: function( grid, record, item, index, e, eOpts ){
                         CL.app.getController("C_seriale_modello").onEdit(item,record);
+                    },
+                    itemmouseenter: function(view, record, item) {
+                        if(record.get('assegnato_a') !== '<b> </b> -  ()')
+                            Ext.fly(item).set({'data-qtip': record.get('assegnato_a')});
                     }
                 },
 
@@ -74,7 +78,7 @@ Ext.define('CL.view.seriale_modello.V_list_by_modello', {
                     {
                         text: 'Seriale',
                         dataIndex: 'seriale',
-                        flex: 1
+                        flex: 1.3
                     },
                     {
                         text: 'Modello',
@@ -95,7 +99,8 @@ Ext.define('CL.view.seriale_modello.V_list_by_modello', {
                     {
                         text: 'Disponibile',
                         dataIndex: 'disponibile',
-                        renderer: function(value){
+                        flex: 0.5,
+                        renderer: function (value, metaData, record) {
                             return (value === "true") ? 'Sì' : 'No'
                         }
                     },

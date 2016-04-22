@@ -11,7 +11,7 @@ Ext.define('CL.view.richiesta.V_edit', {
 
     padding: 10,
 
-    width: 800,
+    width: 750,
 
     initComponent: function() {
         var this_view = this;
