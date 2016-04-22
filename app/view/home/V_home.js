@@ -30,11 +30,6 @@ Ext.define('CL.view.home.V_home', {
 
                 disableSelection: true,
 
-                plugins: {
-                    ptype: 'rowediting',
-                    clicksToEdit: 2
-                },
-
                 dockedItems: [{
                     xtype: 'pagingtoolbar',
                     store: 'S_richiesta',//'S_user', // same store GridPanel is using
@@ -63,30 +58,38 @@ Ext.define('CL.view.home.V_home', {
                         '->',
                         {
                             xtype: 'combobox',
+                            valueField: 'value',
                             displayField: 'name',
                             editable: false,
-                            fieldStyle: 'background: #FFCBCB', //B3D3EA
                             store: Ext.create('Ext.data.Store', {
                                 fields: ['name'],
                                 data : [
-                                    {"name":"Non Consegnate"},
-                                    {"name":"Consegnate"}
+                                    {"name":"Tutte",        "value":"%"},
+                                    {"name":"Da Valutare",  "value":"Da Valutare"},
+                                    {"name":"Rifiutate",    "value":"Rifiutata"},
+                                    {"name":"Accettate",    "value":"Accettata"},
+                                    {"name":"Completate",   "value":"Completata"}
                                 ]
                             }),
-                            value: "Non Consegnata",
-                            listeners: {
-                                change: function(me){
-                                    if(me.getValue() === "Non Consegnate")
-                                        me.setFieldStyle({background: "#FFCBCB"});
-                                    else
-                                        me.setFieldStyle({background: "#B3D3EA"});
-                                }
-                            }
+                            value: "%"
                         }
                     ]
                 },
 
+                listeners:{
+                    itemdblclick: function( grid, record, item, index, e, eOpts ){
+                        CL.app.getController("C_richiesta").onEdit(item,record);
+                    }
+                },
+
                 columns: [
+                    {
+                        dataIndex: 'stato',
+                        flex: 0.1,
+                        renderer: function(value){
+                            return '<img src="resources/images/'+value+'.png" alt=" " height="16" width="16" title="'+value+'">';
+                        }
+                    },
                     {
                         text: 'Richiesta da',
                         dataIndex: 'full_nome',
@@ -102,30 +105,19 @@ Ext.define('CL.view.home.V_home', {
                         xtype: 'datecolumn',
                         text: 'Richiesta il',
                         dataIndex: 'richiesta_il',
+                        format:'d/m/Y',
                         flex: 1
                     },
                     {
-                        dataIndex: 'stato',
-                        flex: 0.5
-                    },
-                    {
-                        xtype:'actioncolumn',
-                        width:60,
+                        xtype: 'actioncolumn',
+                        width: 60,
                         items: [
                             {
-                                iconCls: 'x-fa fa-edit',
+                                iconCls: 'x-fa fa-search',
                                 tooltip: 'Edit',
                                 handler: function(grid, rowIndex, colIndex) {
                                     var rec = grid.getStore().getAt(rowIndex);
-                                    alert("Edit " + rec.get('last_name'));
-                                }
-                            },
-                            {
-                                iconCls: 'x-fa fa-remove',
-                                tooltip: 'Delete',
-                                handler: function(grid, rowIndex, colIndex) {
-                                    var rec = grid.getStore().getAt(rowIndex);
-                                    alert("Delete " + rec.get('last_name'));
+                                    CL.app.getController("C_richiesta").onEdit(this.el,rec);
                                 }
                             }
                         ]

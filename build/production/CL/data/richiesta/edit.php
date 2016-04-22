@@ -11,20 +11,14 @@ $data = json_decode($_POST['data'],true);
 
 
 $s = $pdo->prepare("
-	UPDATE fattura
-	SET codice = :codice,
-		fornitore_id = :fornitore_id,
-		data = :data
-
-
+	UPDATE richiesta
+	SET stato = :stato
 	WHERE id = :id
 ");
 
 $params = array(
 	'id' => $data['id'],
-	'codice' => $data['codice'],
-	'fornitore_id' => $data['fornitore_id'],
-	'data' => $data['data']
+	'stato' => $data['stato']
 );
 
 $success = $s->execute($params);

@@ -11,8 +11,8 @@ $data = json_decode($_POST['data'],true);
 
 
 $s = $pdo->prepare("
-	INSERT INTO richiesta(nome,cognome,funzionario_id,email,sede_id,ufficio_id,servizio,motivazione,disponibile_per_usato,richiesta_il)
-	VALUES(:nome,:cognome,:funzionario_id,:email,:sede_id,:ufficio_id,:servizio,:motivazione,:disponibile_per_usato,now())
+	INSERT INTO richiesta(nome,cognome,funzionario_id,email,sede_id,ufficio_id,servizio,motivazione,disponibile_per_usato,richiesta_il,stato)
+	VALUES(:nome,:cognome,:funzionario_id,:email,:sede_id,:ufficio_id,:servizio,:motivazione,:disponibile_per_usato,now(),'Da Valutare')
 ");
 
 $params = array(
@@ -96,13 +96,6 @@ function inviaMail($from, $to, $oggetto, $testo, $allegati = null){
 
 	$mail->setFrom($from, 'CED SSCOL');
 	$mail->addAddress($to);
-
-	if($allegati != null){
-		$mail->addAttachment($allegati[0], "CV.pdf");
-		$mail->addAttachment($allegati[1], "Documento Identita.pdf");
-		$mail->addAttachment($allegati[2], "Referenze Professionali.xls");
-		$mail->addAttachment($allegati[3], "Dichiarazione Sostitutiva.doc");
-	}
 
 	$mail->Subject = $oggetto;
 	$mail->Body    = $testo."<br><br><b><i>La presente e-mail è stata generata automaticamente da un indirizzo di posta elettronica di solo invio; si chiede pertanto di non rispondere al messaggio.</i></b>";

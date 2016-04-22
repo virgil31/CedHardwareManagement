@@ -12,14 +12,21 @@ Ext.define('CL.controller.C_richiesta', {
         'M_richiesta'
     ],
     views: [
-        'richiesta.V_form_richiesta'
+        'richiesta.V_form_richiesta',
+        'richiesta.V_edit'
     ],
 
     /////////////////////////////////////////////////
     init: function () {
         this.control({
+            // DO RICHIESTA
             'form_richiesta button[action=doRichiesta]':{
                 click: this.doRichiesta
+            },
+
+            // DO EDIT
+            'richiesta_edit button[action=do_edit]':{
+                click: this.doEdit
             }
         }, this);
     },
@@ -41,6 +48,28 @@ Ext.define('CL.controller.C_richiesta', {
 
     /////////////////////////////////////////////////
 
+    // DO EDIT
+    doEdit: function(btn){
+        var window = btn.up("window"),
+            form = window.down("form"),
+            values = form.getValues(),
+            record = form.getRecord(),
+            store = Ext.StoreManager.lookup("S_richiesta");
+
+        Ext.Msg.confirm('Attenzione!', 'Modificare la richiesta?',function(btn){
+            if (btn === 'yes'){
+                console.log(values);
+                record.set(values);
+                store.sync();
+
+                window.close();
+            }
+        });
+
+    },
+
+
+    // DO RICHIESTA
     doRichiesta: function(btn){
         var form = btn.up("form"),
             values = form.getValues();
@@ -75,12 +104,28 @@ Ext.define('CL.controller.C_richiesta', {
                     success: function(){
                         Ext.getBody().unmask();
                         Ext.Msg.alert("Successo!","La registrazione è stata correttamente effettuata!<br>A breve riceverà una mail di conferma su <b>"+(values.email)+"</b> con codice di 'tracciabilità'.",function(){
-                            //CL.app.getController("C_richiesta").redirectTo("login");
+                            CL.app.getController("C_richiesta").redirectTo("login");
                         });
                     }
                 });
             }
         }
+    },
+
+
+    //ON EDIT
+    onEdit: function(animateTargetEl,record){
+        var win = Ext.widget("richiesta_edit",{
+            animateTarget: animateTargetEl,
+            title: 'Richiesta Hardware <b>#'+record.get("id")+'</b>'
+        });
+
+        win.down("form").loadRecord(record);
+        Ext.StoreManager.lookup("S_assegnazione").load({
+            params:{
+                richiesta_id: record.get("id")
+            }
+        });
     }
 
 

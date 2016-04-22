@@ -25,7 +25,9 @@ Ext.application({
 
         'C_fattura',
 
-        'C_richiesta'
+        'C_richiesta',
+
+        'C_assegnazione'
     ],
 
     // vv ROUTING

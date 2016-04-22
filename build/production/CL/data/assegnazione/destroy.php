@@ -11,18 +11,18 @@ $data = json_decode($_POST['data'],true);
 
 
 $s = $pdo->prepare("
-	UPDATE richiesta
-	SET stato = :stato
+	DELETE FROM fattura
 	WHERE id = :id
 ");
 
 $params = array(
-	'id' => $data['id'],
-	'stato' => $data['stato']
+	'id' => $data['id']
 );
 
 $success = $s->execute($params);
 
+
+//sleep(1.5);
 
 if ($success) {
     echo json_encode(array(
