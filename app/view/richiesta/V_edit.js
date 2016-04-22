@@ -11,7 +11,7 @@ Ext.define('CL.view.richiesta.V_edit', {
 
     padding: 10,
 
-    width: 600,
+    width: 800,
 
     initComponent: function() {
         var this_view = this;
@@ -119,7 +119,7 @@ Ext.define('CL.view.richiesta.V_edit', {
                         },
                         store: 'S_assegnazione',
                         columns: [
-                            { text: 'Materiale',            dataIndex: 'tipo_hardware_name', flex: 0.6 },
+                            { text: 'Materiale',            dataIndex: 'tipo_hardware_name', flex: 0.4 },
                             { text: 'Note',                 dataIndex: 'note', flex: 0.5 },
                             { text: 'Modello Assegnato',    dataIndex: 'seriale_name', flex: 1 },
                             {
@@ -132,7 +132,7 @@ Ext.define('CL.view.richiesta.V_edit', {
                                         tooltip: 'Assegna Hardware',
                                         handler: function(grid, rowIndex, colIndex) {
                                             var rec = grid.getStore().getAt(rowIndex);
-                                            grid.getStore().remove(rec);
+                                            CL.app.getController("C_assegnazione").onEdit(this.el,rec);
                                         }
                                     }
                                 ]

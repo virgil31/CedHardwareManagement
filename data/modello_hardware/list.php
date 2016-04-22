@@ -21,8 +21,23 @@ $order_str = rtrim($order_str,",");
 
 $total = 0;
 
+
+//LIST FULL BY tipo_hardware_id
+if(isset($_GET["tipo_hardware_id"])){
+	$tipo_hardware_id = $_GET["tipo_hardware_id"];
+
+	$statement = $pdo->prepare("
+		SELECT A.id,CONCAT(C.nome,' - ',A.nome) as nome,A.tipo_id,B.nome as tipo_name,A.marca_id,C.nome as marca_name, COUNT(*) OVER() as total
+		FROM modello_hardware A
+			LEFT JOIN tipo_hardware B ON B.id = A.tipo_id
+			LEFT JOIN marca_hardware C ON C.id = A.marca_id
+		WHERE tipo_id = $tipo_hardware_id
+		ORDER BY $order_str LIMIT $limit OFFSET $start
+	");
+}
+
 // LIST PAGINATO CON QUERY
-if(isset($_GET["query"])){
+else if(isset($_GET["query"])){
 	$query = $_GET["query"];
 	$query = trim($query);
 

@@ -121,14 +121,12 @@ Ext.define('CL.controller.C_richiesta', {
         });
 
         win.down("form").loadRecord(record);
+
         Ext.StoreManager.lookup("S_assegnazione").load({
             params:{
                 richiesta_id: record.get("id")
             }
         });
     }
-
-
-
 
 });

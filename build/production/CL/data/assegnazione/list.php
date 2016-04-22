@@ -27,12 +27,12 @@ if(isset($_GET["richiesta_id"])){
 	$statement = $pdo->prepare("
 		SELECT *
 		FROM (
-		SELECT A.id,richiesta_id, tipo_hardware_id,B.nome as tipo_hardware_name, note, seriale_id, CONCAT(E.nome,' - ',D.nome,' - (SN: <b>',C.seriale,'</b>)') as seriale_name, COUNT(*) OVER() as total
-			FROM richiesta_tipo_hardware A
-			LEFT JOIN tipo_hardware B ON B.id = A.tipo_hardware_id
-			LEFT JOIN seriale_modello C ON C.id = A.seriale_id
-			LEFT JOIN modello_hardware D ON D.id = C.modello_id
-			LEFT JOIN marca_hardware E ON E.id = D.marca_id
+			SELECT A.id,richiesta_id, tipo_hardware_id,B.nome as tipo_hardware_name, note, seriale_id, CONCAT(E.nome,' - ',D.nome,' - (SN: <b>',C.seriale,'</b>)') as seriale_name,C.modello_id, COUNT(*) OVER() as total
+				FROM richiesta_tipo_hardware A
+				LEFT JOIN tipo_hardware B ON B.id = A.tipo_hardware_id
+				LEFT JOIN seriale_modello C ON C.id = A.seriale_id
+				LEFT JOIN modello_hardware D ON D.id = C.modello_id
+				LEFT JOIN marca_hardware E ON E.id = D.marca_id
 		) tmp
 		WHERE richiesta_id = $richiesta_id
 		ORDER BY $pro $dir
@@ -44,12 +44,12 @@ else if(isset($_GET["flag_full"])){
 	$statement = $pdo->prepare("
 		SELECT *
 		FROM (
-		SELECT A.id,richiesta_id, tipo_hardware_id,B.nome as tipo_hardware_name, note, seriale_id, CONCAT(E.nome,' - ',D.nome,' - (SN: <b>',C.seriale,'</b>)') as seriale_name, COUNT(*) OVER() as total
-			FROM richiesta_tipo_hardware A
-			LEFT JOIN tipo_hardware B ON B.id = A.tipo_hardware_id
-			LEFT JOIN seriale_modello C ON C.id = A.seriale_id
-			LEFT JOIN modello_hardware D ON D.id = C.modello_id
-			LEFT JOIN marca_hardware E ON E.id = D.marca_id
+			SELECT A.id,richiesta_id, tipo_hardware_id,B.nome as tipo_hardware_name, note, seriale_id, CONCAT(E.nome,' - ',D.nome,' - (SN: <b>',C.seriale,'</b>)') as seriale_name,C.modello_id, COUNT(*) OVER() as total
+				FROM richiesta_tipo_hardware A
+				LEFT JOIN tipo_hardware B ON B.id = A.tipo_hardware_id
+				LEFT JOIN seriale_modello C ON C.id = A.seriale_id
+				LEFT JOIN modello_hardware D ON D.id = C.modello_id
+				LEFT JOIN marca_hardware E ON E.id = D.marca_id
 		) tmp
 		ORDER BY $pro $dir
 	");
@@ -59,12 +59,12 @@ else{
 	$statement = $pdo->prepare("
 		SELECT *
 		FROM (
-		SELECT A.id,richiesta_id, tipo_hardware_id,B.nome as tipo_hardware_name, note, seriale_id, CONCAT(E.nome,' - ',D.nome,' - (SN: <b>',C.seriale,'</b>)') as seriale_name, COUNT(*) OVER() as total
-			FROM richiesta_tipo_hardware A
-			LEFT JOIN tipo_hardware B ON B.id = A.tipo_hardware_id
-			LEFT JOIN seriale_modello C ON C.id = A.seriale_id
-			LEFT JOIN modello_hardware D ON D.id = C.modello_id
-			LEFT JOIN marca_hardware E ON E.id = D.marca_id
+			SELECT A.id,richiesta_id, tipo_hardware_id,B.nome as tipo_hardware_name, note, seriale_id, CONCAT(E.nome,' - ',D.nome,' - (SN: <b>',C.seriale,'</b>)') as seriale_name,C.modello_id, COUNT(*) OVER() as total
+				FROM richiesta_tipo_hardware A
+				LEFT JOIN tipo_hardware B ON B.id = A.tipo_hardware_id
+				LEFT JOIN seriale_modello C ON C.id = A.seriale_id
+				LEFT JOIN modello_hardware D ON D.id = C.modello_id
+				LEFT JOIN marca_hardware E ON E.id = D.marca_id
 		) tmp
 		ORDER BY $pro $dir LIMIT $limit OFFSET $start
 	");
