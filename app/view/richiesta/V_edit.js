@@ -56,6 +56,14 @@ Ext.define('CL.view.richiesta.V_edit', {
                                         {"stato":"Completata"}
                                     ]
                                 })
+                            },
+                            {
+                                xtype: 'datefield',
+                                fieldLabel: 'Assegnata il',
+                                name: 'assegnata_il',
+                                format:'d/m/Y',
+                                submitFormat:'d/m/Y'//,
+                                //editable: false
                             }
                         ]
                     },
@@ -94,7 +102,7 @@ Ext.define('CL.view.richiesta.V_edit', {
                         fieldLabel: 'Richiesta il',
                         name: 'richiesta_il',
                         format:'d/m/Y',
-                        submitFormat:'m/d/Y',
+                        submitFormat:'d/m/Y',
                         readOnly: true
                     },
                     {
@@ -155,7 +163,7 @@ Ext.define('CL.view.richiesta.V_edit', {
                         scale: 'large',
                         action: 'mostra_foglio_consegna',
                         style: {
-                            background: "#02CD40"
+                            background: "#29A14E"
                         }
                     }
                 ]

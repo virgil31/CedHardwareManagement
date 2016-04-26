@@ -23,6 +23,6 @@ Ext.define('CL.model.M_richiesta', {
 
         {name: 'disponibile_per_usato', type: 'string'},
         {name: 'richiesta_il',          type: 'string'},
-        {name: 'consegnata_il',         type: 'string'}
+        {name: 'assegnata_il',          type: 'string'}
     ]
 });

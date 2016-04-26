@@ -78,7 +78,7 @@ Ext.define('CL.controller.C_seriale_modello', {
                     window.close();
 
                     setTimeout(function(){
-                        Ext.StoreManager.lookup("S_seriale_modello").load();
+                        Ext.StoreManager.lookup("S_seriale_modello").reload();
                     }, 250);
                 }
             });

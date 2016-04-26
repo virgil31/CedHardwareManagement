@@ -38,6 +38,7 @@ Ext.define('CL.controller.C_assegnazione', {
             store = Ext.StoreManager.lookup("S_assegnazione");
 
         record.set(values);
+
         store.sync({
             callback: function(){
                 store.reload();
@@ -52,8 +53,6 @@ Ext.define('CL.controller.C_assegnazione', {
             animateTarget: animateTargetEl,
             title: 'Assegnazione Hardware - <b>'+record.get("tipo_hardware_name")+'</b>'
         });
-
-        console.log(record);
 
         Ext.StoreManager.lookup("S_modello_hardware").load({
             params:{

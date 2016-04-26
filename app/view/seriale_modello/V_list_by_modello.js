@@ -101,7 +101,8 @@ Ext.define('CL.view.seriale_modello.V_list_by_modello', {
                         dataIndex: 'disponibile',
                         flex: 0.5,
                         renderer: function (value, metaData, record) {
-                            return (value === "true") ? 'Sì' : 'No'
+                            metaData.tdStyle = 'background: '+((value == "true" || value == true)?"#B8FFB8":"#FFC5C5")+';';
+                            return (value == "true") ? 'Sì' : 'No'
                         }
                     },
                     {

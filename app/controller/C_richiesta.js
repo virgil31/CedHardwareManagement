@@ -55,6 +55,12 @@ Ext.define('CL.controller.C_richiesta', {
 
     // MOSTRA FOGLIO CONSEGNA
     mostraFoglioConsegna: function(btn){
+        var window = btn.up("window"),
+            form = window.down("form"),
+            values = form.getValues(),
+            record = form.getRecord(),
+            richiesta_id = record.get("id");
+
         Ext.create("Ext.window.Window",{
             animateTarget: btn.el,
             title: '<b>Foglio Di Consegna</b>',
@@ -90,7 +96,7 @@ Ext.define('CL.controller.C_richiesta', {
                     id: 'my_iframe',
                     autoEl: {
                         tag: 'iframe',
-                        src: 'data/richiesta/getPDF.php'
+                        src: 'data/richiesta/getPDF.php?richiesta_id='+richiesta_id
                     }
                 }
             ],
@@ -115,11 +121,11 @@ Ext.define('CL.controller.C_richiesta', {
 
         Ext.Msg.confirm('Attenzione!', 'Modificare la richiesta?',function(btn){
             if (btn === 'yes'){
-                console.log(values);
                 record.set(values);
                 store.sync();
 
                 window.close();
+                store.reload();
             }
         });
 

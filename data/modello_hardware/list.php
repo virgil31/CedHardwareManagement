@@ -27,12 +27,18 @@ if(isset($_GET["tipo_hardware_id"])){
 	$tipo_hardware_id = $_GET["tipo_hardware_id"];
 
 	$statement = $pdo->prepare("
-		SELECT A.id,CONCAT(C.nome,' - ',A.nome) as nome,A.tipo_id,B.nome as tipo_name,A.marca_id,C.nome as marca_name, COUNT(*) OVER() as total
-		FROM modello_hardware A
-			LEFT JOIN tipo_hardware B ON B.id = A.tipo_id
-			LEFT JOIN marca_hardware C ON C.id = A.marca_id
-		WHERE tipo_id = $tipo_hardware_id
-		ORDER BY $order_str LIMIT $limit OFFSET $start
+		SELECT *
+		FROM (
+			SELECT A.id,CONCAT(C.nome,' - ',A.nome) as nome,A.tipo_id,B.nome as tipo_name,A.marca_id,C.nome as marca_name,COUNT(D.*), COUNT(*) OVER() as total
+			FROM modello_hardware A
+				LEFT JOIN tipo_hardware B ON B.id = A.tipo_id
+				LEFT JOIN marca_hardware C ON C.id = A.marca_id
+				LEFT JOIN seriale_modello D ON (D.modello_id = A.id AND disponibile = TRUE)
+			WHERE tipo_id = 10
+			GROUP BY A.id, C.nome,A.nome,B.nome
+			ORDER BY $order_str LIMIT $limit OFFSET $start
+		) tmp
+		WHERE count > 0
 	");
 }
 

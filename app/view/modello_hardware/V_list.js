@@ -158,6 +158,16 @@ Ext.define('CL.view.modello_hardware.V_list', {
 
                                     store.getProxy().extraParams.modello_id = rec.get("id");
 
+                                    var win = Ext.widget("seriale_modello_list_by_modello",{
+                                        animateTarget: btn.el
+                                    });
+
+                                    store.load({
+                                        callback: function(){
+                                            win.setTitle('Lista Seriali ('+this.getTotalCount()+') - <b>'+rec.get("nome")+'</b>');
+                                        }
+                                    });
+                                    /*
                                     store.load({
                                         callback: function(){
                                             Ext.widget("seriale_modello_list_by_modello",{
@@ -165,7 +175,7 @@ Ext.define('CL.view.modello_hardware.V_list', {
                                                 animateTarget: btn.el
                                             });
                                         }
-                                    });
+                                    });*/
                                 }
                             },
                             {
