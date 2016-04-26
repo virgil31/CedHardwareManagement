@@ -143,12 +143,19 @@ Ext.define('CL.view.richiesta.V_edit', {
                 buttonAlign: 'center',
                 buttons: [
                     {
-                        text: "Modifica Richiesta",
+                        text: "Salva Modifiche",
                         scale: 'large',
                         action: 'do_edit',
-                        allowBlank: false,
                         style: {
                             background: "#3CAFFF"
+                        }
+                    },
+                    {
+                        text: "Foglio Consegna",
+                        scale: 'large',
+                        action: 'mostra_foglio_consegna',
+                        style: {
+                            background: "#02CD40"
                         }
                     }
                 ]

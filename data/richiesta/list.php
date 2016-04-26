@@ -18,9 +18,40 @@ $start = $_GET['start'];
 $total = 0;
 
 
+//LIST FULL BY query_id
+if(isset($_GET["query_id"])){
+	$query_id = $_GET["query_id"];
+	$statement = $pdo->prepare("
+		SELECT A.id, A.nome,A.cognome,CONCAT(A.nome,' ',A.cognome) as full_nome, funzionario_id,CONCAT(B.nome,' ',B.cognome) as funzionario_name,email,A.sede_id,C.nome as sede_name,ufficio_id, D.nome as ufficio_name,servizio,motivazione,disponibile_per_usato,richiesta_il,consegnata_il, stato,  COUNT(*) OVER() as total
+		FROM richiesta A
+			LEFT JOIN utente B on B.id = A.funzionario_id
+			LEFT JOIN sede C on C.id = A.sede_id
+			LEFT JOIN ufficio D on D.id = A.ufficio_id
+		WHERE CAST(id as TEXT) ilike '$query_id%'
+		ORDER BY $pro $dir
+	");
+}
+
+
+
+// LIST PAGINATO FILTRATO PER stato
+else if(isset($_GET["stato"])){
+	$stato = $_GET["stato"];
+	$statement = $pdo->prepare("
+		SELECT A.id, A.nome,A.cognome,CONCAT(A.nome,' ',A.cognome) as full_nome, funzionario_id,CONCAT(B.nome,' ',B.cognome) as funzionario_name,email,A.sede_id,C.nome as sede_name,ufficio_id, D.nome as ufficio_name,servizio,motivazione,disponibile_per_usato,richiesta_il,consegnata_il, stato,  COUNT(*) OVER() as total
+		FROM richiesta A
+			LEFT JOIN utente B on B.id = A.funzionario_id
+			LEFT JOIN sede C on C.id = A.sede_id
+			LEFT JOIN ufficio D on D.id = A.ufficio_id
+		WHERE stato ilike '$stato'
+		ORDER BY $pro $dir LIMIT $limit OFFSET $start
+	");
+}
+
+
 
 //LIST FULL
-if(isset($_GET["flag_full"])){
+else if(isset($_GET["flag_full"])){
 	$statement = $pdo->prepare("
 		SELECT A.id, A.nome,A.cognome,CONCAT(A.nome,' ',A.cognome) as full_nome, funzionario_id,CONCAT(B.nome,' ',B.cognome) as funzionario_name,email,A.sede_id,C.nome as sede_name,ufficio_id, D.nome as ufficio_name,servizio,motivazione,disponibile_per_usato,richiesta_il,consegnata_il, stato, COUNT(*) OVER() as total
 		FROM richiesta A

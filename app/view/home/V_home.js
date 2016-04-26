@@ -60,6 +60,7 @@ Ext.define('CL.view.home.V_home', {
                             xtype: 'combobox',
                             valueField: 'value',
                             displayField: 'name',
+                            width: 120,
                             editable: false,
                             store: Ext.create('Ext.data.Store', {
                                 fields: ['name'],
@@ -71,7 +72,49 @@ Ext.define('CL.view.home.V_home', {
                                     {"name":"Completate",   "value":"Completata"}
                                 ]
                             }),
-                            value: "%"
+                            value: "%",
+                            listeners: {
+                                select: function(combo,record){
+                                    Ext.StoreManager.lookup("S_richiesta").proxy.extraParams.stato = record.get("value");
+                                    Ext.StoreManager.lookup("S_richiesta").loadPage(1);
+                                }
+                            }
+                        },
+                        {
+                            xtype: 'tbseparator'
+                        },
+                        {
+                            xtype: 'textfield',
+                            emptyText: 'ID richiesta',
+                            name: 'query_id',
+                            width: 100,
+                            listeners: {
+                                specialkey: function(field, e){
+                                    if (e.getKey() == e.ENTER){
+                                        if(field.getValue().length != 0){
+                                            var btn = Ext.ComponentQuery.query("home button[action=do_query_id]")[0];
+                                            btn.fireEvent("click",btn);
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            xtype: 'button',
+                            iconCls: 'x-fa fa-search',
+                            tooltip: 'Ricerca per ID',
+                            action: 'do_query_id',
+                            listeners:{
+                                click: function(){
+                                    if(Ext.ComponentQuery.query("home textfield[name=query_id]")[0].getValue().length != 0){
+                                        Ext.StoreManager.lookup("S_richiesta").load({
+                                            params:{
+                                                query_id: Ext.ComponentQuery.query("home textfield[name=query_id]")[0].getValue()
+                                            }
+                                        });
+                                    }
+                                }
+                            }
                         }
                     ]
                 },
@@ -91,6 +134,12 @@ Ext.define('CL.view.home.V_home', {
                         }
                     },
                     {
+                        text: 'ID',
+                        dataIndex: 'id',
+                        flex: 0.3,
+                        sortable: false
+                    },
+                    {
                         text: 'Richiesta da',
                         dataIndex: 'full_nome',
                         sortable: false,
@@ -99,14 +148,15 @@ Ext.define('CL.view.home.V_home', {
                     {
                         text: 'Sede',
                         dataIndex: 'sede_name',
-                        flex: 1
+                        flex: 1,
+                        sortable: false
                     },
                     {
                         xtype: 'datecolumn',
                         text: 'Richiesta il',
                         dataIndex: 'richiesta_il',
                         format:'d/m/Y',
-                        flex: 1
+                        flex: 0.5
                     },
                     {
                         xtype: 'actioncolumn',
@@ -114,7 +164,7 @@ Ext.define('CL.view.home.V_home', {
                         items: [
                             {
                                 iconCls: 'x-fa fa-search',
-                                tooltip: 'Edit',
+                                tooltip: 'Scheda Richiesta',
                                 handler: function(grid, rowIndex, colIndex) {
                                     var rec = grid.getStore().getAt(rowIndex);
                                     CL.app.getController("C_richiesta").onEdit(this.el,rec);

@@ -99,7 +99,8 @@ Ext.define('CL.view.login.V_login', {
                             constrain: true,
                             animateTarget: btn.el,
                             width: 330,
-                            title: 'Accesso per le richieste',
+                            title: 'Richiedi materiale Informatico',
+                            name: 'login_richiesta',
                             padding: 10,
                             items: [
                                 {
@@ -115,7 +116,17 @@ Ext.define('CL.view.login.V_login', {
                                             fieldLabel: 'Username',
                                             width: '100%',
                                             allowBlank: false,
-                                            margin: '10 0 0 0'
+                                            margin: '10 0 0 0',
+                                            listeners: {
+                                                specialkey: function(field, e){
+                                                    if (e.getKey() == e.ENTER){
+                                                        console.log(Ext.ComponentQuery.query("window[name=login_richiesta]"));
+
+                                                        var btn = Ext.ComponentQuery.query("window[name=login_richiesta] button[action=do_login_richiesta]")[0];
+                                                        btn.fireEvent("click",btn);
+                                                    }
+                                                }
+                                            }
                                         },
                                         {
                                             xtype: 'textfield',
@@ -124,7 +135,16 @@ Ext.define('CL.view.login.V_login', {
                                             inputType: 'password',
                                             width: '100%',
                                             allowBlank: false,
-                                            margin: '10 0 10 0'
+                                            margin: '10 0 10 0',
+                                            listeners: {
+                                                specialkey: function(field, e){
+                                                    if (e.getKey() == e.ENTER){
+                                                        console.log(Ext.ComponentQuery.query("window[name=login_richiesta]"));
+                                                        var btn = Ext.ComponentQuery.query("window[name=login_richiesta] button[action=do_login_richiesta]")[0];
+                                                        btn.fireEvent("click",btn);
+                                                    }
+                                                }
+                                            }
                                         }
                                     ],
                                     buttons: [

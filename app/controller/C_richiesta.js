@@ -27,6 +27,11 @@ Ext.define('CL.controller.C_richiesta', {
             // DO EDIT
             'richiesta_edit button[action=do_edit]':{
                 click: this.doEdit
+            },
+
+            // MOSTRA FOGLIO CONSEGNA
+            'richiesta_edit button[action=mostra_foglio_consegna]':{
+                click: this.mostraFoglioConsegna
             }
         }, this);
     },
@@ -47,6 +52,58 @@ Ext.define('CL.controller.C_richiesta', {
     },
 
     /////////////////////////////////////////////////
+
+    // MOSTRA FOGLIO CONSEGNA
+    mostraFoglioConsegna: function(btn){
+        Ext.create("Ext.window.Window",{
+            animateTarget: btn.el,
+            title: '<b>Foglio Di Consegna</b>',
+            autoShow: true,
+            name: 'preview_pdf',
+            height: 650,
+            width: 960,
+            layout: 'fit',
+            resizable: false,
+            constrain: true,
+            modal: true,
+            items: [
+                {
+                    xtype:'panel',
+                    name: 'loading',
+                    layout: {
+                        type: 'vbox',
+                        align: 'center',
+                        pack: 'center'
+                    },
+
+                    items: [
+                        {
+                            xtype:'image',
+                            src: 'resources/lib/pdfjs/loading.gif',
+                            height: 200,
+                            width: 200
+                        }
+                    ]
+                },
+                {
+                    xtype: 'box',
+                    id: 'my_iframe',
+                    autoEl: {
+                        tag: 'iframe',
+                        src: 'data/richiesta/getPDF.php'
+                    }
+                }
+            ],
+            listeners: {
+                //nascondo la gif di caricamento
+                afterrender: function(){
+                    document.getElementById("my_iframe").onload = function() {
+                        Ext.ComponentQuery.query('window[name=preview_pdf] panel[name=loading]')[0].destroy();
+                    };
+                }
+            }
+        });
+    },
 
     // DO EDIT
     doEdit: function(btn){
