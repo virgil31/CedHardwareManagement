@@ -159,6 +159,18 @@ Ext.define('CL.view.login.V_login', {
 
                         });
                     }
+                },
+                {
+                    xtype: 'button',
+                    margin: '20 0 0 0',
+                    text: 'Verifica Stato Richiesta',
+                    scale: 'large',
+                    style: {
+                        background: "#CB9A2D"
+                    },
+                    handler: function(){
+                        CL.app.getController("C_login").redirectTo("controlla_richiesta");
+                    }
                 }
             ]
         },

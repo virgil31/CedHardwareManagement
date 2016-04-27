@@ -27,7 +27,8 @@ Ext.application({
 
         'C_richiesta',
 
-        'C_assegnazione'
+        'C_assegnazione',
+        'C_controlla_richiesta'
     ],
 
     // vv ROUTING

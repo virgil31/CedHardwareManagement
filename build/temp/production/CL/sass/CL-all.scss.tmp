@@ -3,6 +3,7 @@ $image-search-path: 'C:/xampp/htdocs/projects/Extjs_6.0.0/CedHardwareManagement/
 $theme-name:  dynamic( 'theme-crisp' );
 $include-cl-controller-c_assegnazione: dynamic(true);;
 $include-cl-controller-c_bbar: dynamic(true);;
+$include-cl-controller-c_controlla_richiesta: dynamic(true);;
 $include-cl-controller-c_fattura: dynamic(true);;
 $include-cl-controller-c_fornitore: dynamic(true);;
 $include-cl-controller-c_home: dynamic(true);;
@@ -44,6 +45,7 @@ $include-cl-store-s_user: dynamic(true);;
 $include-cl-store-s_utente: dynamic(true);;
 $include-cl-view-assegnazione-v_edit: dynamic(true);;
 $include-cl-view-bbar-v_bbar: dynamic(true);;
+$include-cl-view-controlla_richiesta-v_controlla_richiesta: dynamic(true);;
 $include-cl-view-fattura-v_create: dynamic(true);;
 $include-cl-view-fattura-v_edit: dynamic(true);;
 $include-cl-view-fattura-v_list: dynamic(true);;
