@@ -55,6 +55,14 @@ Ext.define('CL.view.home.V_home', {
                             text: 'Richieste Hardware',
                             style: 'color: #157fcc;font-size: 15px;font-weight: 300;font-family: helvetica, arial, verdana, sans-serif;line-height: 16px'
                         },
+                        {
+                            xtype: 'button',
+                            icon: 'resources/images/icon_plus.gif',
+                            tooltip: 'Crea Richiesta',
+                            handler: function(){
+                                CL.app.getController("C_richiesta").onQuickCreate(this.el);
+                            }
+                        },
                         '->',
                         {
                             xtype: 'combobox',
@@ -129,6 +137,7 @@ Ext.define('CL.view.home.V_home', {
                     {
                         dataIndex: 'stato',
                         flex: 0.1,
+                        sortable: false,
                         renderer: function(value){
                             return '<img src="resources/images/'+value+'.png" alt=" " height="16" width="16" title="'+value+'">';
                         }

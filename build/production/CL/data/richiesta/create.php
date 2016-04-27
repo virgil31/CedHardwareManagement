@@ -55,7 +55,7 @@ sleep(2);
 if ($success) {
     echo json_encode(array(
         "success" => true,
-		"mail_sent" => inviaMail("RichiestaHardware-CED@SSCOL.it", $data['email'], "Richiesta Hardware #".$last_id, "Il codice identificativo della sua richiesta è <b>".$last_id.'</b>. Può utilizzare questo codice per controllare lo stato della sua richiesta <a target="_blank" href="http://localhost/projects/Extjs_6.0.0/CedHardwareManagement/#controlla_richiesta">QUI</a>.'),
+		"mail_sent" => inviaMail("RichiestaHardware-CED@SSCOL.it", $data['email'], "Richiesta Hardware #".$last_id, "Il codice identificativo della sua richiesta è <b>".$last_id.'</b>. Può utilizzare questo codice per controllare lo stato della sua richiesta <a target="_blank" href="http://localhost/projects/Extjs_6.0.0/CedHardwareManagement/#controlla_richiesta">QUI</a><br><br>Elenco materiale richiesto:<br>'.getRiepilogo($last_id)),
         "result" => array(
             "id" => $last_id
         )
@@ -71,6 +71,33 @@ else{
 
 
 /////////////////////////////////////////
+
+function getRiepilogo($richiesta_id){
+	$ini_array = parse_ini_file("../config.ini");
+
+    $pdo=new PDO("pgsql:host=".$ini_array['pdo_host'].";port=".$ini_array['pdo_port']."; dbname=".$ini_array['pdo_db'].";",$ini_array['pdo_user'],$ini_array['pdo_psw']);
+
+
+	$statement = $pdo->prepare("
+		SELECT B.nome as tipo_name,COALESCE(A.note,'-') as note
+		FROM richiesta_tipo_hardware A
+			LEFT JOIN tipo_hardware B ON B.id = A.tipo_hardware_id
+	    WHERE A.richiesta_id = $richiesta_id
+	");
+
+	$statement->execute();
+	$result = $statement->fetchAll(PDO::FETCH_OBJ);
+
+
+	$to_return = '<ul>';
+	foreach ($result as $row)
+		$to_return .= '<li><b>'.$row->tipo_name ."</b><i> (Note: ".$row->note.")</i></li>" ;
+
+	$to_return .= "</ul>";
+
+
+	return $to_return;
+}
 
 function inviaMail($from, $to, $oggetto, $testo, $allegati = null){
 	require '../../resources/lib/PHPMailer/PHPMailerAutoload.php';

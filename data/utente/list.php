@@ -30,9 +30,9 @@ if(isset($_GET["flag_solo_funzionari"])){
 //LIST FULL
 else if(isset($_GET["flag_full"])){
 	$statement = $pdo->prepare("
-		SELECT id, nome, cognome, funzionario, COUNT(*) OVER() as total
+		SELECT id, nome, cognome,CONCAT(nome,' ',cognome) as utente_name, funzionario, COUNT(*) OVER() as total
 		FROM utente
-		ORDER BY $pro $dir,nome
+		ORDER BY utente_name ASC
 	");
 }
 else{

@@ -13,7 +13,8 @@ Ext.define('CL.controller.C_richiesta', {
     ],
     views: [
         'richiesta.V_form_richiesta',
-        'richiesta.V_edit'
+        'richiesta.V_edit',
+        'richiesta.V_quick_create'
     ],
 
     /////////////////////////////////////////////////
@@ -32,6 +33,11 @@ Ext.define('CL.controller.C_richiesta', {
             // MOSTRA FOGLIO CONSEGNA
             'richiesta_edit button[action=mostra_foglio_consegna]':{
                 click: this.mostraFoglioConsegna
+            },
+
+            // DO (quick) CREATE
+            'richiesta_quick_create button[action=do_create]':{
+                click: this.doQuickCreate
             }
         }, this);
     },
@@ -52,6 +58,48 @@ Ext.define('CL.controller.C_richiesta', {
     },
 
     /////////////////////////////////////////////////
+
+    // DO QUICK CREATE
+    doQuickCreate: function(btn) {
+        var win = btn.up("window"),
+            form = win.down("form"),
+            values = form.getValues();
+
+        var tipi_hardware = [];
+        Ext.ComponentQuery.query("richiesta_quick_create grid")[0].getStore().each(function(tipo_hardware){
+            tipi_hardware.push(tipo_hardware.data);
+        });
+
+        values.tipi_hardware = tipi_hardware;
+
+        win.mask("Creazione in corso...");
+        Ext.Ajax.request({
+            url: 'data/richiesta/quick_create.php',
+            params:{
+                data: Ext.encode(values)
+            },
+            success: function(response, opts) {
+                win.unmask();
+                win.close();
+                Ext.ComponentQuery.query("richiesta_quick_create grid")[0].getStore().removeAll();
+                Ext.ComponentQuery.query("home grid")[0].getStore().loadPage(1);
+            },
+            failure: function(response, opts) {
+                win.unmask();
+                Ext.Msg.alert("Attenzione!","Errore interno. Si è pregati di riprovare più tardi.")
+            }
+        });
+
+    },
+
+    // ON QUICK CREATE
+    onQuickCreate: function(targetEl) {
+        Ext.StoreManager.lookup("S_sede").load({params:{flag_full:true}});
+        Ext.StoreManager.lookup("S_utente").load({params:{flag_full:true}});
+        Ext.widget("richiesta_quick_create",{
+            animateTarget: targetEl
+        });
+    },
 
     // MOSTRA FOGLIO CONSEGNA
     mostraFoglioConsegna: function(btn){
@@ -162,7 +210,7 @@ Ext.define('CL.controller.C_richiesta', {
                     failure: function(){
                         Ext.getBody().unmask();
                         store.rejectChanges();
-                        Ext.Msg.alert("Attenzione!","Errore interno. Si è pregati di riprovare in seguito.")
+                        Ext.Msg.alert("Attenzione!","Errore interno. Si è pregati di riprovare più tardi.")
                     },
                     success: function(){
                         Ext.getBody().unmask();
