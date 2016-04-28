@@ -227,6 +227,8 @@ Ext.define('CL.view.richiesta.V_quick_create', {
                                                                                     tipo_hardware_id: tipo_hardware_id
                                                                                 }
                                                                             });
+
+                                                                            Ext.ComponentQuery.query("window[name=add_tipo_hardware] combobox[name=seriale_id]")[0].reset();
                                                                         }
                                                                     }
                                                                 },
@@ -342,7 +344,7 @@ Ext.define('CL.view.richiesta.V_quick_create', {
                                                                                     var records = Ext.StoreManager.lookup("S_seriale_modello").getRange(),
                                                                                         record_created = records[records.length-1];
 
-                                                                                    Ext.ComponentQuery.query("window[name=add_tipo_hardware] combobox[name=seriale_id]")[0].getStore().reload();
+                                                                                    //Ext.ComponentQuery.query("window[name=add_tipo_hardware] combobox[name=seriale_id]")[0].getStore().reload();
                                                                                     Ext.ComponentQuery.query("window[name=add_tipo_hardware] combobox[name=seriale_id]")[0].setValue(record_created.get("id"));
 
                                                                                     Ext.ComponentQuery.query("window[name=add_tipo_hardware] combobox[name=modello_id]")[0].getStore().reload();

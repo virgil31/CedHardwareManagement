@@ -135,9 +135,15 @@ Ext.define('CL.controller.C_fattura', {
     // per gli hyperlink
     onEditById: function(animateTargetEl,id){
         var my_controller = this;
-        var record = Ext.StoreManager.lookup("S_fattura").getById(id);
 
-        my_controller.onEdit(animateTargetEl,record);
+        Ext.StoreManager.lookup("S_fattura").load({
+            callback: function(){
+                var record = Ext.StoreManager.lookup("S_fattura").getById(id);
+                my_controller.onEdit(animateTargetEl,record);
+            }
+        });
+
+
     }
 
 

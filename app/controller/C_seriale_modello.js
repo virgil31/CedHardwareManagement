@@ -119,20 +119,18 @@ Ext.define('CL.controller.C_seriale_modello', {
 
             setTimeout(function(){
 
-                Ext.StoreManager.lookup("S_seriale_modello").reload({
-                    callback: function(){
-                        try{
-                            var nome_modello = Ext.ComponentQuery.query("seriale_modello_create combobox[name=modello_id]")[0].getRawValue();
-                            window.close();
-                            Ext.ComponentQuery.query("seriale_modello_list_by_modello")[0].setTitle('Lista Seriali ('+this.getTotalCount()+') - <b>'+nome_modello+'</b>');
-                        }
-                        catch(e){}
-
-                    }
-                });
 
                 if(window.callbackOnCreated != null)
                     window.callbackOnCreated();
+                else{
+                    Ext.StoreManager.lookup("S_seriale_modello").reload({
+                        callback: function(){
+                            var nome_modello = Ext.ComponentQuery.query("seriale_modello_create combobox[name=modello_id]")[0].getRawValue();
+                            //window.close();
+                            Ext.ComponentQuery.query("seriale_modello_list_by_modello")[0].setTitle('Lista Seriali ('+this.getTotalCount()+') - <b>'+nome_modello+'</b>');
+                        }
+                    });
+                }
 
                 window.close();
             }, 250);
