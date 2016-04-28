@@ -12,7 +12,7 @@ $data = json_decode($_POST['data'],true);
 
 $s = $pdo->prepare("
 	INSERT INTO richiesta(nome,cognome,sede_id,ufficio_id,disponibile_per_usato,richiesta_il,stato,motivazione)
-	VALUES(:nome,:cognome,:sede_id,:ufficio_id,TRUE,now(),'Accettata','Assegnazione del pregresso da parte del CED')
+	VALUES(:nome,:cognome,:sede_id,:ufficio_id,TRUE,now(),'Pregresso','Assegnazione del pregresso da parte del CED')
 ");
 
 $utente = getUtenteById($data["richiedente_id"]);
@@ -33,16 +33,26 @@ $last_id = $pdo->lastInsertId("richiesta_id_seq");
 $tipi_hardware = $data["tipi_hardware"];
 foreach ($tipi_hardware as $tipo_hardware) {
 	$s = $pdo->prepare("
-		INSERT INTO richiesta_tipo_hardware(richiesta_id, tipo_hardware_id)
-		VALUES(:richiesta_id,:tipo_hardware_id)
+		INSERT INTO richiesta_tipo_hardware(richiesta_id, tipo_hardware_id,seriale_id)
+		VALUES(:richiesta_id,:tipo_hardware_id,:seriale_id)
 	");
 
 	$params = array(
 		'richiesta_id' => $last_id,
-		'tipo_hardware_id' => $tipo_hardware['id']
+		'tipo_hardware_id' => $tipo_hardware['tipo_id'],
+		'seriale_id' => $tipo_hardware['seriale_id']
 	);
 
 	$success = $s->execute($params);
+
+	// segno il seriale come NON DISPONIBILE
+	$s = $pdo->prepare("
+		UPDATE seriale_modello
+		SET DISPONIBILE = FALSE
+		WHERE id = ".$tipo_hardware['seriale_id']
+	);
+	$success = $s->execute();
+
 }
 // ^^
 

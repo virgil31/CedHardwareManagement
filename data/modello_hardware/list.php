@@ -34,7 +34,7 @@ if(isset($_GET["tipo_hardware_id"])){
 				LEFT JOIN tipo_hardware B ON B.id = A.tipo_id
 				LEFT JOIN marca_hardware C ON C.id = A.marca_id
 				LEFT JOIN seriale_modello D ON (D.modello_id = A.id AND disponibile = TRUE)
-			WHERE tipo_id = 10
+			WHERE tipo_id = $tipo_hardware_id
 			GROUP BY A.id, C.nome,A.nome,B.nome
 			ORDER BY $order_str LIMIT $limit OFFSET $start
 		) tmp

@@ -86,13 +86,16 @@ Ext.define('CL.controller.C_utente', {
             form = window.down("form").getForm(),
             values = form.getValues();
 
+        
         if(form.isValid()){
             Ext.StoreManager.lookup("S_utente").add(values);
 
-            if(window.callbackOnCreated != null)
-                window.callbackOnCreated();
+            setTimeout(function(){
+                if(window.callbackOnCreated != null)
+                    window.callbackOnCreated();
 
-            window.close();
+                window.close();
+            }, 250);
         }
     },
 

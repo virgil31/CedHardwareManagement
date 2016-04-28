@@ -7,7 +7,7 @@ Ext.define('CL.view.richiesta.V_edit', {
     autoShow: true,
     modal: true,
     constrain: true,
-    resizable: false,
+    //resizable: false,
 
     padding: 10,
 
@@ -55,7 +55,13 @@ Ext.define('CL.view.richiesta.V_edit', {
                                         {"stato":"Accettata"},
                                         {"stato":"Completata"}
                                     ]
-                                })
+                                }),
+                                listeners:{
+                                    change: function(){
+                                        if(this.getValue() == "Pregresso")
+                                            this.readOnly = true;
+                                    }
+                                }
                             },
                             {
                                 xtype: 'datefield',
