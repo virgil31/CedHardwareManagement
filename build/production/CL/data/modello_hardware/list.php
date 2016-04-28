@@ -22,8 +22,30 @@ $order_str = rtrim($order_str,",");
 $total = 0;
 
 
-//LIST FULL BY tipo_hardware_id
-if(isset($_GET["tipo_hardware_id"])){
+//LIST FULL FULL BY tipo_hardware_id
+if(isset($_GET["tipo_hardware_id"]) && isset($_GET["flag_full"])){
+	$tipo_hardware_id = $_GET["tipo_hardware_id"];
+	if($tipo_hardware_id == null)
+		$tipo_hardware_id = "%";
+
+
+	$statement = $pdo->prepare("
+		SELECT *
+		FROM (
+			SELECT A.id,CONCAT(C.nome,' - ',A.nome) as nome,A.tipo_id,B.nome as tipo_name,A.marca_id,C.nome as marca_name,COUNT(D.*), COUNT(*) OVER() as total
+			FROM modello_hardware A
+				LEFT JOIN tipo_hardware B ON B.id = A.tipo_id
+				LEFT JOIN marca_hardware C ON C.id = A.marca_id
+				LEFT JOIN seriale_modello D ON (D.modello_id = A.id AND disponibile = TRUE)
+			WHERE CAST(tipo_id as TEXT) like '$tipo_hardware_id'
+			GROUP BY A.id, C.nome,A.nome,B.nome
+			ORDER BY $order_str
+		) tmp
+	");
+}
+
+//LIST FULL BY tipo_hardware_id (solo disponibili)
+else if(isset($_GET["tipo_hardware_id"])){
 	$tipo_hardware_id = $_GET["tipo_hardware_id"];
 
 	$statement = $pdo->prepare("
@@ -36,10 +58,12 @@ if(isset($_GET["tipo_hardware_id"])){
 				LEFT JOIN seriale_modello D ON (D.modello_id = A.id AND disponibile = TRUE)
 			WHERE tipo_id = $tipo_hardware_id
 			GROUP BY A.id, C.nome,A.nome,B.nome
-			ORDER BY $order_str LIMIT $limit OFFSET $start
+			ORDER BY $order_str
 		) tmp
 		WHERE count > 0
 	");
+
+	// NB!! il WHERE mi da problemi nel crea e assegna del modello della vista richiesta_quick_create
 }
 
 // LIST PAGINATO CON QUERY

@@ -86,13 +86,23 @@ Ext.define('CL.controller.C_tipo_hardware', {
             form = window.down("form").getForm(),
             values = form.getValues();
 
-        if(form.isValid()){
+        /*if(form.isValid()){
             Ext.StoreManager.lookup("S_tipo_hardware").add(values);
 
             if(window.callbackOnCreated != null)
                 window.callbackOnCreated();
 
             window.close();
+        }*/
+        if(form.isValid()){
+            Ext.StoreManager.lookup("S_tipo_hardware").add(values);
+
+            setTimeout(function(){
+                if(window.callbackOnCreated != null)
+                    window.callbackOnCreated();
+
+                window.close();
+            }, 250);
         }
 
     },

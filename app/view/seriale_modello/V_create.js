@@ -42,7 +42,7 @@ Ext.define('CL.view.seriale_modello.V_create', {
                                 name: 'modello_id',
                                 allowBlank: false,
                                 forceSelection: true,
-                                store: 'S_modello_hardware',
+                                store: Ext.create('CL.store.S_modello_hardware'),
                                 queryMode: 'local',
                                 anyMatch: true,
                                 displayField: 'nome',

@@ -202,66 +202,165 @@ Ext.define('CL.view.richiesta.V_quick_create', {
                                                     xtype: 'form',
                                                     items:[
                                                         {
-                                                            xtype: 'combobox',
-                                                            name: 'tipo_hardware_id',
-                                                            fieldLabel: 'Hardware',
-                                                            store: "S_tipo_hardware",
-                                                            queryMode: 'local',
-                                                            displayField: 'nome',
-                                                            valueField: 'id',
-                                                            emptyText: 'Monitor',
-                                                            anyMatch: true,
-                                                            allowBlank: false,
-                                                            forceSelection: true,
-                                                            listeners: {
-                                                                select: function(combo, record){
-                                                                    var tipo_hardware_id = record.get("id");
+                                                            xtype: 'panel',
+                                                            layout: 'hbox',
+                                                            margin: '0 0 5 0',
+                                                            items:[
+                                                                {
+                                                                    xtype: 'combobox',
+                                                                    name: 'tipo_hardware_id',
+                                                                    fieldLabel: 'Hardware',
+                                                                    store: "S_tipo_hardware",
+                                                                    queryMode: 'local',
+                                                                    displayField: 'nome',
+                                                                    valueField: 'id',
+                                                                    emptyText: 'Monitor',
+                                                                    anyMatch: true,
+                                                                    allowBlank: false,
+                                                                    forceSelection: true,
+                                                                    listeners: {
+                                                                        select: function(combo, record){
+                                                                            var tipo_hardware_id = record.get("id");
 
-                                                                    Ext.StoreManager.lookup("S_modello_hardware").load({
-                                                                        params:{
-                                                                            tipo_hardware_id: tipo_hardware_id
+                                                                            Ext.StoreManager.lookup("S_modello_hardware").load({
+                                                                                params:{
+                                                                                    tipo_hardware_id: tipo_hardware_id
+                                                                                }
+                                                                            });
                                                                         }
-                                                                    });
+                                                                    }
+                                                                },
+                                                                {
+                                                                    xtype: 'button',
+                                                                    text: '+',
+                                                                    tooltip: 'Crea e assegna',
+                                                                    listeners:{
+                                                                        click: function(btn){
+                                                                            Ext.widget("tipo_hardware_create",{
+                                                                                animateTarget: btn.el,
+                                                                                callbackOnCreated: function(){
+                                                                                    var records = Ext.StoreManager.lookup("S_tipo_hardware").getRange(),
+                                                                                        record_created = records[records.length-1];
+
+                                                                                    Ext.ComponentQuery.query("window[name=add_tipo_hardware] combobox[name=tipo_hardware_id]")[0].getStore().reload();
+                                                                                    Ext.ComponentQuery.query("window[name=add_tipo_hardware] combobox[name=tipo_hardware_id]")[0].setValue(record_created.get("id"));
+                                                                                    Ext.StoreManager.lookup("S_modello_hardware").load({
+                                                                                        params:{
+                                                                                            tipo_hardware_id: record_created.get("id")
+                                                                                        }
+                                                                                    });
+                                                                                }
+                                                                            });
+                                                                        }
+                                                                    }
                                                                 }
-                                                            }
+                                                            ]
                                                         },
                                                         {
-                                                            xtype: 'combobox',
-                                                            fieldLabel: 'Modello',
-                                                            name: 'modello_id',
-                                                            allowBlank: false,
-                                                            forceSelection: true,
-                                                            store: 'S_modello_hardware',
-                                                            queryMode: 'local',
-                                                            anyMatch: true,
-                                                            displayField: 'nome',
-                                                            valueField: 'id',
-                                                            //editable: false,
-                                                            listeners: {
-                                                                select: function(combo, record){
-                                                                    var modello_id = record.get("id");
+                                                            xtype: 'panel',
+                                                            layout: 'hbox',
+                                                            margin: '0 0 5 0',
+                                                            items:[
+                                                                {
+                                                                    xtype: 'combobox',
+                                                                    fieldLabel: 'Modello',
+                                                                    name: 'modello_id',
+                                                                    allowBlank: false,
+                                                                    forceSelection: true,
+                                                                    store: 'S_modello_hardware',
+                                                                    queryMode: 'local',
+                                                                    anyMatch: true,
+                                                                    displayField: 'nome',
+                                                                    valueField: 'id',
+                                                                    //editable: false,
+                                                                    listeners: {
+                                                                        select: function(combo, record){
+                                                                            var modello_id = record.get("id");
 
-                                                                    Ext.StoreManager.lookup("S_seriale_modello").load({
-                                                                        params:{
-                                                                            solo_disponibili: true,
-                                                                            modello_id: modello_id
+                                                                            Ext.StoreManager.lookup("S_seriale_modello").load({
+                                                                                params:{
+                                                                                    solo_disponibili: true,
+                                                                                    modello_id: modello_id
+                                                                                }
+                                                                            });
                                                                         }
-                                                                    });
+                                                                    }
+                                                                },
+                                                                {
+                                                                    xtype: 'button',
+                                                                    text: '+',
+                                                                    tooltip: 'Crea e assegna',
+                                                                    listeners:{
+                                                                        click: function(btn){
+                                                                            Ext.widget("modello_hardware_create",{
+                                                                                animateTarget: btn.el,
+                                                                                callbackOnCreated: function(){
+                                                                                    var records = Ext.StoreManager.lookup("S_modello_hardware").getRange(),
+                                                                                        record_created = records[records.length-1];
+
+                                                                                    Ext.ComponentQuery.query("window[name=add_tipo_hardware] combobox[name=modello_id]")[0].getStore().reload();
+                                                                                    Ext.ComponentQuery.query("window[name=add_tipo_hardware] combobox[name=modello_id]")[0].setValue(record_created.get("id"));
+
+                                                                                    Ext.Msg.alert("Attenzione!","Il modello è stato creato, ma per poterlo selezionare bisogna prima associargli <b>ALMENO UN SERIALE</b>.")
+                                                                                }
+                                                                            });
+                                                                            var tipo_id = Ext.ComponentQuery.query("window[name=add_tipo_hardware] combobox[name=tipo_hardware_id]")[0].getValue();
+                                                                            Ext.ComponentQuery.query("modello_hardware_create combobox[name=tipo_id]")[0].setValue(tipo_id);
+                                                                            //Ext.ComponentQuery.query("modello_hardware_create combobox[name=tipo_id]")[0].readOnly = true;
+                                                                        }
+                                                                    }
                                                                 }
-                                                            }
+                                                            ]
                                                         },
                                                         {
-                                                            xtype: 'combobox',
-                                                            fieldLabel: 'Seriale',
-                                                            name: 'seriale_id',
-                                                            allowBlank: false,
-                                                            forceSelection: true,
-                                                            store: 'S_seriale_modello',
-                                                            queryMode: 'local',
-                                                            anyMatch: true,
-                                                            displayField: 'seriale',
-                                                            valueField: 'id',
-                                                            editable: false
+                                                            xtype: 'panel',
+                                                            layout: 'hbox',
+                                                            margin: '0 0 5 0',
+                                                            items:[
+                                                                {
+                                                                    xtype: 'combobox',
+                                                                    fieldLabel: 'Seriale',
+                                                                    name: 'seriale_id',
+                                                                    allowBlank: false,
+                                                                    forceSelection: true,
+                                                                    store: 'S_seriale_modello',
+                                                                    queryMode: 'local',
+                                                                    anyMatch: true,
+                                                                    displayField: 'seriale',
+                                                                    valueField: 'id',
+                                                                    editable: false
+                                                                },
+                                                                {
+                                                                    xtype: 'button',
+                                                                    text: '+',
+                                                                    tooltip: 'Crea e assegna',
+                                                                    listeners:{
+                                                                        click: function(btn){
+                                                                            Ext.widget("seriale_modello_create",{
+                                                                                animateTarget: btn.el,
+                                                                                callbackOnCreated: function(){
+                                                                                    var records = Ext.StoreManager.lookup("S_seriale_modello").getRange(),
+                                                                                        record_created = records[records.length-1];
+
+                                                                                    Ext.ComponentQuery.query("window[name=add_tipo_hardware] combobox[name=seriale_id]")[0].getStore().reload();
+                                                                                    Ext.ComponentQuery.query("window[name=add_tipo_hardware] combobox[name=seriale_id]")[0].setValue(record_created.get("id"));
+
+                                                                                    Ext.ComponentQuery.query("window[name=add_tipo_hardware] combobox[name=modello_id]")[0].getStore().reload();
+                                                                                }
+                                                                            });
+                                                                            Ext.ComponentQuery.query("seriale_modello_create combobox[name=modello_id]")[0].getStore().load({
+                                                                                params:{
+                                                                                    flag_full: true,
+                                                                                    tipo_hardware_id: Ext.ComponentQuery.query("window[name=add_tipo_hardware] combobox[name=tipo_hardware_id]")[0].getValue()
+                                                                                }
+                                                                            });
+                                                                            var modello_id = Ext.ComponentQuery.query("window[name=add_tipo_hardware] combobox[name=modello_id]")[0].getValue();
+                                                                            Ext.ComponentQuery.query("seriale_modello_create combobox[name=modello_id]")[0].setValue(modello_id);
+                                                                            //Ext.ComponentQuery.query("modello_hardware_create combobox[name=tipo_id]")[0].readOnly = true;
+                                                                        }
+                                                                    }
+                                                                }
+                                                            ]
                                                         }
                                                     ],
                                                     buttonAlign: 'center',

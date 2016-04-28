@@ -95,11 +95,22 @@ Ext.define('CL.controller.C_modello_hardware', {
             form = window.down("form").getForm(),
             values = form.getValues();
 
-        if(form.isValid()){
+        /*if(form.isValid()){
             Ext.StoreManager.lookup("S_modello_hardware").add(values);
             window.close();
             setTimeout(function(){
                 Ext.StoreManager.lookup("S_modello_hardware").reload();
+            }, 250);
+        }*/
+
+        if(form.isValid()){
+            Ext.StoreManager.lookup("S_modello_hardware").add(values);
+
+            setTimeout(function(){
+                if(window.callbackOnCreated != null)
+                    window.callbackOnCreated();
+
+                window.close();
             }, 250);
         }
     },
