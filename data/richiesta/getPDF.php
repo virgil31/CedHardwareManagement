@@ -28,6 +28,10 @@ $sede = $result[0]->sede_name;
 $ufficio = $result[0]->ufficio_name;
 $data_assegnazione = $result[0]->assegnata_il;
 
+// rimpiazzo i valori nulli delle schede corrispondenti alle assegnazioni del pregresso
+if($funzionario == " ") $funzionario = "-";
+if($data_assegnazione == "") $data_assegnazione = "<i>Assegnazione del Pregresso</i>";
+
 
 $html = '<div style="text-align: center;"><br><img alt=" " src="../../resources/images/logos/logo2.png" height="48" width="48"><h1>Soprintendenza Speciale per il Colosseo, MNR e Area Archeologica di Roma</h1><i>Centro Elaborazione Dati "Piero Bertolini"</i><br><br>Modulo per la consegna di attrezzature Informatiche';
 

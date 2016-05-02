@@ -112,6 +112,7 @@ Ext.define('CL.controller.C_richiesta', {
 
     // MOSTRA FOGLIO CONSEGNA
     mostraFoglioConsegna: function(btn){
+
         var window = btn.up("window"),
             form = window.down("form"),
             values = form.getValues(),
@@ -166,6 +167,20 @@ Ext.define('CL.controller.C_richiesta', {
                 }
             }
         });
+
+
+        setTimeout(function(){
+            var hardware_non_assegnato = 0;
+            Ext.ComponentQuery.query("richiesta_edit grid")[0].getStore().each(function(tipo_hardware){
+                if(tipo_hardware.data.seriale_id == "")
+                    hardware_non_assegnato++;
+            });
+            if(hardware_non_assegnato > 0){
+                Ext.Msg.alert("<b>Attenzione!</b>","Non è stato assegnato <i>tutto</i> l'hardware richiesto,<br>di conseguenza il foglio di consegna potrebbe<br> essere <b>nullo o parziale</b>")
+            }
+        }, 1500);
+
+
     },
 
     // DO EDIT

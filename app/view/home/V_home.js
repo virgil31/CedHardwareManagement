@@ -73,7 +73,7 @@ Ext.define('CL.view.home.V_home', {
                             editable: false,
                             tpl: Ext.create('Ext.XTemplate',
                                 '<ul class="x-list-plain"><tpl for=".">',
-                                    '<li role="option" class="x-boundlist-item"><img src="resources/images/{value}.png" alt=" " style="width:16px;height:16px;"> {name}</li>',
+                                    '<li role="option" class="x-boundlist-item"><img src="resources/images/{value}.png" alt=" " style="width:16px;height:16px;">&nbsp;&nbsp;{name}</li>',
                                 '</tpl></ul>'
                             ),
                             store: Ext.create('Ext.data.Store', {
