@@ -19,7 +19,30 @@ Ext.define('CL.view.controlla_richiesta.V_controlla_richiesta', {
             {
                 xtype: 'panel',
                 titleAlign: 'center',
-                title: '<b>Verifica Stato Richiesta</b>',
+                //title: '<b>Verifica Stato Richiesta</b>',
+                tbar: {
+                    xtype: 'toolbar',
+                    style: {
+                        background: '#5CC25C'
+                    },
+                    height: 50,
+                    items:[
+                        '->',
+                        {
+                            xtype: 'label',
+                            text: 'Verifica Stato Richiesta',
+                            style: {
+                                color: 'white',
+                                fontWeight: 'bold',
+                                fontSize: "25px"
+                            }
+                        },
+                        '->'
+                    ]
+                },
+                style: {
+                    borderRadius: '10px'
+                },
                 width: 500,
                 layout:{
                     type: 'vbox',
@@ -32,47 +55,63 @@ Ext.define('CL.view.controlla_richiesta.V_controlla_richiesta', {
                     {
                         xtype: 'numberfield',
                         name: 'richiesta_id',
-                        emptyText: 'ID della richiesta'
+                        emptyText: 'ID della richiesta',
+                        listeners: {
+                            specialkey: function(field, e){
+                                if (e.getKey() == e.ENTER){
+                                    var btn = Ext.ComponentQuery.query("controlla_richiesta button[action=do_verifica]")[0];
+                                    btn.fireEvent("click",btn);
+                                }
+                            }
+                        }
                     },
                     {
                         xtype: 'button',
+                        action: 'do_verifica',
                         text: 'Verifica',
                         scale: 'medium',
-                        style:{
+                        /*style:{
                             background: '#5CC25C'
-                        },
-                        handler: function(){
-                            var richiesta_id = Ext.ComponentQuery.query("controlla_richiesta numberfield[name=richiesta_id]")[0].getValue();
-                            if(richiesta_id == 0 || richiesta_id == null)
-                                Ext.Msg.alert("Attenzione!","Inserire un ID per procedere con la sua verifica.");
+                        },*/
+                        listeners:{
+                            click: function(){
+                                var richiesta_id = Ext.ComponentQuery.query("controlla_richiesta numberfield[name=richiesta_id]")[0].getValue();
+                                if(richiesta_id == 0 || richiesta_id == null)
+                                    Ext.Msg.alert("Attenzione!","Inserire un ID per procedere con la sua verifica.");
 
-                            else{
-                                Ext.getBody().mask("Verifica in corso...");
-                                Ext.Ajax.request({
-                                    url: 'data/richiesta/controlla.php',
-                                    params: {
-                                        richiesta_id: richiesta_id
-                                    },
-                                    success: function(response, opts) {
-                                        Ext.getBody().unmask();
+                                else{
+                                    Ext.ComponentQuery.query("controlla_richiesta panel")[0].mask("Verifica in corso...");
+                                    Ext.Ajax.request({
+                                        url: 'data/richiesta/controlla.php',
+                                        params: {
+                                            richiesta_id: richiesta_id
+                                        },
+                                        success: function(response, opts) {
+                                            Ext.ComponentQuery.query("controlla_richiesta panel")[0].unmask();
 
-                                        var risposta = Ext.decode(response.responseText),
-                                            stato = risposta.stato;
+                                            var risposta = Ext.decode(response.responseText),
+                                                stato = risposta.stato;
 
-                                        Ext.ComponentQuery.query("controlla_richiesta label[name=stato]")[0].setText(stato)
+                                            Ext.ComponentQuery.query("controlla_richiesta label[name=stato]")[0].setText("#"+richiesta_id+" => "+stato);
 
-                                        if(stato=="RIFIUTATA" || stato=="INESISTENTE"){
-                                            Ext.ComponentQuery.query("controlla_richiesta label[name=stato]")[0].setStyle({
-                                                color: "red"
-                                            })
+                                            if(stato=="RIFIUTATA" || stato=="INESISTENTE"){
+                                                Ext.ComponentQuery.query("controlla_richiesta label[name=stato]")[0].setStyle({
+                                                    color: "red"
+                                                })
+                                            }
+                                            else if(stato == "COMPLETATA"){
+                                                Ext.ComponentQuery.query("controlla_richiesta label[name=stato]")[0].setStyle({
+                                                    color: "green"
+                                                })
+                                            }
+                                            else{
+                                                Ext.ComponentQuery.query("controlla_richiesta label[name=stato]")[0].setStyle({
+                                                    color: "#3892D4"
+                                                })
+                                            }
                                         }
-                                        else{
-                                            Ext.ComponentQuery.query("controlla_richiesta label[name=stato]")[0].setStyle({
-                                                color: "#3892D4"
-                                            })
-                                        }
-                                    }
-                                });
+                                    });
+                                }
                             }
                         }
                     },
@@ -82,7 +121,8 @@ Ext.define('CL.view.controlla_richiesta.V_controlla_richiesta', {
                         name: 'stato',
                         text: '-',
                         style:{
-                            fontWeight: "bold"
+                            fontWeight: "bold",
+                            fontSize: "30px"
                         }
                     },
                     {xtype: 'menuseparator',width: '95%'},

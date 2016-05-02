@@ -74,7 +74,7 @@ Ext.application({
                 {
                     xtype: 'panel',
                     scrollable: true,
-                    bodyStyle: "background: #3892D4",//  686868    963232
+                    bodyStyle: "background: #646464",// 3892D4
                     tbar: Ext.widget('tbar'),
                     layout: {
                         type: 'hbox',
@@ -106,7 +106,15 @@ Ext.application({
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+
     applyOverrides: function () {
+
+        /*Ext.override(Ext.button.Button,{
+            style: {
+                borderColor: '#D8D8D8'
+            }
+        });*/
+
         /*
          fade animation card layout
          */

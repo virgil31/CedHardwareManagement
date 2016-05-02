@@ -72,23 +72,32 @@ Ext.define('CL.controller.C_richiesta', {
 
         values.tipi_hardware = tipi_hardware;
 
-        win.mask("Creazione in corso...");
-        Ext.Ajax.request({
-            url: 'data/richiesta/quick_create.php',
-            params:{
-                data: Ext.encode(values)
-            },
-            success: function(response, opts) {
-                win.unmask();
-                win.close();
-                Ext.ComponentQuery.query("richiesta_quick_create grid")[0].getStore().removeAll();
-                Ext.ComponentQuery.query("home grid")[0].getStore().loadPage(1);
-            },
-            failure: function(response, opts) {
-                win.unmask();
-                Ext.Msg.alert("Attenzione!","Errore interno. Si è pregati di riprovare più tardi.")
-            }
-        });
+        if(!form.isValid() || tipi_hardware.length == 0){
+            Ext.Msg.show({
+                title:"<b>Attenzione!</b>",
+                message: "Compilare i campi <i>anagrafici</i> dell'assegnazione<br>e selezionare almeno un modello/seriale.",
+                icon: Ext.Msg.ERROR
+            });
+        }
+        else{
+            win.mask("Creazione in corso...");
+            Ext.Ajax.request({
+                url: 'data/richiesta/quick_create.php',
+                params:{
+                    data: Ext.encode(values)
+                },
+                success: function(response, opts) {
+                    win.unmask();
+                    win.close();
+                    Ext.ComponentQuery.query("richiesta_quick_create grid")[0].getStore().removeAll();
+                    Ext.ComponentQuery.query("home grid")[0].getStore().loadPage(1);
+                },
+                failure: function(response, opts) {
+                    win.unmask();
+                    Ext.Msg.alert("Attenzione!","Errore interno. Si è pregati di riprovare più tardi.")
+                }
+            });
+        }
 
     },
 
@@ -232,6 +241,11 @@ Ext.define('CL.controller.C_richiesta', {
         });
 
         win.down("form").loadRecord(record);
+
+        //nel caso in cui si tratti di pregresso,
+        //non farò editare lo stato (guarda la View) e la data di assegnazione
+        if(record.get("stato") == "Pregresso")
+            Ext.ComponentQuery.query("richiesta_edit datefield[name=assegnata_il]")[0].readOnly = true;
 
         Ext.StoreManager.lookup("S_assegnazione").load({
             params:{

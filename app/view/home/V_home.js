@@ -58,7 +58,8 @@ Ext.define('CL.view.home.V_home', {
                         {
                             xtype: 'button',
                             icon: 'resources/images/icon_plus.gif',
-                            tooltip: 'Crea Richiesta',
+                            text: 'Assegnazione Rapida',
+                            tooltip: 'Assegnazione Rapida',
                             handler: function(){
                                 CL.app.getController("C_richiesta").onQuickCreate(this.el);
                             }
@@ -70,17 +71,23 @@ Ext.define('CL.view.home.V_home', {
                             displayField: 'name',
                             width: 120,
                             editable: false,
+                            tpl: Ext.create('Ext.XTemplate',
+                                '<ul class="x-list-plain"><tpl for=".">',
+                                    '<li role="option" class="x-boundlist-item"><img src="resources/images/{value}.png" alt=" " style="width:16px;height:16px;"> {name}</li>',
+                                '</tpl></ul>'
+                            ),
                             store: Ext.create('Ext.data.Store', {
                                 fields: ['name'],
                                 data : [
-                                    {"name":"Tutte",        "value":"%"},
+                                    {"name":"Tutte",        "value":"Tutte"},
                                     {"name":"Da Valutare",  "value":"Da Valutare"},
                                     {"name":"Rifiutate",    "value":"Rifiutata"},
                                     {"name":"Accettate",    "value":"Accettata"},
-                                    {"name":"Completate",   "value":"Completata"}
+                                    {"name":"Completate",   "value":"Completata"},
+                                    {"name":"Pregresso",   "value":"Pregresso"}
                                 ]
                             }),
-                            value: "%",
+                            value: "Tutte",
                             listeners: {
                                 select: function(combo,record){
                                     Ext.StoreManager.lookup("S_richiesta").proxy.extraParams.stato = record.get("value");

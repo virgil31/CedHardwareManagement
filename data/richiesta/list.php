@@ -35,6 +35,7 @@ try{
 	// LIST PAGINATO FILTRATO PER stato
 	else if(isset($_GET["stato"])){
 		$stato = $_GET["stato"];
+		if($stato == "Tutte") $stato = "%";
 		$statement = $pdo->prepare("
 			SELECT A.id, A.nome,A.cognome,CONCAT(A.nome,' ',A.cognome) as full_nome, funzionario_id,CONCAT(B.nome,' ',B.cognome) as funzionario_name,email,A.sede_id,C.nome as sede_name,ufficio_id, D.nome as ufficio_name,servizio,motivazione,disponibile_per_usato,richiesta_il,assegnata_il, stato,  COUNT(*) OVER() as total
 			FROM richiesta A

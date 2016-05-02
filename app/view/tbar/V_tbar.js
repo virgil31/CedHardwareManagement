@@ -42,7 +42,8 @@ Ext.define('CL.view.tbar.V_tbar', {
 		                    "background-color: transparent;" +
 		                    "background-repeat: no-repeat;",
 		                handler: function () {
-		                    window.open("http://i109.photobucket.com/albums/n51/Izariel/ChromaticEmperorDragon.jpg",'_blank');
+		                    window.location.href = window.location.pathname + "#home";
+		                    location.reload();
 		                }
 		            },
 		            '->',

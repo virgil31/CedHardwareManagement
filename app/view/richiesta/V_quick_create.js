@@ -7,8 +7,16 @@ Ext.define('CL.view.richiesta.V_quick_create', {
     autoShow: true,
     constrain: true,
     modal: true,
+    resizable: false,
     title: '<b>Richiesta Materiale Informatico - CED</b>',
     width: 600,
+
+
+    listeners:{
+        beforeclose: function(){
+            Ext.ComponentQuery.query("richiesta_quick_create grid")[0].getStore().removeAll();
+        }
+    },
 
     items:[
         {
@@ -36,7 +44,7 @@ Ext.define('CL.view.richiesta.V_quick_create', {
                     items:[
                         {
                             xtype: 'combobox',
-                            fieldLabel: 'Richiedente',
+                            fieldLabel: 'Assegnato a',
                             name: 'richiedente_id',
                             allowBlank: false,
                             forceSelection: true,
@@ -197,9 +205,11 @@ Ext.define('CL.view.richiesta.V_quick_create', {
                                             name: 'add_tipo_hardware',
                                             title: 'Aggiungi Hardware Richiesto',
                                             padding: 10,
+                                            width: 400,
                                             items: [
                                                 {
                                                     xtype: 'form',
+                                                    width: '100%',
                                                     items:[
                                                         {
                                                             xtype: 'panel',
@@ -218,6 +228,7 @@ Ext.define('CL.view.richiesta.V_quick_create', {
                                                                     anyMatch: true,
                                                                     allowBlank: false,
                                                                     forceSelection: true,
+                                                                    width: '92%',
                                                                     listeners: {
                                                                         select: function(combo, record){
                                                                             var tipo_hardware_id = record.get("id");
@@ -226,9 +237,16 @@ Ext.define('CL.view.richiesta.V_quick_create', {
                                                                                 params:{
                                                                                     tipo_hardware_id: tipo_hardware_id
                                                                                 }
+
                                                                             });
 
+
+                                                                            Ext.ComponentQuery.query("window[name=add_tipo_hardware] combobox[name=modello_id]")[0].reset();
                                                                             Ext.ComponentQuery.query("window[name=add_tipo_hardware] combobox[name=seriale_id]")[0].reset();
+
+                                                                            //sblocco la scelta del modello
+                                                                            Ext.ComponentQuery.query("window[name=add_tipo_hardware] combobox[name=modello_id]")[0].enable();
+                                                                            Ext.ComponentQuery.query("window[name=add_tipo_hardware] button[action=crea_assegna_modello]")[0].enable();
                                                                         }
                                                                     }
                                                                 },
@@ -274,6 +292,8 @@ Ext.define('CL.view.richiesta.V_quick_create', {
                                                                     anyMatch: true,
                                                                     displayField: 'nome',
                                                                     valueField: 'id',
+                                                                    disabled: true,
+                                                                    width: '92%',
                                                                     //editable: false,
                                                                     listeners: {
                                                                         select: function(combo, record){
@@ -285,6 +305,12 @@ Ext.define('CL.view.richiesta.V_quick_create', {
                                                                                     modello_id: modello_id
                                                                                 }
                                                                             });
+
+                                                                            Ext.ComponentQuery.query("window[name=add_tipo_hardware] combobox[name=seriale_id]")[0].reset();
+
+                                                                            //sblocco la scelta del modello
+                                                                            Ext.ComponentQuery.query("window[name=add_tipo_hardware] combobox[name=seriale_id]")[0].enable();
+                                                                            Ext.ComponentQuery.query("window[name=add_tipo_hardware] button[action=crea_assegna_seriale]")[0].enable();
                                                                         }
                                                                     }
                                                                 },
@@ -292,6 +318,8 @@ Ext.define('CL.view.richiesta.V_quick_create', {
                                                                     xtype: 'button',
                                                                     text: '+',
                                                                     tooltip: 'Crea e assegna',
+                                                                    action: 'crea_assegna_modello',
+                                                                    disabled: true,
                                                                     listeners:{
                                                                         click: function(btn){
                                                                             Ext.widget("modello_hardware_create",{
@@ -330,12 +358,16 @@ Ext.define('CL.view.richiesta.V_quick_create', {
                                                                     anyMatch: true,
                                                                     displayField: 'seriale',
                                                                     valueField: 'id',
-                                                                    editable: false
+                                                                    disabled: true,
+                                                                    width: '92%'
+                                                                    //editable: false
                                                                 },
                                                                 {
                                                                     xtype: 'button',
                                                                     text: '+',
                                                                     tooltip: 'Crea e assegna',
+                                                                    action: 'crea_assegna_seriale',
+                                                                    disabled: true,
                                                                     listeners:{
                                                                         click: function(btn){
                                                                             Ext.widget("seriale_modello_create",{
@@ -426,7 +458,7 @@ Ext.define('CL.view.richiesta.V_quick_create', {
             buttons:[
                 {
                     text: "Crea Richiesta",
-                    formBind: true,
+                    //formBind: true,
                     scale: 'large',
                     action: 'do_create',
                     allowBlank: false,

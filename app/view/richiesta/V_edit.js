@@ -7,7 +7,7 @@ Ext.define('CL.view.richiesta.V_edit', {
     autoShow: true,
     modal: true,
     constrain: true,
-    //resizable: false,
+    resizable: false,
 
     padding: 10,
 
@@ -143,7 +143,7 @@ Ext.define('CL.view.richiesta.V_edit', {
                                     {
                                         //iconCls: 'x-fa fa-remove',
                                         icon: 'resources/images/icon_give.png',
-                                        tooltip: 'Assegna Hardware',
+                                        tooltip: 'Cambia/Assegna Hardware',
                                         handler: function(grid, rowIndex, colIndex) {
                                             var rec = grid.getStore().getAt(rowIndex);
                                             CL.app.getController("C_assegnazione").onEdit(this.el,rec);

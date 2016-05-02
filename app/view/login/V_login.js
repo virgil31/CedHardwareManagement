@@ -13,16 +13,17 @@ Ext.define('CL.view.login.V_login', {
     },
 
 
-    padding: 30,
+    //padding: 30,
 
     items: [
         {
             xtype: 'image',
             src: 'resources/images/colonna.png',
             alt: " ",
-            width: 300,
+            width: 280,
             height: 498
         },
+        {width:50},
         {
             xtype: 'panel',
             bodyStyle:{
@@ -35,7 +36,7 @@ Ext.define('CL.view.login.V_login', {
             },
             items:[
                 {
-                    html: '<br><br><br><br><br>'
+                    html: '<br><br><br><br>'
                 },
                 {
                     xtype: 'form',
@@ -84,8 +85,9 @@ Ext.define('CL.view.login.V_login', {
                 {
                     xtype: 'button',
                     margin: '20 0 0 0',
-                    text: 'Richiesta Hardware',
-                    padding: 40,
+                    text: 'Richiedi Nuovo Hardware!',
+                    height: 80,
+                    width: 300,
                     scale: 'large',
                     style: {
                         background: "#5CC25C"
@@ -165,6 +167,7 @@ Ext.define('CL.view.login.V_login', {
                     margin: '20 0 0 0',
                     text: 'Verifica Stato Richiesta',
                     scale: 'large',
+                    width: 300,
                     style: {
                         background: "#CB9A2D"
                     },
@@ -174,11 +177,12 @@ Ext.define('CL.view.login.V_login', {
                 }
             ]
         },
+        {width:50},
         {
             xtype: 'image',
             src: 'resources/images/colonna.png',
             alt: " ",
-            width: 300,
+            width: 280,
             height: 498
         }
     ]
