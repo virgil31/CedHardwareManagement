@@ -137,15 +137,15 @@ Ext.define('CL.controller.C_fattura', {
         var my_controller = this;
 
         Ext.StoreManager.lookup("S_fattura").load({
+            params: {
+                flag_full: true
+            },
             callback: function(){
                 var record = Ext.StoreManager.lookup("S_fattura").getById(id);
                 my_controller.onEdit(animateTargetEl,record);
             }
         });
 
-
     }
-
-
 
 });
