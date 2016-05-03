@@ -26,8 +26,33 @@ Ext.define('CL.view.albero_risorse.V_albero_risorse', {
 
                 listeners: {
                     itemclick: function( treepanel, record, item, index, e, eOpts ){
+                        console.log(record.data);
+
                         if(record.get("leaf")){
-                            console.log("Foglia! ID: "+record.get("id"));
+
+                            var array_path = record.get("id").split("/"),
+                                sede_id = array_path[1],
+                                ufficio_id = array_path[2],
+                                richiedente = array_path[3],
+                                array_richiedente = richiedente.split(" "),
+                                nome = array_richiedente[0],
+                                cognome = array_richiedente[1];
+
+
+                            /*
+                            mostro la lista dei seriali assegnati a tale utente E in tale ufficio
+                            */
+                            Ext.StoreManager.lookup("S_seriale_modello").load({
+                                params:{
+                                    ufficio_id: ufficio_id,
+                                    richiedente: richiedente
+                                }
+                            });
+
+                            Ext.widget("seriale_modello_list_by_richiedente_ufficio",{
+                                title: 'Lista Materiale Assegnato a <b>'+richiedente+"</b> nell'ufficio selezionato",
+                                animateTarget: this.el
+                            });
                         }
                     }
                 },

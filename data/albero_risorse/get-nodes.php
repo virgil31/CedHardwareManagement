@@ -12,20 +12,15 @@ $array_path = explode('/',$node);
 
 //ROOT
 if(count($array_path) == 1){
-    /*$statement = $pdo->prepare("
-        SELECT *, FALSE as leaf
-        FROM sede
-        ORDER BY nome
-    ");*/
 
     $statement = $pdo->prepare("
-        SELECT A.id, CONCAT(A.nome,' (',COUNT(D.richiesta_id),')') as nome, FALSE as leaf, 'sede' as icon
+        SELECT A.id, CONCAT(A.nome,' (',COUNT(E.id),')') as nome, FALSE as leaf, 'sede' as icon
 
         FROM sede A
         	LEFT JOIN ufficio B ON B.sede_id = A.id
         	LEFT JOIN richiesta C ON C.ufficio_id = B.id
         	LEFT JOIN richiesta_tipo_hardware D ON D.richiesta_id = C.id
-
+            LEFT JOIN seriale_modello E ON E.id = D.seriale_id
 
         GROUP BY A.id, A.nome
         ORDER BY A.nome
@@ -37,20 +32,14 @@ if(count($array_path) == 1){
 else if(count($array_path) == 2){
     $sede_id = $array_path[1];
 
-    /*$statement = $pdo->prepare("
-        SELECT *
-        FROM ufficio
-        WHERE sede_id = $sede_id
-        ORDER BY nome
-    ");*/
     $statement = $pdo->prepare("
-        SELECT A.id, CONCAT(A.nome,' (',COUNT(C.richiesta_id),')') as nome, FALSE as leaf, 'ufficio' as icon
+        SELECT A.id, CONCAT(A.nome,' (',COUNT(D.id),')') as nome, FALSE as leaf, 'ufficio' as icon
         FROM ufficio A
             LEFT JOIN richiesta B ON B.ufficio_id = A.id
             LEFT JOIN richiesta_tipo_hardware C ON C.richiesta_id = B.id
+            LEFT JOIN seriale_modello D ON D.id = C.seriale_id
 
         WHERE A.sede_id = $sede_id
-
         GROUP BY A.id
         ORDER BY A.nome
 
@@ -67,10 +56,13 @@ else if(count($array_path) == 3){
         SELECT CONCAT(B.nome,' ',B.cognome,' (',COUNT(*),')') as nome, CONCAT(B.nome,' ',B.cognome) as id, TRUE as leaf, 'utente' as icon
 
         FROM ufficio A
-        	RIGHT JOIN richiesta B ON B.ufficio_id = A.id
-        	LEFT JOIN richiesta_tipo_hardware C ON C.richiesta_id = B.id
+            RIGHT JOIN richiesta B ON B.ufficio_id = A.id
+            LEFT JOIN richiesta_tipo_hardware C ON C.richiesta_id = B.id
+            LEFT JOIN seriale_modello D ON D.id = C.seriale_id
 
         WHERE A.id = $ufficio_id
+            AND D.id IS NOT NULL
+
         GROUP BY B.nome, B.cognome
 
     ");

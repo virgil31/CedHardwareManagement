@@ -11,6 +11,7 @@ Ext.define('CL.controller.C_seriale_modello', {
 
     views: [
         'seriale_modello.V_list_by_modello',
+        'seriale_modello.V_list_by_richiedente_ufficio',
         'seriale_modello.V_create',
         'seriale_modello.V_edit'
     ],

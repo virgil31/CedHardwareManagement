@@ -35,6 +35,15 @@ Ext.define('CL.controller.C_albero_risorse', {
 
             //
             Ext.ComponentQuery.query('albero_risorse treepanel')[0].collapseAll();
+
+            Ext.toast({
+                html: 'Doppio click su un utente per vedere la lista del materiale assegnato.',
+                title: 'Guida',
+                width: 430,
+                align: 'b',
+                closable: true
+            });
+
         }
         else
             this.redirectTo('login');
