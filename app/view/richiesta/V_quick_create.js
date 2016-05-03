@@ -457,7 +457,7 @@ Ext.define('CL.view.richiesta.V_quick_create', {
             buttonAlign: 'center',
             buttons:[
                 {
-                    text: "Crea Richiesta",
+                    text: "Associa Hardware",
                     //formBind: true,
                     scale: 'large',
                     action: 'do_create',

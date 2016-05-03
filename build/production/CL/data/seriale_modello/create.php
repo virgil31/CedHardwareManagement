@@ -17,12 +17,13 @@ $s = $pdo->prepare("
 
 $params = array(
 	'seriale' => $data['seriale'],
-	'modello_id' => $data['modello_id'],
+	'modello_id' =>($data["modello_id"]=="") ? $_POST['modello_id'] : $data['modello_id'],
 	'fattura_id' => $data['fattura_id']
 );
 
 $success = $s->execute($params);
 
+$error =  $pdo->errorInfo();
 
 $last_id = $pdo->lastInsertId("seriale_modello_id_seq");
 
@@ -39,6 +40,6 @@ if ($success) {
 else{
     echo json_encode(array(
         "success" => false,
-        "error_message" =>  $pdo->errorInfo()
+        "error_message" =>  $error
     ));
 }

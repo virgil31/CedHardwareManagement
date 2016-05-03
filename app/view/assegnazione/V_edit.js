@@ -62,8 +62,8 @@ Ext.define('CL.view.assegnazione.V_edit', {
                         queryMode: 'local',
                         anyMatch: true,
                         displayField: 'seriale',
-                        valueField: 'id',
-                        editable: false
+                        valueField: 'id'
+                        //editable: false
                     }
                 ],
                 buttonAlign: 'center',

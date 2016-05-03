@@ -25,6 +25,8 @@ Ext.define('CL.view.seriale_modello.V_list_by_modello', {
     initComponent: function() {
         var this_view = this;
 
+        var record_modello = this.record_modello;
+
         this_view.items = [
             {
                 xtype: 'grid',
@@ -48,7 +50,11 @@ Ext.define('CL.view.seriale_modello.V_list_by_modello', {
                         {
                             xtype: 'button',
                             icon: 'resources/images/icon_plus.gif',
-                            action: 'on_create'
+                            //action: 'on_create'
+                            handler: function(){
+                                CL.app.getController("C_seriale_modello").onCreate(this.el,record_modello);
+                            }
+
                         },
                         '->',
                         {

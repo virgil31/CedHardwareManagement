@@ -86,11 +86,13 @@ Ext.define('CL.controller.C_seriale_modello', {
     },
 
     //ON CREATE
-    onCreate: function(btn){
+    onCreate: function(btn,record_modello){
         var win = Ext.widget("seriale_modello_create",{
             animateTarget: btn.el
         });
 
+        win.down("combobox[name=modello_id]").setValue(record_modello.get("id"));
+        win.down("combobox[name=modello_id]").setRawValue(record_modello.get("nome"));
         win.down("combobox[name=modello_id]").setReadOnly(true);
     },
 
@@ -100,20 +102,7 @@ Ext.define('CL.controller.C_seriale_modello', {
             form = window.down("form").getForm(),
             values = form.getValues();
 
-        /*
-        if(form.isValid()){
-            Ext.StoreManager.lookup("S_seriale_modello").add(values);
-
-            setTimeout(function(){
-                Ext.StoreManager.lookup("S_seriale_modello").reload({
-                    callback: function(){
-                        var nome_modello = Ext.ComponentQuery.query("seriale_modello_create combobox[name=modello_id]")[0].getRawValue();
-                        window.close();
-                        Ext.ComponentQuery.query("seriale_modello_list_by_modello")[0].setTitle('Lista Seriali ('+this.getTotalCount()+') - <b>'+nome_modello+'</b>');
-                    }
-                });
-            }, 250);
-        }*/
+    
         if(form.isValid()){
             Ext.StoreManager.lookup("S_seriale_modello").add(values);
 
