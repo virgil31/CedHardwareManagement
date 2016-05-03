@@ -159,8 +159,7 @@ Ext.define('CL.view.modello_hardware.V_list', {
                                     store.getProxy().extraParams.modello_id = rec.get("id");
 
                                     var win = Ext.widget("seriale_modello_list_by_modello",{
-                                        animateTarget: btn.el,
-                                        record_modello: rec
+                                        animateTarget: btn.el
                                     });
 
                                     store.load({

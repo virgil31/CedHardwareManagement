@@ -12,10 +12,23 @@ $array_path = explode('/',$node);
 
 //ROOT
 if(count($array_path) == 1){
-    $statement = $pdo->prepare("
+    /*$statement = $pdo->prepare("
         SELECT *, FALSE as leaf
         FROM sede
         ORDER BY nome
+    ");*/
+
+    $statement = $pdo->prepare("
+        SELECT A.id, CONCAT(A.nome,' (',COUNT(D.richiesta_id),')') as nome, FALSE as leaf, 'sede' as icon
+
+        FROM sede A
+        	LEFT JOIN ufficio B ON B.sede_id = A.id
+        	LEFT JOIN richiesta C ON C.ufficio_id = B.id
+        	LEFT JOIN richiesta_tipo_hardware D ON D.richiesta_id = C.id
+
+
+        GROUP BY A.id, A.nome
+        ORDER BY A.nome
     ");
 }
 
@@ -31,7 +44,7 @@ else if(count($array_path) == 2){
         ORDER BY nome
     ");*/
     $statement = $pdo->prepare("
-        SELECT A.id, CONCAT(A.nome,' (',COUNT(C.richiesta_id),')') as nome, FALSE as leaf
+        SELECT A.id, CONCAT(A.nome,' (',COUNT(C.richiesta_id),')') as nome, FALSE as leaf, 'ufficio' as icon
         FROM ufficio A
             LEFT JOIN richiesta B ON B.ufficio_id = A.id
             LEFT JOIN richiesta_tipo_hardware C ON C.richiesta_id = B.id
@@ -51,7 +64,7 @@ else if(count($array_path) == 3){
 
     $statement = $pdo->prepare("
 
-        SELECT CONCAT(B.nome,' ',B.cognome,' (',COUNT(*),')') as nome, CONCAT(B.nome,' ',B.cognome) as id, FALSE as leaf
+        SELECT CONCAT(B.nome,' ',B.cognome,' (',COUNT(*),')') as nome, CONCAT(B.nome,' ',B.cognome) as id, TRUE as leaf, 'utente' as icon
 
         FROM ufficio A
         	RIGHT JOIN richiesta B ON B.ufficio_id = A.id
@@ -62,6 +75,27 @@ else if(count($array_path) == 3){
 
     ");
 }
+/*
+// ROOT/sede_id/ufficio_id/nome cognome
+else if(count($array_path) == 4){
+    $nome_e_cognome = $array_path[3];
+    $nome_e_cognome = explode(" ",$nome_e_cognome);
+    $nome = $nome_e_cognome[0];
+    $cognome = $nome_e_cognome[1];
+
+    $statement = $pdo->prepare("
+
+        SELECT CONCAT(B.nome,' ',B.cognome,' (',COUNT(*),')') as nome, CONCAT(B.nome,' ',B.cognome) as id, FALSE as leaf, 'utente' as icon
+
+        FROM ufficio A
+        	RIGHT JOIN richiesta B ON B.ufficio_id = A.id
+        	LEFT JOIN richiesta_tipo_hardware C ON C.richiesta_id = B.id
+
+        WHERE A.id = $ufficio_id
+        GROUP BY B.nome, B.cognome
+
+    ");
+}*/
 
 $statement->execute();
 $result = $statement->fetchAll(PDO::FETCH_OBJ);
@@ -71,7 +105,8 @@ foreach ($result as $row) {
     array_push($arrayResult,array(
         "id" => $node.'/'.$row->id,
         "leaf" => $row->leaf,
-        "text" => $row->nome
+        "text" => $row->nome,
+        "icon" => "resources/images/icon_".$row->icon.".png"
         //"src" => "root/".$row->id,
         //"qtip" => "qtip here",
     ));

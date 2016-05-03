@@ -17,7 +17,7 @@ $s = $pdo->prepare("
 
 $params = array(
 	'seriale' => $data['seriale'],
-	'modello_id' =>($data["modello_id"]=="") ? $_POST['modello_id'] : $data['modello_id'],
+	'modello_id' => $data["modello_id"],
 	'fattura_id' => $data['fattura_id']
 );
 

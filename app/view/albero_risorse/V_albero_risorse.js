@@ -24,6 +24,14 @@ Ext.define('CL.view.albero_risorse.V_albero_risorse', {
                 height: '98%',
                 flex: 60,
 
+                listeners: {
+                    itemclick: function( treepanel, record, item, index, e, eOpts ){
+                        if(record.get("leaf")){
+                            console.log("Foglia! ID: "+record.get("id"));
+                        }
+                    }
+                },
+
                 tbar: {
                     xtype: 'toolbar',
                     height: 38,

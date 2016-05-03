@@ -60,6 +60,8 @@ Ext.define('CL.controller.C_fattura', {
             animateTarget: animateTargetEl
         });
 
+        Ext.StoreManager.lookup("S_fornitore").load({params:{flag_full: true}});
+
         win.down("form").loadRecord(record);
     },
 

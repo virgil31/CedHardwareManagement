@@ -86,13 +86,14 @@ Ext.define('CL.controller.C_seriale_modello', {
     },
 
     //ON CREATE
-    onCreate: function(btn,record_modello){
+    onCreate: function(btn){
+        var modello_id = Ext.StoreManager.lookup('S_seriale_modello').getProxy().extraParams.modello_id;
+
         var win = Ext.widget("seriale_modello_create",{
             animateTarget: btn.el
         });
 
-        win.down("combobox[name=modello_id]").setValue(record_modello.get("id"));
-        win.down("combobox[name=modello_id]").setRawValue(record_modello.get("nome"));
+        win.down("combobox[name=modello_id]").getStore().load({params:{flag_full: true}});
         win.down("combobox[name=modello_id]").setReadOnly(true);
     },
 
@@ -102,7 +103,8 @@ Ext.define('CL.controller.C_seriale_modello', {
             form = window.down("form").getForm(),
             values = form.getValues();
 
-    
+        console.log(values);
+
         if(form.isValid()){
             Ext.StoreManager.lookup("S_seriale_modello").add(values);
 

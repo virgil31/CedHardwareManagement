@@ -32,6 +32,9 @@ Ext.define('CL.controller.C_albero_risorse', {
                 Ext.ComponentQuery.query('viewport panel[name=card]')[0].add({xtype: 'albero_risorse'});
 
             Ext.ComponentQuery.query('viewport panel[name=card]')[0].getLayout().setActiveItem('albero_risorse_id');
+
+            //
+            Ext.ComponentQuery.query('albero_risorse treepanel')[0].collapseAll();
         }
         else
             this.redirectTo('login');
