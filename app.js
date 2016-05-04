@@ -110,11 +110,12 @@ Ext.application({
 
     applyOverrides: function () {
 
-        /*Ext.override(Ext.button.Button,{
-            style: {
-                borderColor: '#D8D8D8'
-            }
-        });*/
+        Ext.override(Ext.form.field.Text,{
+            msgTarget: 'side'
+        });
+        Ext.override(Ext.form.field.Number,{
+            msgTarget: 'side'
+        });
 
         /*
          fade animation card layout

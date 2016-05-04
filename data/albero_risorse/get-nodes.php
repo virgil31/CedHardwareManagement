@@ -20,7 +20,7 @@ if(count($array_path) == 1){
         	LEFT JOIN ufficio B ON B.sede_id = A.id
         	LEFT JOIN richiesta C ON C.ufficio_id = B.id
         	LEFT JOIN richiesta_tipo_hardware D ON D.richiesta_id = C.id
-            LEFT JOIN seriale_modello E ON E.id = D.seriale_id
+            LEFT JOIN seriale_modello E ON (E.id = D.seriale_id AND E.disponibile = FALSE)
 
         GROUP BY A.id, A.nome
         ORDER BY A.nome
@@ -37,7 +37,7 @@ else if(count($array_path) == 2){
         FROM ufficio A
             LEFT JOIN richiesta B ON B.ufficio_id = A.id
             LEFT JOIN richiesta_tipo_hardware C ON C.richiesta_id = B.id
-            LEFT JOIN seriale_modello D ON D.id = C.seriale_id
+            LEFT JOIN seriale_modello D ON (D.id = C.seriale_id AND D.disponibile = FALSE)
 
         WHERE A.sede_id = $sede_id
         GROUP BY A.id
@@ -62,6 +62,7 @@ else if(count($array_path) == 3){
 
         WHERE A.id = $ufficio_id
             AND D.id IS NOT NULL
+            AND D.disponibile = FALSE
 
         GROUP BY B.nome, B.cognome
 

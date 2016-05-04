@@ -25,7 +25,7 @@ Ext.define('CL.view.albero_risorse.V_albero_risorse', {
                 flex: 60,
 
                 listeners: {
-                    itemclick: function( treepanel, record, item, index, e, eOpts ){
+                    itemdblclick: function( treepanel, record, item, index, e, eOpts ){
                         console.log(record.data);
 
                         if(record.get("leaf")){

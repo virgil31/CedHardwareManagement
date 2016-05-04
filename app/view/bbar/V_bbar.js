@@ -16,7 +16,7 @@ Ext.define('CL.view.bbar.V_bbar', {
                 '->',
                 {
         			html: '<marquee behavior="scroll" scrollamount="5" direction="left" width="900">'+
-        				'Leyle Leyle Leyle Leyle Leyle Leyle Leyle Leyle Leyle Leyle Leyle Leyle Leyle Leyle Leyle Leyle Leyle Leyle Leyle Leyle Leyle Leyle Leyle Leyle Leyle Leyle Leyle Leyle Leyle Leyle Leyle Leyle Leyle Leyle Leyle Leyle Leyle Leyle '+
+        				'Lena Lena Lena Lena Lena Lena Lena Lena Lena Lena Lena Lena Lena Lena Lena Lena Lena Lena Lena Lena Lena Lena Lena Lena Lena Lena Lena Lena Lena Lena Lena Lena Lena Lena Lena Lena Lena Lena '+
         				'</marquee>'
         		},
                 '->'
