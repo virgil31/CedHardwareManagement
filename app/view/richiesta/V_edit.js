@@ -132,6 +132,14 @@ Ext.define('CL.view.richiesta.V_edit', {
                             enableTextSelection: true
                         },
                         store: 'S_assegnazione',
+                        listeners: {
+                            itemmouseenter: function(view, record, item) {
+                                if(record.get('assegnato_a') !== '<b> </b> -  ()')
+                                    Ext.fly(item).set({
+                                        'data-qtip': record.get("tipo_hardware_name")+": <b>"+record.get("seriali_disponibili")+"</b> disponibili"
+                                    });
+                            }
+                        },
                         columns: [
                             { text: 'Materiale',            dataIndex: 'tipo_hardware_name', flex: 0.4 },
                             { text: 'Note',                 dataIndex: 'note', flex: 0.5 },
@@ -145,8 +153,15 @@ Ext.define('CL.view.richiesta.V_edit', {
                                         icon: 'resources/images/icon_give.png',
                                         tooltip: 'Cambia/Assegna Hardware',
                                         handler: function(grid, rowIndex, colIndex) {
-                                            var rec = grid.getStore().getAt(rowIndex);
-                                            CL.app.getController("C_assegnazione").onEdit(this.el,rec);
+                                            var stato_richiesta = Ext.ComponentQuery.query("richiesta_edit combobox[name=stato]")[0].getValue();
+
+                                            if(stato_richiesta == "Pregresso"){
+                                                Ext.Msg.alert("Attenzione!","Impossibile modificare un'assegnazione del pregresso.")
+                                            }
+                                            else{
+                                                var rec = grid.getStore().getAt(rowIndex);
+                                                CL.app.getController("C_assegnazione").onEdit(this.el,rec);
+                                            }
                                         }
                                     }
                                 ]

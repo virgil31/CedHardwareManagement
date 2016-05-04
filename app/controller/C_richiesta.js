@@ -262,6 +262,7 @@ Ext.define('CL.controller.C_richiesta', {
         if(record.get("stato") == "Pregresso")
             Ext.ComponentQuery.query("richiesta_edit datefield[name=assegnata_il]")[0].readOnly = true;
 
+
         Ext.StoreManager.lookup("S_assegnazione").load({
             params:{
                 richiesta_id: record.get("id")

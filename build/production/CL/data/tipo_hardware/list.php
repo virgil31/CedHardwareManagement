@@ -26,12 +26,25 @@ if(isset($_GET["flag_full"])){
 	");
 }
 //LIST PAGINATO
-$statement = $pdo->prepare("
-	SELECT id, nome, COUNT(*) OVER() as total
-	FROM tipo_hardware
-	ORDER BY $pro $dir LIMIT $limit OFFSET $start
-");
+else{
+	/*
+	$statement = $pdo->prepare("
+		SELECT id, nome, COUNT(*) OVER() as total
+		FROM tipo_hardware
+		ORDER BY $pro $dir LIMIT $limit OFFSET $start
+	");
+	*/
+	$statement = $pdo->prepare("
+		SELECT A.id, A.nome, COUNT(C.*) as seriali_disponibili,COUNT(*) OVER() as total
 
+		FROM tipo_hardware A
+			LEFT JOIN modello_hardware B ON B.tipo_id = A.id
+			LEFT JOIN seriale_modello C ON (C.modello_id = B.id AND C.disponibile = TRUE)
+
+		GROUP BY A.id
+		ORDER BY $pro $dir LIMIT $limit OFFSET $start
+	");
+}
 
 $statement->execute();
 $result = $statement->fetchAll(PDO::FETCH_OBJ);

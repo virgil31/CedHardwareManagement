@@ -92,6 +92,15 @@ Ext.define('CL.view.tipo_hardware.V_list', {
                         flex: 2
                     },
                     {
+                        text: '#Seriali Disponibili',
+                        dataIndex: 'seriali_disponibili',
+                        flex: 2,
+                        renderer: function (value, metaData, record) {
+                            metaData.tdStyle = 'background: '+((value != "0")?"#B8FFB8":"#FFC5C5")+';';
+                            return value;
+                        }
+                    },
+                    {
                         xtype:'actioncolumn',
                         width:50,
                         items: [
