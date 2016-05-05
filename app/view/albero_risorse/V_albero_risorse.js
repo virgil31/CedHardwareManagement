@@ -26,8 +26,6 @@ Ext.define('CL.view.albero_risorse.V_albero_risorse', {
 
                 listeners: {
                     itemdblclick: function( treepanel, record, item, index, e, eOpts ){
-                        console.log(record.data);
-
                         if(record.get("leaf")){
 
                             var array_path = record.get("id").split("/"),
@@ -78,6 +76,13 @@ Ext.define('CL.view.albero_risorse.V_albero_risorse', {
                                 color: '#157fcc',
                                 fontSize: '15px',
                                 fontWeight: 'bold'
+                            }
+                        },
+                        '->',
+                        {
+                            text: 'Chiudi Tutto',
+                            handler: function(){
+                                Ext.ComponentQuery.query("albero_risorse treepanel")[0].collapseAll();
                             }
                         }
                     ]

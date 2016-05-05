@@ -68,8 +68,8 @@ Ext.define('CL.view.richiesta.V_edit', {
                                 fieldLabel: 'Assegnata il',
                                 name: 'assegnata_il',
                                 format:'d/m/Y',
-                                submitFormat:'d/m/Y'//,
-                                //editable: false
+                                submitFormat:'d/m/Y',
+                                editable: false
                             }
                         ]
                     },
