@@ -7,11 +7,13 @@ Ext.define('CL.view.richiesta.V_edit', {
     autoShow: true,
     modal: true,
     constrain: true,
-    resizable: false,
+    //resizable: false,
 
     padding: 10,
 
-    width: 750,
+    width: 880, //750
+
+    layout: 'fit',
 
     initComponent: function() {
         var this_view = this;

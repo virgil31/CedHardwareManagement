@@ -70,7 +70,7 @@ Ext.define('CL.view.albero_risorse.V_albero_risorse', {
                         },
                         {
                             xtype: 'label',
-                            text: 'Albero Delle Risorse SSCOL',
+                            text: 'Albero Delle Risorse SSCOL Assegnate',
                             //style: 'color: #157fcc;font-size: 15px;font-weight: 300;font-family: helvetica, arial, verdana, sans-serif;line-height: 16px'
                             style: {
                                 color: '#157fcc',
@@ -85,6 +85,26 @@ Ext.define('CL.view.albero_risorse.V_albero_risorse', {
                                 Ext.ComponentQuery.query("albero_risorse treepanel")[0].collapseAll();
                             }
                         }
+                    ]
+                },
+
+                bbar:{
+                    xtype: 'toolbar',
+                    height: 60,
+                    style: 'backgroundColor: #F5F5F5',
+                    items: [
+                        '->',
+                        {
+                            xtype: 'image',
+                            src: 'resources/images/information.png',
+                            width: 40,
+                            height: 40
+                        },
+                        {
+                            xtype: 'label',
+                            html: 'Doppio click su di un utente per vedere la lista del materiale ad esso assegnato!'
+                        },
+                        '->'
                     ]
                 }
             }

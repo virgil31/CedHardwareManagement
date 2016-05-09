@@ -33,7 +33,7 @@ if($funzionario == " ") $funzionario = "-";
 if($data_assegnazione == "") $data_assegnazione = "<i>Assegnazione del Pregresso</i>";
 
 
-$html = '<div style="text-align: center;"><br><img alt=" " src="../../resources/images/logos/logo2.png" height="48" width="48"><h1>Soprintendenza Speciale per il Colosseo, MNR e Area Archeologica di Roma</h1><i>Centro Elaborazione Dati "Piero Bertolini"</i><br><br>Modulo per la consegna di attrezzature Informatiche';
+$html = '<div style="text-align: center;"><br><img alt=" " src="../../resources/images/logos/logo2.png" height="48" width="48"><h1>Soprintendenza Speciale per il Colosseo, MNR e Area Archeologica di Roma</h1><i>Centro Elaborazione Dati "Piero Bertolini"</i><br><br>Modulo per la consegna di attrezzature Informatiche da compilare e riconsegnare al CED';
 
 $html .=    '<br><br><table border="1">';
 
@@ -54,11 +54,13 @@ foreach ($array_materiale as $materiale)
     $html .= '<tr><td>'.$materiale->marca_name.' '.$materiale->tipo_name.' '.$materiale->modello_name.'</td><td>'.$materiale->seriale.'</td></tr>' ;
 $html .= '</table>';
 
-$html .= '<br><br><br><br>Data di consegna&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Firma per ricevuta';
+$html .= '<br><br><br><br>Data di Consegna&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Firma Ricevuta';
 $html .= '<br><br><br>_________________________&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_________________________';
 
 
-$pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
+$pdf = new TCPDF("PORTRAIT", "mm", "A4", true, 'UTF-8', false);
+$pdf->setPrintHeader(false);
+$pdf->setPrintFooter(false);
 $pdf->AddPage("PORTRAIT","A4");
 $pdf->writeHTMLCell(0, 0, 10, 10, $html);
 $pdf->Output($richiesta_id.'_Foglio_Consegna.pdf', 'I');  // 'D' per forzare il download diretto

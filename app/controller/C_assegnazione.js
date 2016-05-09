@@ -49,6 +49,7 @@ Ext.define('CL.controller.C_assegnazione', {
 
     //ON EDIT
     onEdit: function(animateTargetEl,record){
+
         var win = Ext.widget("assegnazione_edit",{
             animateTarget: animateTargetEl,
             title: 'Assegnazione Hardware - <b>'+record.get("tipo_hardware_name")+'</b>'
@@ -66,6 +67,13 @@ Ext.define('CL.controller.C_assegnazione', {
                     },
                     callback: function(){
                         win.down("form").loadRecord(record);
+
+                        if(marca_name != null){
+                            var marca_name = record.get("marca_name");
+                            var modello_name = record.get("modello_name");
+                            Ext.ComponentQuery.query("assegnazione_edit combobox[name=modello_id]")[0].setRawValue(marca_name+" - "+modello_name);
+                        }
+
                     }
                 })
             }

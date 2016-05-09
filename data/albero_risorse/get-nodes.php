@@ -14,7 +14,7 @@ $array_path = explode('/',$node);
 if(count($array_path) == 1){
 
     $statement = $pdo->prepare("
-        SELECT A.id, CONCAT(A.nome,' (',COUNT(E.id),')') as nome, FALSE as leaf, 'sede' as icon
+        SELECT A.id, CONCAT(A.nome,' <b>(',COUNT(E.id),')</b>') as nome, FALSE as leaf, 'sede' as icon
 
         FROM sede A
         	LEFT JOIN ufficio B ON B.sede_id = A.id

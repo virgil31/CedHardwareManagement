@@ -206,7 +206,7 @@ Ext.define('CL.view.home.V_home', {
                 items: [
                     {
                         xtype: 'button',
-                        text: 'Cerca Richieste HW',
+                        text: 'Ricerche Varie',
                         flex: 5,
                         width: '100%',
                         style: 'backgroundColor: green',
@@ -219,9 +219,10 @@ Ext.define('CL.view.home.V_home', {
                     {
                         xtype: 'button',
                         text: 'Albero Risorse',
+                        icon: "resources/images/icon_tree.png",
                         flex: 1,
                         width: '100%',
-                        style: 'backgroundColor: #3892D4    ',
+                        style: 'backgroundColor: #3892D4',
                         handler: function(){
                             CL.app.getController('C_home').redirectTo("albero_risorse");
                         }
@@ -250,6 +251,7 @@ Ext.define('CL.view.home.V_home', {
                         xtype: 'button',
                         text: 'Modelli HW',
                         flex: 1,
+                        icon: "resources/images/icon_laptop.png",
                         width: '100%',
                         style: 'backgroundColor: #CC8D00',
                         handler: function(){
