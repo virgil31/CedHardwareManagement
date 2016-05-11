@@ -1,8 +1,13 @@
 Ext.define('CL.controller.C_seriale_modello', {
     extend: 'Ext.app.Controller',
 
+    routes: {
+        'cerca_seriali' : 'showView'
+    },
+
     stores: [
-        'S_seriale_modello'
+        'S_seriale_modello',
+        'S_seriale_modello_search'
     ],
 
     models: [
@@ -13,7 +18,10 @@ Ext.define('CL.controller.C_seriale_modello', {
         'seriale_modello.V_list_by_modello',
         'seriale_modello.V_list_by_richiedente_ufficio',
         'seriale_modello.V_create',
-        'seriale_modello.V_edit'
+        'seriale_modello.V_edit',
+
+        //
+        'seriale_modello.V_search'
     ],
 
     /////////////////////////////////////////////////
@@ -39,6 +47,24 @@ Ext.define('CL.controller.C_seriale_modello', {
     },
     /////////////////////////////////////////////////
 
+    //SHOW VIEW
+    showView: function(){
+        //Ext.ComponentQuery.query("window").forEach(function(win){win.destroy();});  //per eliminare le vecchie windows
+
+        if(Ext.util.Cookies.get("ced_logged") !== null){
+            if(Ext.ComponentQuery.query('seriale_modello_search').length == 0)
+                Ext.ComponentQuery.query('viewport panel[name=card]')[0].add({xtype: 'seriale_modello_search'});
+
+            Ext.ComponentQuery.query('viewport panel[name=card]')[0].getLayout().setActiveItem('seriale_modello_search_id');
+
+            Ext.StoreManager.lookup("S_seriale_modello_search").loadPage(1);
+
+            Ext.StoreManager.lookup("S_modello_hardware").load({params:{flag_full: true}});
+            Ext.StoreManager.lookup("S_fattura").load({params:{flag_full: true}});
+        }
+        else
+            this.redirectTo('login');
+    },
 
     //ON DESTROY
     onDestroy: function(record){

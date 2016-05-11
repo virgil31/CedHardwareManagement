@@ -260,6 +260,17 @@ Ext.define('CL.view.home.V_home', {
                     },
                     {
                         xtype: 'button',
+                        text: 'Cerca Seriali',
+                        flex: 1,
+                        icon: "resources/images/icon_serial.png",
+                        width: '100%',
+                        style: 'backgroundColor: #CC8D00',
+                        handler: function(){
+                            CL.app.getController('C_home').redirectTo("cerca_seriali");
+                        }
+                    },
+                    {
+                        xtype: 'button',
                         text: 'Fatture',
                         flex: 1,
                         width: '100%',
