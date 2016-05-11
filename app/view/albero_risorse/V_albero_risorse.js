@@ -80,11 +80,21 @@ Ext.define('CL.view.albero_risorse.V_albero_risorse', {
                         },
                         '->',
                         {
-                            text: 'Chiudi Tutto',
+                            text: 'Chiudi Tutti i Nodi',
                             handler: function(){
                                 Ext.ComponentQuery.query("albero_risorse treepanel")[0].collapseAll();
                             }
+                        },
+                        {
+                            text: 'Aggiorna Lista',
+                            handler: function(){
+                                var treepanel = Ext.ComponentQuery.query("albero_risorse treepanel")[0],
+                                    treestore = treepanel.getStore();
+
+                                treestore.load();
+                            }
                         }
+
                     ]
                 },
 

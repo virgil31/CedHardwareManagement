@@ -9,7 +9,7 @@ Ext.define('CL.store.S_richiesta',{
     pageSize: 50,
 
     remoteSort: true,
-    sorters: { property: 'richiesta_il', direction : 'DESC' }, //lo ordiniamo per id
+    sorters: { property: 'id', direction : 'DESC' }, //lo ordiniamo per id
 
     //mostro un messaggio di errore quando non riesco a connetermi al db
     listeners:{

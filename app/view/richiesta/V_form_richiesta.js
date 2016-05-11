@@ -22,6 +22,7 @@ Ext.define('CL.view.richiesta.V_form_richiesta', {
             {
                 xtype: 'form',
                 title: '<b>Richiesta Materiale Informatico - CED</b>',
+                titleAlign: 'center',
                 style: {
                     borderRadius: "20px"
                 },
@@ -254,6 +255,44 @@ Ext.define('CL.view.richiesta.V_form_richiesta', {
                             background: "#5CC25C"
                         }
                     }
+                ]
+            },
+            //pannello informazioni
+            {
+                xtype: 'panel',
+                titleAlign: 'center',
+                title: '<i>Guida & Info</i>',
+                width: '35%',
+                height: '64%',
+                padding: 10,
+                layout: {
+                    type: 'vbox',
+                    align: 'center'
+                },
+                items: [
+                    {
+                        xtype: 'image',
+                        src: 'resources/images/information.png',
+                        width: 65 ,
+                        height: 60,
+                        margin: '10 0 10 0'
+                    },
+                    {
+                        xtype: 'label',
+                        html: '<u><i>In primis, assicurarsi che nome<br> e cognome del richiedente siano corretti.</i></u>'+
+                            "<br><br>Una volta compilate le altre informazioni del<br>richiedente, passare alla richiesta del materiale<br>desiderato,  tramite apposito bottone di aggiunta.<br><u>E' possibile richiedere 1 o più elementi.</u>"+
+                            "<br><br><b>NB!</b> Nel caso in cui non sia presente la <br>tipologia di hardware desiderata,<br>mettersi in contatto con il CED."+
+                            "<br><br>Una volta esplicitata la motivazione e<br> la disponibilità riguardo il materiale usato,<br> confermare ed inviare la richiesta."+
+                            "<br><br>Riceverà in seguito una mail di conferma/riepilogo<br> con le istruzioni per poter verificare in qualunque<br>momento lo stato della sua richiesta."
+                    }
+                ],
+                bbar: [
+                    '->',
+                    {
+                        xtype: 'label',
+                        html: '<i>Tel. CED: Luca Cerini (51)262</i>'
+                    },
+                    '->'
                 ]
             }
 

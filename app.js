@@ -46,7 +46,6 @@ Ext.application({
     },
 
     onUnmatchedRoute: function(hash) {
-        //this.redirectTo('not_found');
         if(Ext.ComponentQuery.query('not_found').length == 0)
             Ext.ComponentQuery.query('viewport panel[name=card]')[0].add({xtype: 'not_found'});
 

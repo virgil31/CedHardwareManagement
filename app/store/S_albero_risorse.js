@@ -10,7 +10,9 @@ Ext.define('CL.store.S_albero_risorse',{
         id: 'root',
         expanded: true
     },
-    folderSort: true/*,
+    folderSort: true
+
+    /*,
     sorters: [{
         property: 'nome',
         direction: 'ASC'

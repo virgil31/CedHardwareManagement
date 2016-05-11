@@ -74,6 +74,18 @@ Ext.define('CL.view.seriale_modello.V_list_by_richiedente_ufficio', {
                         renderer: function (value, metaData, record) {
                             return '<a href="#" onclick="CL.app.getController(\'C_fattura\').onEditById(this,'+record.get('fattura_id')+');return false;">'+value+'</a>';
                         }*/
+                    },
+
+                    {
+                        xtype: 'datecolumn',
+                        format:'d-m-Y',
+                        text: 'Assegnato Il',
+                        dataIndex: 'assegnata_il',
+                        flex: 1,
+                        sortable: false,
+                        renderer: function(value){
+                            return (value == null) ? "<i>-Pregresso-</i>" : value;
+                        }
                     }
                 ]
             }

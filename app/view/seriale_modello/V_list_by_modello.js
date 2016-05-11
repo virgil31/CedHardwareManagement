@@ -72,8 +72,9 @@ Ext.define('CL.view.seriale_modello.V_list_by_modello', {
                     itemdblclick: function( grid, record, item, index, e, eOpts ){
                         CL.app.getController("C_seriale_modello").onEdit(item,record);
                     },
-                    itemmouseenter: function(view, record, item) {
-                        if(record.get('assegnato_a') !== '<b> </b> -  ()')
+                    itemmouseenter: function(view, record, item) {                        
+                        //if(record.get('assegnato_a') != '<b> </b> -  ()')
+                        if(record.get("assegnato_a").length != 27)  //nel caso in cui il sia assegnato mostro il tooltip
                             Ext.fly(item).set({'data-qtip': record.get('assegnato_a')});
                     }
                 },

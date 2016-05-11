@@ -39,7 +39,7 @@ if(isset($_GET["richiedente"]) && isset($_GET["ufficio_id"])){
 	$ufficio_id = $_GET["ufficio_id"];
 
 	$statement = $pdo->prepare("
-		SELECT D.id, D.seriale,C.id as tipo_id,C.nome as tipo_name,E.marca_id,F.nome as marca_name, E.id as modello_id, E.nome as modello_name, G.id as fattura_id,G.codice as fattura_name, COUNT(*) OVER() as total
+		SELECT A.assegnata_il,D.id, D.seriale,C.id as tipo_id,C.nome as tipo_name,E.marca_id,F.nome as marca_name, E.id as modello_id, E.nome as modello_name, G.id as fattura_id,G.codice as fattura_name, COUNT(*) OVER() as total
 
 		FROM richiesta A
 			LEFT JOIN richiesta_tipo_hardware B ON B.richiesta_id = A.id
@@ -49,7 +49,7 @@ if(isset($_GET["richiedente"]) && isset($_GET["ufficio_id"])){
 			LEFT JOIN marca_hardware F ON F.id = E.marca_id
 			LEFT JOIN fattura G ON G.id = D.fattura_id
 
-		WHERE CONCAT(A.nome,' ',A.cognome) ilike '$richiedente'
+		WHERE CONCAT(A.nome,' ',A.cognome) ilike '%$richiedente%'
 			AND A.ufficio_id = $ufficio_id
 			AND D.id IS NOT NULL
 

@@ -14,7 +14,7 @@ $array_path = explode('/',$node);
 if(count($array_path) == 1){
 
     $statement = $pdo->prepare("
-        SELECT A.id, CONCAT(A.nome,' <b>(',COUNT(E.id),')</b>') as nome, FALSE as leaf, 'sede' as icon
+        SELECT A.id, CONCAT(A.nome,' <b>(',COUNT(E.id),')</b>') as nome, FALSE as leaf, 'sede' as icon, COUNT(E.id) as numero_seriali
 
         FROM sede A
         	LEFT JOIN ufficio B ON B.sede_id = A.id
@@ -33,7 +33,7 @@ else if(count($array_path) == 2){
     $sede_id = $array_path[1];
 
     $statement = $pdo->prepare("
-        SELECT A.id, CONCAT(A.nome,' (',COUNT(D.id),')') as nome, FALSE as leaf, 'ufficio' as icon
+        SELECT A.id, CONCAT(A.nome,' (',COUNT(D.id),')') as nome, FALSE as leaf, 'ufficio' as icon, COUNT(D.id) as numero_seriali
         FROM ufficio A
             LEFT JOIN richiesta B ON B.ufficio_id = A.id
             LEFT JOIN richiesta_tipo_hardware C ON C.richiesta_id = B.id
@@ -42,7 +42,6 @@ else if(count($array_path) == 2){
         WHERE A.sede_id = $sede_id
         GROUP BY A.id
         ORDER BY A.nome
-
     ");
 }
 
@@ -53,7 +52,7 @@ else if(count($array_path) == 3){
 
     $statement = $pdo->prepare("
 
-        SELECT CONCAT(B.nome,' ',B.cognome,' (',COUNT(*),')') as nome, CONCAT(B.nome,' ',B.cognome) as id, TRUE as leaf, 'utente' as icon
+        SELECT CONCAT(B.nome,' ',B.cognome,' (',COUNT(*),')') as nome, CONCAT(B.nome,' ',B.cognome) as id, TRUE as leaf, 'utente' as icon, COUNT(*) as numero_seriali
 
         FROM ufficio A
             RIGHT JOIN richiesta B ON B.ufficio_id = A.id
@@ -99,7 +98,8 @@ foreach ($result as $row) {
         "id" => $node.'/'.$row->id,
         "leaf" => $row->leaf,
         "text" => $row->nome,
-        "icon" => "resources/images/icon_".$row->icon.".png"
+        "icon" => "resources/images/icon_".$row->icon.".png",
+        "cls" => $row->numero_seriali > 0 ? "azure_node" : ""
         //"src" => "root/".$row->id,
         //"qtip" => "qtip here",
     ));
