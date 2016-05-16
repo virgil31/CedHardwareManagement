@@ -21,7 +21,9 @@ if(isset($_GET["query"])){
 
 	$statement = $pdo->prepare("
 		SELECT A.id,A.seriale,A.modello_id, B.nome as modello_name,A.disponibile, B.marca_id, C.nome as marca_name,B.tipo_id, D.nome as tipo_name,A.fattura_id,
-			F.nome as nome_richiedente, F.cognome as cognome_richiedente,G.nome as sede_name,H.nome as ufficio_name, COUNT(*) OVER() as total
+			F.nome as nome_richiedente, F.cognome as cognome_richiedente,G.nome as sede_name,H.nome as ufficio_name, COALESCE(CAST(F.assegnata_il as TEXT),'{Pregresso}') as assegnata_il,
+			COUNT(*) OVER() as total
+
 		FROM seriale_modello A
 			LEFT JOIN modello_hardware B ON B.id = A.modello_id
 			LEFT JOIN marca_hardware C ON C.id = B.marca_id
@@ -40,16 +42,18 @@ if(isset($_GET["query"])){
 else{
 
 	$statement = $pdo->prepare("
-		SELECT A.id,A.seriale,A.modello_id, B.nome as modello_name,A.disponibile, B.marca_id, C.nome as marca_name,B.tipo_id, D.nome as tipo_name,A.fattura_id,
-			F.nome as nome_richiedente, F.cognome as cognome_richiedente,G.nome as sede_name,H.nome as ufficio_name, COUNT(*) OVER() as total
-		FROM seriale_modello A
-			LEFT JOIN modello_hardware B ON B.id = A.modello_id
-			LEFT JOIN marca_hardware C ON C.id = B.marca_id
-			LEFT JOIN tipo_hardware D ON D.id = B.tipo_id
-			LEFT JOIN richiesta_tipo_hardware E ON E.seriale_id = A.id
-			LEFT JOIN richiesta F ON F.id = E.richiesta_id
-			LEFT JOIN sede G ON G.id = F.sede_id
-			LEFT JOIN ufficio H ON H.id = F.ufficio_id
+	SELECT A.id,A.seriale,A.modello_id, B.nome as modello_name,A.disponibile, B.marca_id, C.nome as marca_name,B.tipo_id, D.nome as tipo_name,A.fattura_id,
+		F.nome as nome_richiedente, F.cognome as cognome_richiedente,G.nome as sede_name,H.nome as ufficio_name, COALESCE(CAST(F.assegnata_il as TEXT),'{Pregresso}') as assegnata_il,
+		COUNT(*) OVER() as total
+
+	FROM seriale_modello A
+		LEFT JOIN modello_hardware B ON B.id = A.modello_id
+		LEFT JOIN marca_hardware C ON C.id = B.marca_id
+		LEFT JOIN tipo_hardware D ON D.id = B.tipo_id
+		LEFT JOIN richiesta_tipo_hardware E ON E.seriale_id = A.id
+		LEFT JOIN richiesta F ON F.id = E.richiesta_id
+		LEFT JOIN sede G ON G.id = F.sede_id
+		LEFT JOIN ufficio H ON H.id = F.ufficio_id
 
 		ORDER BY $pro $dir LIMIT $limit OFFSET $start
 	");

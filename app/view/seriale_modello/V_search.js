@@ -96,9 +96,10 @@ Ext.define('CL.view.seriale_modello.V_search', {
                         if(record.get('nome_richiedente') != null){
                             var richiedente = record.get("nome_richiedente")+" "+record.get("cognome_richiedente"),
                                 sede = record.get("sede_name"),
-                                ufficio = record.get("ufficio_name");
+                                ufficio = record.get("ufficio_name"),
+                                assegnata_il = record.get("assegnata_il");
 
-                            Ext.fly(item).set({'data-qtip': "Assegnato a <b>"+richiedente+"</b> - "+sede+" ("+ufficio+")"});
+                            Ext.fly(item).set({'data-qtip': "Assegnato a <b>"+richiedente+"</b> - "+sede+" ("+ufficio+") il giorno <i>"+assegnata_il+"</i>"});
                         }
                     }
                 },
@@ -155,7 +156,6 @@ Ext.define('CL.view.seriale_modello.V_search', {
                                     Ext.Msg.confirm('Attenzione!', 'Eliminare <b>'+record.get("seriale")+"</b>?",function(btn){
                                         if (btn === 'yes')
                                             Ext.StoreManager.lookup("S_seriale_modello_search").remove(record);
-
                                     });
                                 }
                             }

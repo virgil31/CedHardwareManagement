@@ -56,17 +56,17 @@ Ext.application({
 
     launch: function () {
 
+        //rimuovo l'icona di caricamento
         var item = document.getElementById("img_loader_id");
         item.parentNode.removeChild(item);
 
-
+        //applico tutti i miei overrides
         this.applyOverrides();
 
         //previene la creazione dei context menu del browser
         //Ext.getDoc().on('contextmenu', function(ev) {
         //     ev.preventDefault();
         //});
-
 
         Ext.create('Ext.container.Viewport',{
             layout: 'fit',
@@ -94,6 +94,7 @@ Ext.application({
                 }
             ]
         });
+
 
         window.onresize = function(){
             Ext.ComponentQuery.query('viewport panel[name=card]')[0].minHeight = window.innerHeight-88-88;
