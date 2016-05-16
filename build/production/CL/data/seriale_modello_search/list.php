@@ -33,7 +33,7 @@ if(isset($_GET["query"])){
 			LEFT JOIN sede G ON G.id = F.sede_id
 			LEFT JOIN ufficio H ON H.id = F.ufficio_id
 
-		WHERE A.seriale like '%$query%'
+		WHERE A.seriale ilike '%$query%'
 			OR B.nome ilike '%$query%'
 		ORDER BY $pro $dir LIMIT $limit OFFSET $start
 	");

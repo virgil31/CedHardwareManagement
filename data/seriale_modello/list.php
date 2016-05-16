@@ -112,8 +112,7 @@ echo json_encode(array(
 
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
-function serialeAncoraAssegnato($pdo,$seriale_id,$richiedente){
-	
+function serialeAncoraAssegnato($pdo,$seriale_id,$richiedente){	
 	$statement = $pdo->prepare("
 		SELECT *
 		FROM (
@@ -130,6 +129,4 @@ function serialeAncoraAssegnato($pdo,$seriale_id,$richiedente){
 	$result = $statement->fetchAll(PDO::FETCH_OBJ);
 
 	return (count($result) != 0);
-
-
 }

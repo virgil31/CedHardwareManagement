@@ -33,7 +33,7 @@ if(isset($_GET["solo_disponibili"])){
 }
 
 // LIST BY nome/cognome richiedente E ufficio_id
-if(isset($_GET["richiedente"]) && isset($_GET["ufficio_id"])){
+else if(isset($_GET["richiedente"]) && isset($_GET["ufficio_id"])){
 
 	$richiedente = $_GET["richiedente"];
 	$ufficio_id = $_GET["ufficio_id"];
@@ -55,6 +55,27 @@ if(isset($_GET["richiedente"]) && isset($_GET["ufficio_id"])){
 
 		ORDER BY tipo_name ASC, marca_name ASC, modello_name ASC, seriale ASC
 	");
+
+	$statement->execute();
+	$result = $statement->fetchAll(PDO::FETCH_OBJ);
+
+	if(count($result) != 0)
+		$total = $result[0]->total;
+
+	$arrayResult = array();
+	foreach ($result as $row) {
+		$seriale_id = $row->id;
+		//controllo se il seriale è ancora assegnato a quell'utente
+		if(serialeAncoraAssegnato($pdo,$seriale_id,$richiedente))
+			array_push($arrayResult,$row);
+
+	}
+
+	echo json_encode(array(
+		"result" => $arrayResult,
+		"total" => $total
+	));
+	exit();
 }
 
 // LIST PAGINATO by modello_id
@@ -88,3 +109,24 @@ echo json_encode(array(
 	"result" => $result,
 	"total" => $total
 ));
+
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+function serialeAncoraAssegnato($pdo,$seriale_id,$richiedente){	
+	$statement = $pdo->prepare("
+		SELECT *
+		FROM (
+			SELECT *
+			FROM richiesta_tipo_hardware A
+				LEFT JOIN richiesta B ON B.id = A.richiesta_id
+			WHERE A.seriale_id = $seriale_id
+			ORDER BY B.id DESC
+			LIMIT 1
+		) tmp
+		WHERE CONCAT(tmp.nome,' ',tmp.cognome) ilike '$richiedente'
+	");
+	$statement->execute();
+	$result = $statement->fetchAll(PDO::FETCH_OBJ);
+
+	return (count($result) != 0);
+}
