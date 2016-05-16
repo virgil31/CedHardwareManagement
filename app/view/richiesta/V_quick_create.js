@@ -247,6 +247,9 @@ Ext.define('CL.view.richiesta.V_quick_create', {
                                                                             //sblocco la scelta del modello
                                                                             Ext.ComponentQuery.query("window[name=add_tipo_hardware] combobox[name=modello_id]")[0].enable();
                                                                             Ext.ComponentQuery.query("window[name=add_tipo_hardware] button[action=crea_assegna_modello]")[0].enable();
+                                                                            //sblocco la scelta del seriale
+                                                                            Ext.ComponentQuery.query("window[name=add_tipo_hardware] combobox[name=seriale_id]")[0].enable();
+                                                                            Ext.ComponentQuery.query("window[name=add_tipo_hardware] button[action=crea_assegna_seriale]")[0].enable();
                                                                         }
                                                                     }
                                                                 },
@@ -307,10 +310,6 @@ Ext.define('CL.view.richiesta.V_quick_create', {
                                                                             });
 
                                                                             Ext.ComponentQuery.query("window[name=add_tipo_hardware] combobox[name=seriale_id]")[0].reset();
-
-                                                                            //sblocco la scelta del modello
-                                                                            Ext.ComponentQuery.query("window[name=add_tipo_hardware] combobox[name=seriale_id]")[0].enable();
-                                                                            Ext.ComponentQuery.query("window[name=add_tipo_hardware] button[action=crea_assegna_seriale]")[0].enable();
                                                                         }
                                                                     }
                                                                 },
@@ -376,10 +375,18 @@ Ext.define('CL.view.richiesta.V_quick_create', {
                                                                                     var records = Ext.StoreManager.lookup("S_seriale_modello").getRange(),
                                                                                         record_created = records[records.length-1];
 
-                                                                                    //Ext.ComponentQuery.query("window[name=add_tipo_hardware] combobox[name=seriale_id]")[0].getStore().reload();
                                                                                     Ext.ComponentQuery.query("window[name=add_tipo_hardware] combobox[name=seriale_id]")[0].setValue(record_created.get("id"));
 
-                                                                                    Ext.ComponentQuery.query("window[name=add_tipo_hardware] combobox[name=modello_id]")[0].getStore().reload();
+                                                                                    var tipo_id = Ext.ComponentQuery.query("window[name=add_tipo_hardware] combobox[name=tipo_hardware_id]")[0].getValue();
+                                                                                    Ext.ComponentQuery.query("window[name=add_tipo_hardware] combobox[name=modello_id]")[0].getStore().load({
+                                                                                        params:{
+                                                                                            tipo_hardware_id: tipo_id
+                                                                                        },
+                                                                                        callback: function(){
+                                                                                            var modello_id = record_created.get("modello_id");
+                                                                                            Ext.ComponentQuery.query("window[name=add_tipo_hardware] combobox[name=modello_id]")[0].setValue(modello_id);
+                                                                                        }
+                                                                                    });
                                                                                 }
                                                                             });
                                                                             Ext.ComponentQuery.query("seriale_modello_create combobox[name=modello_id]")[0].getStore().load({

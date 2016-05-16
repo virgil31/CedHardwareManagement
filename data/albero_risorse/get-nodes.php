@@ -67,27 +67,6 @@ else if(count($array_path) == 3){
 
     ");
 }
-/*
-// ROOT/sede_id/ufficio_id/nome cognome
-else if(count($array_path) == 4){
-    $nome_e_cognome = $array_path[3];
-    $nome_e_cognome = explode(" ",$nome_e_cognome);
-    $nome = $nome_e_cognome[0];
-    $cognome = $nome_e_cognome[1];
-
-    $statement = $pdo->prepare("
-
-        SELECT CONCAT(B.nome,' ',B.cognome,' (',COUNT(*),')') as nome, CONCAT(B.nome,' ',B.cognome) as id, FALSE as leaf, 'utente' as icon
-
-        FROM ufficio A
-        	RIGHT JOIN richiesta B ON B.ufficio_id = A.id
-        	LEFT JOIN richiesta_tipo_hardware C ON C.richiesta_id = B.id
-
-        WHERE A.id = $ufficio_id
-        GROUP BY B.nome, B.cognome
-
-    ");
-}*/
 
 $statement->execute();
 $result = $statement->fetchAll(PDO::FETCH_OBJ);

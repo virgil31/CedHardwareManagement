@@ -130,8 +130,6 @@ Ext.define('CL.controller.C_seriale_modello', {
             form = window.down("form").getForm(),
             values = form.getValues();
 
-        console.log(values);
-
         if(form.isValid()){
             Ext.StoreManager.lookup("S_seriale_modello").add(values);
 
