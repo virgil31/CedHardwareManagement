@@ -238,7 +238,7 @@ Ext.define('CL.controller.C_richiesta', {
                     },
                     success: function(){
                         Ext.getBody().unmask();
-                        Ext.Msg.alert("Successo!","La registrazione è stata correttamente effettuata!<br>A breve riceverà una mail di conferma su <b>"+(values.email)+"</b> con codice di 'tracciabilità'.",function(){
+                        Ext.Msg.alert("Successo!","La registrazione è stata correttamente effettuata!<br>A breve riceverà una mail di conferma su <b>"+(values.email)+"</b><br>con relativo con codice di <i>tracciabilità</i>.",function(){
                             CL.app.getController("C_richiesta").redirectTo("login");
                         });
                     }

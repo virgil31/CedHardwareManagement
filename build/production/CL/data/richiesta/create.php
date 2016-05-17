@@ -124,6 +124,7 @@ function inviaMail($from, $to, $oggetto, $testo, $allegati = null){
 	$mail->setFrom($from, 'CED SSCOL');
 	$mail->addAddress($to);
 
+	$mail->CharSet = 'UTF-8';
 	$mail->Subject = $oggetto;
 	$mail->Body    = $testo."<br><br><b><i>La presente e-mail è stata generata automaticamente da un indirizzo di posta elettronica di solo invio; si chiede pertanto di non rispondere al messaggio.</i></b>";
 	//$mail->AltBody = 'This is the body in plain text for non-HTML mail clients';

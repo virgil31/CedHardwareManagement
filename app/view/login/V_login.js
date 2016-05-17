@@ -101,7 +101,7 @@ Ext.define('CL.view.login.V_login', {
                             constrain: true,
                             animateTarget: btn.el,
                             width: 330,
-                            title: 'Richiedi materiale Informatico',
+                            title: '<b>Richiedi materiale Informatico</b>',
                             name: 'login_richiesta',
                             padding: 10,
                             items: [
@@ -110,7 +110,7 @@ Ext.define('CL.view.login.V_login', {
                                     items: [
                                         {
                                             xtype: 'label',
-                                            html: 'Per richiedere del nuovo hardware è necessario fare accesso con le proprie credenziali di dominio. <br><br><b>NB! </b>La richiesta che verrà scaturita di seguito sarà automaticamente assegnata a tali credenziali!'
+                                            html: 'Per richiedere del nuovo hardware è necessario fare accesso con le <u>proprie</u> credenziali di dominio. <br><br><b>NB! </b>La richiesta che verrà scaturita di seguito sarà automaticamente assegnata a tali credenziali!'
                                         },
                                         {
                                             xtype: 'textfield',
@@ -148,9 +148,10 @@ Ext.define('CL.view.login.V_login', {
                                             }
                                         }
                                     ],
+                                    buttonAlign: 'center',
                                     buttons: [
                                         {
-                                            text: 'Login',
+                                            text: 'Entra e avvia procedura',
                                             formBind: true,
                                             action: 'do_login_richiesta'
                                         }

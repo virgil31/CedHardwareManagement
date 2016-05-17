@@ -14,7 +14,7 @@ $array_path = explode('/',$node);
 if(count($array_path) == 1){
 
     $statement = $pdo->prepare("
-        SELECT A.id, CONCAT(A.nome,' <b>(',COUNT(E.id),')</b>') as nome, FALSE as leaf, 'sede' as icon, COUNT(E.id) as numero_seriali
+        SELECT A.id, CONCAT(A.nome) as nome, FALSE as leaf, 'sede' as icon
 
         FROM sede A
         	LEFT JOIN ufficio B ON B.sede_id = A.id
@@ -26,17 +26,20 @@ if(count($array_path) == 1){
         ORDER BY A.nome
     ");
 
+
     $statement->execute();
     $result = $statement->fetchAll(PDO::FETCH_OBJ);
 
     $arrayResult = array();
     foreach ($result as $row) {
+        $numero_seriali_sede = getNumeroSerialiDiSede($pdo,$row->id);
+
         array_push($arrayResult,array(
             "id" => $node.'/'.$row->id,
             "leaf" => $row->leaf,
-            "text" => $row->nome,
+            "text" => $row->nome." (".$numero_seriali_sede.")",
             "icon" => "resources/images/icon_".$row->icon.".png",
-            "cls" => $row->numero_seriali > 0 ? "azure_node" : ""
+            "cls" => $numero_seriali_sede > 0 ? "green_node" : ""
         ));
     }
 
@@ -115,7 +118,7 @@ else if(count($array_path) == 3){
             "leaf" => $row->leaf,
             "text" => $row->nome." (".$numero_seriali_utente.")",
             "icon" => "resources/images/icon_".$row->icon.".png",
-            "cls" => $numero_seriali_utente > 0 ? "azure_node" : ""
+            "cls" => $numero_seriali_utente > 0 ? "orange_node" : ""
         ));
     }
 
@@ -214,7 +217,7 @@ function getNumeroSerialiDiSede($pdo,$sede_id){
 
     $count = 0;
     foreach ($uffici as $ufficio) {
-        $count += getNumeroSerialiDiUtenteUfficio($pdo,$ufficio->id);
+        $count += getNumeroSerialiDiUfficio($pdo,$ufficio->id);
     }
 
     return $count;

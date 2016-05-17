@@ -46,6 +46,21 @@ Ext.define('CL.view.tbar.V_tbar', {
 		                    location.reload();
 		                }
 		            },
+                    {
+		                xtype: 'button',
+		                width: 45,
+		                height: 45,
+		                margin: '0 0 0 20',
+		                style: "background-image: url('resources/images/logos/eis2.png') !important; " +
+		                    "background-size: 100% 100%;" +
+		                    "border-color: transparent;" +
+		                    "background-color: transparent;" +
+		                    "background-repeat: no-repeat;",
+		                handler: function () {
+		                    window.open("http://www.eisworld.eu/", '_blank');
+		                }
+		            },
+
 		            '->',
 		            {
 		            	xtype: 'form',

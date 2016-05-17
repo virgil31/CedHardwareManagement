@@ -19,7 +19,7 @@ Ext.define('CL.view.seriale_modello.V_list_by_richiedente_ufficio', {
     modal: true,
 
     height: 500,
-    width: 750,
+    width: 900,
     title: 'Lista Materiale Assegnato a',
 
     initComponent: function() {
@@ -56,7 +56,7 @@ Ext.define('CL.view.seriale_modello.V_list_by_richiedente_ufficio', {
                     {
                         text: 'Modello',
                         dataIndex: 'modello_name',
-                        flex: 1,
+                        flex: 2,
                         sortable: false
                     },
                     {
@@ -69,11 +69,8 @@ Ext.define('CL.view.seriale_modello.V_list_by_richiedente_ufficio', {
                     {
                         text: 'Fattura',
                         dataIndex: 'fattura_name',
-                        flex: 1,
-                        sortable: false/*,
-                        renderer: function (value, metaData, record) {
-                            return '<a href="#" onclick="CL.app.getController(\'C_fattura\').onEditById(this,'+record.get('fattura_id')+');return false;">'+value+'</a>';
-                        }*/
+                        flex: 1.5,
+                        sortable: false
                     },
 
                     {

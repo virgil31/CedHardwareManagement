@@ -24,5 +24,14 @@ max-width: calc(100% - 22px);
 
 
 .azure_node{
+    background: #CCDCFF;
+}
+
+
+.green_node{
     background: #C9F3D4;
+}
+
+.orange_node{
+    background: #FFE5B5;
 }

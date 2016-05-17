@@ -74,7 +74,7 @@ Ext.define('CL.view.richiesta.V_form_richiesta', {
                                 name: 'email',
                                 fieldLabel: 'Email',
                                 allowBlank: false,
-                                emptyText: 'nome.cognome@beniculturali.it',
+                                value: (Ext.util.Cookies.get("nome")+"."+Ext.util.Cookies.get("cognome")).toLowerCase()+"@beniculturali.it",//'nome.cognome@beniculturali.it',
                                 vtype: 'email'
                             },
                             {xtype: 'menuseparator', width: '95%'},
@@ -276,7 +276,7 @@ Ext.define('CL.view.richiesta.V_form_richiesta', {
                     {
                         xtype: 'panel',
                         titleAlign: 'center',
-                        title: '<i>Guida & Info</i>',
+                        title: '<i><b>Guida & Info</b></i>',
                         width: 325,
                         height: 525,
                         padding: 10,
@@ -294,7 +294,7 @@ Ext.define('CL.view.richiesta.V_form_richiesta', {
                             },
                             {
                                 xtype: 'label',
-                                html: '<div style="text-align: center"><u><i><b>In primis, assicurarsi che nome e cognome<br>del richiedente siano corretti e non generici.</b></i></u>'+
+                                html: '<div style="text-align: center"><u><i><b>In primis, assicurarsi che nome ed email<br>del richiedente siano corretti e non generici.</b></i></u>'+
                                     "<br><br>Una volta compilate le altre informazioni del<br>richiedente, passare alla richiesta del materiale<br>desiderato,  tramite apposito bottone di aggiunta.<br><u>E' possibile richiedere 1 o più elementi.</u>"+
                                     "<br><br><b>NB!</b> Nel caso in cui non sia presente la <br>tipologia di hardware desiderata,<br>mettersi in contatto con il CED."+
                                     "<br><br>Una volta esplicitata la motivazione e<br> la disponibilità riguardo il materiale usato,<br> confermare ed inviare la richiesta."+
