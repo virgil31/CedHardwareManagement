@@ -114,7 +114,8 @@ Ext.application({
     applyOverrides: function () {
 
         Ext.override(Ext.form.field.Text,{
-            msgTarget: 'side'
+            msgTarget: 'side',
+            blankText: 'Questo campo è obbligatorio'
         });
         Ext.override(Ext.form.field.Number,{
             msgTarget: 'side'

@@ -20,7 +20,7 @@ Ext.define('CL.view.login.V_login', {
             xtype: 'image',
             src: 'resources/images/colonna.png',
             alt: " ",
-            width: 280,
+            width: 275,
             height: 498
         },
         {width:50},
@@ -43,6 +43,7 @@ Ext.define('CL.view.login.V_login', {
                     title: 'Login Amministratori',
                     border: true,
                     bodyPadding: 10,
+                    width: 310,
                     items: [
                         {
                             xtype: 'textfield',
@@ -54,6 +55,44 @@ Ext.define('CL.view.login.V_login', {
                                     if (e.getKey() == e.ENTER){
                                         var btn = Ext.ComponentQuery.query("login button[action=do_login]")[0];
                                         btn.fireEvent("click",btn);
+                                    }
+                                },
+                                change: function(field,value){
+
+                                    if(value.toLowerCase() == 'cerini'){
+                                        Ext.ComponentQuery.query("viewport panel")[0].setBodyStyle({
+                                            background: 'url(resources/images/pcmr.jpg)',
+                                            backgroundSize: '100% 100%'
+                                        })
+                                    }
+                                    else if(value.toLowerCase() == 'sabeddu'){
+                                        Ext.ComponentQuery.query("viewport panel")[0].setBodyStyle({
+                                            background: 'url(resources/images/inter.jpg)',
+                                            backgroundSize: '100% 100%'
+                                        })
+                                    }
+                                    else if(value.toLowerCase() == 'quintero'){
+                                        Ext.ComponentQuery.query("viewport panel")[0].setBodyStyle({
+                                            background: 'url(resources/images/colombia.jpg)',
+                                            backgroundSize: '100% 100%'
+                                        })
+                                    }
+                                    else if(value.toLowerCase() == 'sapia'){
+                                        Ext.ComponentQuery.query("viewport panel")[0].setBodyStyle({
+                                            background: 'url(resources/images/harold.jpg)',
+                                            backgroundSize: '100% 100%'
+                                        })
+                                    }
+                                    else if(value.toLowerCase() == 'lena'){
+                                        Ext.ComponentQuery.query("viewport panel")[0].setBodyStyle({
+                                            background: 'url(resources/images/napoli.jpg)',
+                                            backgroundSize: '100% 100%'
+                                        })
+                                    }
+                                    else{
+                                        Ext.ComponentQuery.query("viewport panel")[0].setBodyStyle({
+                                            background: 'url(http://download.1wallpaper.net/20150730/background-spots-shadows-dim-1920x1080.jpg)'
+                                        })
                                     }
                                 }
                             }
@@ -182,7 +221,7 @@ Ext.define('CL.view.login.V_login', {
             xtype: 'image',
             src: 'resources/images/colonna.png',
             alt: " ",
-            width: 280,
+            width: 275,
             height: 498
         }
     ]

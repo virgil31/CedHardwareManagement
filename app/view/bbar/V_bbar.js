@@ -5,7 +5,8 @@ Ext.define('CL.view.bbar.V_bbar', {
     alias: 'widget.bbar',
 
     height: 88,
-	style: 'background: #333333',
+    cls: 'mybbar',
+	//style: 'background: #333333',
 
 
     initComponent: function() {

@@ -5,7 +5,8 @@ Ext.define('CL.view.tbar.V_tbar', {
     alias: 'widget.tbar',
 
     height: 88,
-	style: 'background: #333333',
+    cls: 'mytbar',
+	//style: 'background: #333333',
 
 	initComponent: function() {
 		var this_view = this;
@@ -48,6 +49,7 @@ Ext.define('CL.view.tbar.V_tbar', {
 		            },
                     {
 		                xtype: 'button',
+                        tooltip: 'EiS srl',
 		                width: 45,
 		                height: 45,
 		                margin: '0 0 0 20',

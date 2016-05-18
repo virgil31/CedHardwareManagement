@@ -121,7 +121,7 @@ Ext.define('CL.view.seriale_modello.V_search', {
                         flex: 1
                     },
                     {
-                        text: 'Tipo',
+                        text: 'Modello',
                         dataIndex: 'modello_name',
                         flex: 1
                     },
