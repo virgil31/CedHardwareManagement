@@ -19,22 +19,10 @@ Ext.define('CL.controller.C_home', {
     init: function () {
         this.control({
 
-            // LOAD USER
-            'home button[action=load_user]':{
-                click: this.loadUser
-            },
-
-
-            // TEST WINDOW
-            'home button[action=test_window]':{
-                click: this.testWindow
-            },
-
-            //GO TO OTHER VIEW
-            'home button[action=go_to_second_view]':{
-                click: this.goToSecondView
+            // EXPORT CSV
+            'home button[action=export_csv]':{
+                click: this.exportCSV
             }
-
 
         }, this);
     },
@@ -49,7 +37,7 @@ Ext.define('CL.controller.C_home', {
             if(Ext.ComponentQuery.query('home').length == 0)
                 Ext.ComponentQuery.query('viewport panel[name=card]')[0].add({xtype: 'home'});
 
-            Ext.ComponentQuery.query('viewport panel[name=card]')[0].getLayout().setActiveItem('home_id');            
+            Ext.ComponentQuery.query('viewport panel[name=card]')[0].getLayout().setActiveItem('home_id');
         }
         else
             this.redirectTo('login');
@@ -57,12 +45,18 @@ Ext.define('CL.controller.C_home', {
 
     /////////////////////////////////////////////////
 
-    //DO LOGOUT
-    doLogout: function () {
-        // Remove the localStorage key/value
-        localStorage.removeItem('TutorialLoggedIn');
+    //EXPORT CSV
+    exportCSV: function () {
 
-        this.redirectTo('login');
+        var form = Ext.create('Ext.form.Panel', {
+            standardSubmit: true
+        });
+
+        form.submit({
+            url: 'data/export/assegnazioni_csv.php'
+        });
+
     }
+
 
 });

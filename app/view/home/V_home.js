@@ -58,11 +58,17 @@ Ext.define('CL.view.home.V_home', {
                         {
                             xtype: 'button',
                             icon: 'resources/images/icon_plus.gif',
-                            text: 'Assegnazione Rapida Pregresso',
+                            text: 'Assegnazione Rapida',
                             tooltip: 'Assegnazione Rapida',
                             handler: function(){
                                 CL.app.getController("C_richiesta").onQuickCreate(this.el);
                             }
+                        },
+                        {
+                            xtype: 'button',
+                            icon: 'resources/images/icon_excel.png',
+                            tooltip: 'Scarica CSV',
+                            action: 'export_csv'
                         },
                         '->',
                         {
