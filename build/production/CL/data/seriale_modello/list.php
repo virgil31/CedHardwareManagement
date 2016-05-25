@@ -35,7 +35,7 @@ if(isset($_GET["solo_disponibili"])){
 // LIST BY nome/cognome richiedente E ufficio_id
 else if(isset($_GET["richiedente"]) && isset($_GET["ufficio_id"])){
 
-	$richiedente = $_GET["richiedente"];
+	$richiedente = str_replace("'","''",$_GET["richiedente"]);
 	$ufficio_id = $_GET["ufficio_id"];
 
 	$statement = $pdo->prepare("
@@ -112,7 +112,7 @@ echo json_encode(array(
 
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
-function serialeAncoraAssegnato($pdo,$seriale_id,$richiedente){	
+function serialeAncoraAssegnato($pdo,$seriale_id,$richiedente){
 	$statement = $pdo->prepare("
 		SELECT *
 		FROM (

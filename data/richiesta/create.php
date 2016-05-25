@@ -37,7 +37,7 @@ $tipi_hardware = $data["tipi_hardware"];
 foreach ($tipi_hardware as $tipo_hardware) {
 	$s = $pdo->prepare("
 		INSERT INTO richiesta_tipo_hardware(richiesta_id, tipo_hardware_id, note)
-		VALUES(:richiesta_id,:tipo_hardware_id,:note)
+		VALUES(:richiesta_id,:tipo_hardware_id,:note);
 	");
 
 	$params = array(

@@ -27,7 +27,7 @@ if(isset($_GET["sede_id"])){
 		FROM ufficio A
 			LEFT JOIN sede B ON B.id = A.sede_id
 		WHERE sede_id = $sede_id
-		ORDER BY A.$pro $dir
+		ORDER BY $pro $dir
    ");
 }
 //LIST FULL
@@ -36,7 +36,7 @@ else if(isset($_GET["flag_full"])){
 		SELECT A.id, A.nome, A.sede_id, B.nome as sede_nome, COUNT(*) OVER() as total
 		FROM ufficio A
 			LEFT JOIN sede B ON B.id = A.sede_id
-		ORDER BY A.$pro $dir
+		ORDER BY $pro $dir
 	");
 }
 else{
@@ -45,7 +45,7 @@ else{
 		SELECT A.id, A.nome, A.sede_id, B.nome as sede_nome, COUNT(*) OVER() as total
 		FROM ufficio A
 			LEFT JOIN sede B ON B.id = A.sede_id
-		ORDER BY A.$pro $dir LIMIT $limit OFFSET $start
+		ORDER BY $pro $dir LIMIT $limit OFFSET $start
 	");
 }
 

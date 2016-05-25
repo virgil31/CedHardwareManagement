@@ -157,6 +157,7 @@ function getUtentiFromUfficio($pdo, $ufficio_id){
 
 
 function getNumeroSerialiDiUtenteUfficio($pdo, $ufficio_id, $utente){
+    $utente  = str_replace("'","''",$utente);
     $statement = $pdo->prepare("
         SELECT B.seriale_id
 

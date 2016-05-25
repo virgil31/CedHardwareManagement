@@ -28,7 +28,7 @@ try{
 				LEFT JOIN utente B on B.id = A.funzionario_id
 				LEFT JOIN sede C on C.id = A.sede_id
 				LEFT JOIN ufficio D on D.id = A.ufficio_id
-			WHERE CAST(id as TEXT) ilike '$query_id%'
+			WHERE CAST(A.id as TEXT) ilike '$query_id%'
 			ORDER BY $pro $dir
 		");
 	}

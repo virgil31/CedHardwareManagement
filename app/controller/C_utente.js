@@ -86,7 +86,7 @@ Ext.define('CL.controller.C_utente', {
             form = window.down("form").getForm(),
             values = form.getValues();
 
-        
+
         if(form.isValid()){
             Ext.StoreManager.lookup("S_utente").add(values);
 
