@@ -82,6 +82,46 @@ Ext.define('CL.view.richiesta.V_edit', {
                         readOnly: true
                     },
                     {
+                        xtype: 'combobox',
+                        style: {
+                            background: "#C4F2E5"
+                        },
+                        fieldLabel: 'Sede',
+                        name: 'sede_id',
+                        store: "S_sede",
+                        queryMode: 'local',
+                        anyMatch: true,
+                        displayField: 'nome',
+                        valueField: 'id',
+                        listeners:{
+                            select: function(){
+                                //pulisco selezione dell'ufficio e ricarico la combobox di quest'ultimi
+                                Ext.StoreManager.lookup("S_ufficio").load({
+                                    params:{
+                                        sede_id: this.getValue()
+                                    }
+                                });
+
+                                Ext.ComponentQuery.query("richiesta_edit combobox[name=ufficio_id]")[0].clearValue();
+                            }
+                        }
+                    },
+                    {
+                        xtype: 'combobox',
+                        style: {
+                            background: "#C4F2E5"
+                        },
+                        fieldLabel: 'Ufficio',
+                        name: 'ufficio_id',
+                        store: "S_ufficio",
+                        queryMode: 'local',
+                        anyMatch: true,
+                        displayField: 'nome',
+                        valueField: 'id'
+                    },
+
+                    /*
+                    {
                         xtype: 'textfield',
                         fieldLabel: 'Sede',
                         name: 'sede_name',
@@ -93,6 +133,7 @@ Ext.define('CL.view.richiesta.V_edit', {
                         name: 'ufficio_name',
                         readOnly: true
                     },
+                    */
                     {
                         xtype: 'textfield',
                         fieldLabel: 'Servizio',

@@ -158,8 +158,7 @@ Ext.define('CL.view.home.V_home', {
                     {
                         text: 'ID',
                         dataIndex: 'id',
-                        flex: 0.3,
-                        sortable: false
+                        flex: 0.3
                     },
                     {
                         text: 'Richiesta da',

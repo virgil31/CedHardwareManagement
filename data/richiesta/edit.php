@@ -13,14 +13,18 @@ $data = json_decode($_POST['data'],true);
 $s = $pdo->prepare("
 	UPDATE richiesta
 	SET stato = :stato,
-		assegnata_il = :assegnata_il
+		assegnata_il = :assegnata_il,
+		ufficio_id =  :ufficio_id,
+		sede_id = :sede_id
 	WHERE id = :id
 ");
 
 $params = array(
 	'id' => $data['id'],
 	'stato' => $data['stato'],
-	'assegnata_il' => ($data["assegnata_il"]!="") ? $data["assegnata_il"] : null
+	'assegnata_il' => ($data["assegnata_il"]!="") ? $data["assegnata_il"] : null,
+	'ufficio_id' => $data['ufficio_id'],
+	'sede_id' => $data['sede_id']
 );
 
 

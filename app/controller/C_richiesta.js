@@ -268,6 +268,17 @@ Ext.define('CL.controller.C_richiesta', {
                 richiesta_id: record.get("id")
             }
         });
+
+        Ext.StoreManager.lookup("S_sede").load({
+            params:{
+                flag_full: true
+            }
+        });
+        Ext.StoreManager.lookup("S_ufficio").load({
+            params:{
+                sede_id: record.get("sede_id")
+            }
+        });
     }
 
 });
