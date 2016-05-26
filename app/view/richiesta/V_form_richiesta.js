@@ -278,7 +278,7 @@ Ext.define('CL.view.richiesta.V_form_richiesta', {
                         titleAlign: 'center',
                         title: '<i><b>Guida & Info</b></i>',
                         width: 325,
-                        height: 525,
+                        height: 600,
                         padding: 10,
                         layout: {
                             type: 'vbox',
@@ -299,6 +299,13 @@ Ext.define('CL.view.richiesta.V_form_richiesta', {
                                     "<br><br><b>NB!</b> Nel caso in cui non sia presente la <br>tipologia di hardware desiderata,<br>mettersi in contatto con il CED."+
                                     "<br><br>Una volta esplicitata la motivazione e<br> la disponibilità riguardo il materiale usato,<br> confermare ed inviare la richiesta."+
                                     "<br><br>Riceverà in seguito una mail di conferma/riepilogo<br> con le istruzioni per poter verificare in qualunque<br>momento lo stato della sua richiesta.</div>"
+                            },
+                            {
+                                xtype: 'image',
+                                src: 'resources/images/clippy.gif',
+                                width: 90 ,
+                                height: 80,
+                                margin: '10 0 10 0'
                             }
                         ],
                         bbar: [

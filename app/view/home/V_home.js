@@ -46,6 +46,7 @@ Ext.define('CL.view.home.V_home', {
                             xtype: 'button',
                             tooltip: 'Aggiorna lista richieste',
                             icon: 'resources/images/icon_refresh.gif',
+                            action: 'refresh_richieste',
                             handler: function(){
                                 Ext.ComponentQuery.query("home grid")[0].getStore().loadPage(1);
                             }
@@ -115,6 +116,9 @@ Ext.define('CL.view.home.V_home', {
                                         if(field.getValue().length != 0){
                                             var btn = Ext.ComponentQuery.query("home button[action=do_query_id]")[0];
                                             btn.fireEvent("click",btn);
+                                        }
+                                        else{
+                                            Ext.ComponentQuery.query("home button[action=refresh_richieste]")[0].handler();
                                         }
                                     }
                                 }

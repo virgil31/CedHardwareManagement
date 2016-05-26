@@ -9,24 +9,47 @@ $pdo=new PDO("pgsql:host=".$ini_array['pdo_host'].";port=".$ini_array['pdo_port'
 
 $data = json_decode($_POST['data'],true);
 
+//se ho anche la fattura
+if($data['fattura_id'] != ""){
 
-$s = $pdo->prepare("
-	UPDATE seriale_modello
-	SET seriale = :seriale,
-		modello_id = :modello_id,
-		fattura_id = :fattura_id,
-		disponibile = :disponibile
+	$s = $pdo->prepare("
+		UPDATE seriale_modello
+		SET seriale = :seriale,
+			modello_id = :modello_id,
+			fattura_id = :fattura_id,
+			disponibile = :disponibile
 
-	WHERE id = :id
-");
+		WHERE id = :id
+	");
 
-$params = array(
-	'id' => $data["id"],
-	'seriale' => $data['seriale'],
-	'modello_id' => $data['modello_id'],
-	'fattura_id' => $data['fattura_id'],
-	'disponibile' => $data['disponibile']
-);
+	$params = array(
+		'id' => $data["id"],
+		'seriale' => $data['seriale'],
+		'modello_id' => $data['modello_id'],
+		'fattura_id' => $data['fattura_id'],
+		'disponibile' => $data['disponibile']
+	);
+
+}
+//se non ha la fattura
+else{
+	$s = $pdo->prepare("
+		UPDATE seriale_modello
+		SET seriale = :seriale,
+			modello_id = :modello_id,
+			disponibile = :disponibile
+
+		WHERE id = :id
+	");
+
+	$params = array(
+		'id' => $data["id"],
+		'seriale' => $data['seriale'],
+		'modello_id' => $data['modello_id'],
+		'disponibile' => $data['disponibile']
+	);
+
+}
 
 $success = $s->execute($params);
 
@@ -39,6 +62,9 @@ if ($success) {
 else{
     echo json_encode(array(
         "success" => false,
-        "error_message" =>  $pdo->errorInfo()
+        "error_message" =>  $pdo->errorInfo(),
+		"id" => $data["id"],
+		"modello_id" => $data["modello_id"],
+		"fattura_id" => $data["fattura_id"]
     ));
 }
