@@ -40,9 +40,12 @@ foreach ($tipi_hardware as $tipo_hardware) {
 		VALUES(:richiesta_id,:tipo_hardware_id,:note);
 	");
 
+	$tmp = explode("---", $tipo_hardware['id']);
+	$tipo_hardware_id = $tmp[0];
+
 	$params = array(
 		'richiesta_id' => $last_id,
-		'tipo_hardware_id' => $tipo_hardware['id'],
+		'tipo_hardware_id' => $tipo_hardware_id,
 		'note' => $tipo_hardware['note'],
 	);
 

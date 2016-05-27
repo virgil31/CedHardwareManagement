@@ -54,7 +54,7 @@ Ext.define('CL.view.home.V_home', {
                         {
                             xtype: 'label',
                             text: 'Richieste Hardware',
-                            style: 'color: #157fcc;font-size: 15px;font-weight: 300;font-family: helvetica, arial, verdana, sans-serif;line-height: 16px'
+                            style: 'color: #157fcc;font-size: 15px;font-weight: bold;font-family: helvetica, arial, verdana, sans-serif;line-height: 16px'
                         },
                         {
                             xtype: 'button',

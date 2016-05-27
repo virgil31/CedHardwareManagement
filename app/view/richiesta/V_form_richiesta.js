@@ -203,7 +203,7 @@ Ext.define('CL.view.richiesta.V_form_richiesta', {
 
                                                                             if(form.isValid()){
                                                                                 Ext.ComponentQuery.query("form_richiesta grid")[0].getStore().add({
-                                                                                    id: values.tipo_hardware_id,
+                                                                                    id: values.tipo_hardware_id+"---"+Math.random(),
                                                                                     nome: values.nome,
                                                                                     note: values.note
                                                                                 });
