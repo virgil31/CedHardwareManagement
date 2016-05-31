@@ -103,6 +103,7 @@ else if(count($array_path) == 3){
             AND D.disponibile = FALSE
 
         GROUP BY B.nome, B.cognome
+        ORDER BY B.nome, B.cognome
 
     ");
 

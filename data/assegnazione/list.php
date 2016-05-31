@@ -34,7 +34,7 @@ if(isset($_GET["richiesta_id"])){
 				LEFT JOIN marca_hardware E ON E.id = D.marca_id
 				LEFT JOIN seriale_modello F ON (F.modello_id = D.id AND F.disponibile = TRUE )
 
-			GROUP BY A.id,B.nome,E.nome,D.nome,C.seriale,C..
+			GROUP BY A.id,B.nome,E.nome,D.nome,C.seriale,C.modello_id
 		) A
 		LEFT JOIN tipo_hardware B ON B.id = A.tipo_hardware_id
 		LEFT JOIN modello_hardware C ON C.tipo_id = B.id
