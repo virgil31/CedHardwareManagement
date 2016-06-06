@@ -246,7 +246,7 @@ Ext.define('CL.view.richiesta.V_form_richiesta', {
                                 fieldLabel: 'Motivazione Richiesta',
                                 allowBlank: false,
                                 height: 75,
-                                minLength: 50
+                                minLength: 30
                             },
                             {
                                 xtype: 'checkbox',

@@ -198,13 +198,17 @@ Ext.define('CL.view.richiesta.V_edit', {
                                         handler: function(grid, rowIndex, colIndex) {
                                             var stato_richiesta = Ext.ComponentQuery.query("richiesta_edit combobox[name=stato]")[0].getValue();
 
-                                            if(stato_richiesta == "Pregresso"){
+                                            /*if(stato_richiesta == "Pregresso"){
                                                 Ext.Msg.alert("Attenzione!","Impossibile modificare un'assegnazione del pregresso.")
                                             }
                                             else{
                                                 var rec = grid.getStore().getAt(rowIndex);
                                                 CL.app.getController("C_assegnazione").onEdit(this.el,rec);
-                                            }
+                                            }*/
+
+                                            
+                                            var rec = grid.getStore().getAt(rowIndex);
+                                            CL.app.getController("C_assegnazione").onEdit(this.el,rec);
                                         }
                                     }
                                 ]

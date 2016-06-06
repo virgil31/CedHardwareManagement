@@ -16,7 +16,6 @@
         ldap_sort($ldap,$result,"sn");
         $info = ldap_get_entries($ldap, $result);
 
-
         if(!array_key_exists('sn', $info[0]) || !array_key_exists('givenname', $info[0])){
             echo json_encode(
                 array(
