@@ -5,7 +5,6 @@ Ext.application({
 
     controllers: [
         'C_not_found',
-        'C_user',
         'C_login',
         'C_home',
         'C_second',
