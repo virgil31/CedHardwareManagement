@@ -70,7 +70,7 @@ Ext.define('CL.view.richiesta.V_edit', {
                                 fieldLabel: 'Assegnata il',
                                 name: 'assegnata_il',
                                 format:'d/m/Y',
-                                submitFormat:'d/m/Y',
+                                submitFormat:'m/d/Y',
                                 editable: false
                             }
                         ]
@@ -80,6 +80,20 @@ Ext.define('CL.view.richiesta.V_edit', {
                         fieldLabel: 'Richiedente',
                         name: 'full_nome',
                         readOnly: true
+                    },
+                    {
+                        xtype: 'combobox',
+                        /*style: {
+                            background: "#C4F2E5"
+                        },*/
+			readOnly: true,
+                        fieldLabel: 'Funzionario',
+                        name: 'funzionario_id',
+                        store: "S_utente",
+                        queryMode: 'local',
+                        anyMatch: true,
+                        displayField: 'utente_name',
+                        valueField: 'id'
                     },
                     {
                         xtype: 'combobox',

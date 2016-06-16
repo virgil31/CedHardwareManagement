@@ -93,7 +93,7 @@ Ext.define('CL.view.seriale_modello.V_search', {
                     },
 
                     itemmouseenter: function(view, record, item) {
-                        if(record.get('nome_richiedente') != null){
+                        if(!record.get('disponibile') && record.get('nome_richiedente') != null){
                             var richiedente = record.get("nome_richiedente")+" "+record.get("cognome_richiedente"),
                                 sede = record.get("sede_name"),
                                 ufficio = record.get("ufficio_name"),

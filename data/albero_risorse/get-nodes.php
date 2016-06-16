@@ -189,7 +189,9 @@ function serialeAncoraAssegnato($pdo,$seriale_id,$richiedente){
 			SELECT *
 			FROM richiesta_tipo_hardware A
 				LEFT JOIN richiesta B ON B.id = A.richiesta_id
+				LEFT JOIN seriale_modello C ON C.id = A.seriale_id
 			WHERE A.seriale_id = $seriale_id
+				AND C.disponibile = FALSE
 			ORDER BY B.id DESC
 			LIMIT 1
 		) tmp

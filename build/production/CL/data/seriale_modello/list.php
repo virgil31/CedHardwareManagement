@@ -51,7 +51,7 @@ else if(isset($_GET["richiedente"]) && isset($_GET["ufficio_id"])){
 
 		WHERE CONCAT(A.nome,' ',A.cognome) ilike '%$richiedente%'
 			AND A.ufficio_id = $ufficio_id
-			AND D.id IS NOT NULL
+			AND D.disponibile = FALSE
 
 		ORDER BY tipo_name ASC, marca_name ASC, modello_name ASC, seriale ASC
 	");

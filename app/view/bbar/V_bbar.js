@@ -17,7 +17,7 @@ Ext.define('CL.view.bbar.V_bbar', {
                 '->',
                 {
         			html: '<marquee behavior="scroll" scrollamount="5" direction="left" width="900">'+
-        				'Lena Lena Lena Lena Lena Lena Lena Lena Lena Lena Lena Lena Lena Lena Lena Lena Lena Lena Lena Lena Lena Lena Lena Lena Lena Lena Lena Lena Lena Lena Lena Lena Lena Lena Lena Lena Lena Lena '+
+        				'Uno studente disse al suo Maestro: "Tu mi insegni a combattere e mi parli di pace, come puoi conciliare le due cose?".  Il Maestro rispose: "E’ meglio essere un guerriero in un giardino, che un giardiniere in guerra."'+
         				'</marquee>'
         		},
                 '->'

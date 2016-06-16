@@ -255,7 +255,7 @@ Ext.define('CL.controller.C_richiesta', {
             title: 'Richiesta Hardware <b>#'+record.get("id")+'</b>'
         });
 
-        win.down("form").loadRecord(record);
+        //win.down("form").loadRecord(record);
 
         //nel caso in cui si tratti di pregresso,
         //non farò editare lo stato (guarda la View) e la data di assegnazione
@@ -268,7 +268,6 @@ Ext.define('CL.controller.C_richiesta', {
                 richiesta_id: record.get("id")
             }
         });
-
         Ext.StoreManager.lookup("S_sede").load({
             params:{
                 flag_full: true
@@ -279,6 +278,13 @@ Ext.define('CL.controller.C_richiesta', {
                 sede_id: record.get("sede_id")
             }
         });
+	Ext.StoreManager.lookup("S_utente").load({
+	    params:{
+	        flag_full: true
+	    }
+	});
+
+	win.down("form").loadRecord(record);
     }
 
 });
