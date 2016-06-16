@@ -38,6 +38,11 @@ Ext.define('CL.controller.C_richiesta', {
             // DO (quick) CREATE
             'richiesta_quick_create button[action=do_create]':{
                 click: this.doQuickCreate
+            },
+
+            //ANNULLA RICHIESTA
+            'richiesta_edit button[action=annulla_richiesta]':{
+                click: this.annullaRichiesta
             }
         }, this);
     },
@@ -58,6 +63,38 @@ Ext.define('CL.controller.C_richiesta', {
     },
 
     /////////////////////////////////////////////////
+
+
+    //ANNULLA RICHIESTA
+    annullaRichiesta: function(btn){
+        var richiesta_id = btn.up("form").getRecord().get("id");
+
+        Ext.Msg.confirm("Attenzione!","Sicuro di voler eliminare la richiesta e rendere disponibili gli eventuali seriali assegnati?", function(btnId){
+            if(btnId == "yes"){
+                Ext.Ajax.request({
+                    url: 'data/richiesta/annulla_richiesta.php',
+                    method: "POST",
+                    params: {richiesta_id:richiesta_id},
+
+                    success: function(response, opts) {
+                        var risposta = Ext.decode(response.responseText);
+                        if(risposta["success"]){
+                            btn.up("window").close();
+                            Ext.StoreManager.lookup("S_richiesta").reload();
+                        }
+                        else{
+                            Ext.Msg.alert('Errore');
+                        }
+                    },
+
+                    failure: function(response, opts) {
+                        Ext.Msg.alert('server-side failure with status code ' + response.status);
+                    }
+                });
+
+            }
+        });
+    },
 
     // DO QUICK CREATE
     doQuickCreate: function(btn) {

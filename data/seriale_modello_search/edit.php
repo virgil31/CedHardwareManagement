@@ -27,7 +27,7 @@ if($data['fattura_id'] != ""){
 		'seriale' => $data['seriale'],
 		'modello_id' => $data['modello_id'],
 		'fattura_id' => $data['fattura_id'],
-		'disponibile' => $data['disponibile']
+		'disponibile' =>  ($data['disponibile'] == true) ?  't' : 'f'
 	);
 
 }
@@ -46,7 +46,7 @@ else{
 		'id' => $data["id"],
 		'seriale' => $data['seriale'],
 		'modello_id' => $data['modello_id'],
-		'disponibile' => $data['disponibile']
+		'disponibile' =>  ($data['disponibile'] == true) ?  't' : 'f'
 	);
 
 }

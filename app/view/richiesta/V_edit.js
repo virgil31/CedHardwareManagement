@@ -220,7 +220,7 @@ Ext.define('CL.view.richiesta.V_edit', {
                                                 CL.app.getController("C_assegnazione").onEdit(this.el,rec);
                                             }*/
 
-                                            
+
                                             var rec = grid.getStore().getAt(rowIndex);
                                             CL.app.getController("C_assegnazione").onEdit(this.el,rec);
                                         }
@@ -246,6 +246,14 @@ Ext.define('CL.view.richiesta.V_edit', {
                         action: 'mostra_foglio_consegna',
                         style: {
                             background: "#29A14E"
+                        }
+                    },
+                    {
+                        text: "Annulla Richiesta",
+                        scale: 'large',
+                        action: 'annulla_richiesta',
+                        style: {
+                            background: "#ff6363"
                         }
                     }
                 ]
