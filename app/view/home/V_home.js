@@ -238,6 +238,17 @@ Ext.define('CL.view.home.V_home', {
                     },
                     {
                         xtype: 'button',
+                        text: 'Cerca per Utente',
+                        icon: "resources/images/icon_utente.png",
+                        flex: 1,
+                        width: '100%',
+                        style: 'backgroundColor: green',
+                        handler: function(){
+                            CL.app.getController('C_home').redirectTo("cerca_per_utente");
+                        }
+                    },
+                    {
+                        xtype: 'button',
                         text: 'Tipi HW',
                         flex: 1,
                         width: '100%',

@@ -35,10 +35,20 @@ else if(isset($_GET["flag_full"])){
 		ORDER BY utente_name ASC
 	");
 }
+
+//LIST SOLO RICHIEDENTI
+else if(isset($_GET["flag_only_richiedenti"])){
+	$statement = $pdo->prepare("
+		SELECT DISTINCT CONCAT(nome,' ', cognome) as utente_name, COUNT(*) OVER() as total
+		FROM richiesta
+		ORDER BY utente_name
+	");
+}
+
 else{
 	//LIST PAGINATO
 	$statement = $pdo->prepare("
-		SELECT id, nome, cognome, funzionario, COUNT(*) OVER() as total
+		SELECT id, nome, cognome, funzionario,CONCAT(nome,' ',cognome) as utente_name, COUNT(*) OVER() as total
 		FROM utente
 		ORDER BY $pro $dir,nome LIMIT $limit OFFSET $start
 	");
