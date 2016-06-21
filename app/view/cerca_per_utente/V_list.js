@@ -26,6 +26,11 @@ Ext.define('CL.view.cerca_per_utente.V_list', {
                 overflowX: 'hidden',
                 overflowY: 'auto',
 
+                bodyStyle: {
+                    background: 'url(resources/images/background_arrow_up.png)',
+                    backgroundSize: '100% 100%'
+                },
+
                 viewConfig: {
                     enableTextSelection: true
                 },
@@ -76,7 +81,12 @@ Ext.define('CL.view.cerca_per_utente.V_list', {
                                         params:{
                                             utente: utente_selezionato
                                         }
-                                    })
+                                    });
+
+                                    //tolgo l'immagine della freccia dalla griglia
+                                    Ext.ComponentQuery.query("cerca_per_utente_list grid")[0].setBodyStyle({
+                                        background: "white"
+                                    });
                                 }
                             }
                         },
