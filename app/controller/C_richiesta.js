@@ -315,13 +315,13 @@ Ext.define('CL.controller.C_richiesta', {
                 sede_id: record.get("sede_id")
             }
         });
-	Ext.StoreManager.lookup("S_utente").load({
-	    params:{
-	        flag_full: true
-	    }
-	});
+    	Ext.StoreManager.lookup("S_utente").load({
+    	    params:{
+    	        flag_full: true
+    	    }
+    	});
 
-	win.down("form").loadRecord(record);
+    	win.down("form").loadRecord(record);
     }
 
 });

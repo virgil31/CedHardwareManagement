@@ -131,10 +131,22 @@ Ext.define('CL.controller.C_seriale_modello', {
             values = form.getValues();
 
         if(form.isValid()){
+
+            //Ext.StoreManager.lookup("S_seriale_modello").add(values);
+
+            Ext.StoreManager.lookup("S_seriale_modello").autoSync = false;
             Ext.StoreManager.lookup("S_seriale_modello").add(values);
+            Ext.StoreManager.lookup("S_seriale_modello").sync({
+                failure: function(){
+                    Ext.StoreManager.lookup("S_seriale_modello").autoSync = true;
+                    this.rejectChanges();
+                    return;
+                }
+            });
+            Ext.StoreManager.lookup("S_seriale_modello").autoSync = true;
+
 
             setTimeout(function(){
-
 
                 if(window.callbackOnCreated != null)
                     window.callbackOnCreated();

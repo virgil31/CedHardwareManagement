@@ -107,6 +107,12 @@ Ext.define('CL.view.cerca_per_utente.V_list', {
 
                 columns: [
                     {
+                        text: '# Richiesta',
+                        dataIndex: 'richiesta_id',
+                        flex: 0.5,
+                        sortable: false
+                    },
+                    {
                         text: 'Sede',
                         dataIndex: 'sede_name',
                         flex: 1,
@@ -130,6 +136,7 @@ Ext.define('CL.view.cerca_per_utente.V_list', {
                         flex: 1,
                         sortable: false
                     }
+
                     /*{
                         xtype:'actioncolumn',
                         width:50,

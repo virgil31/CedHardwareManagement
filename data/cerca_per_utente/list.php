@@ -10,7 +10,7 @@ $pdo=new PDO("pgsql:host=".$ini_array['pdo_host'].";port=".$ini_array['pdo_port'
 $utente = $_GET["utente"];
 
 $statement = $pdo->prepare("
-	SELECT B.nome as sede_name, C.nome as ufficio_name,D.seriale_id,E.seriale, CONCAT('<b>',H.nome,'</b> ',G.nome,' ',F.nome ) as hardware_name
+	SELECT B.nome as sede_name, C.nome as ufficio_name,D.seriale_id,E.seriale, CONCAT('<b>',H.nome,'</b> ',G.nome,' ',F.nome ) as hardware_name, D.richiesta_id
 	FROM richiesta A
 		LEFT JOIN sede B ON B.id = A.sede_id
 		LEFT JOIN ufficio C ON C.id = A.ufficio_id
