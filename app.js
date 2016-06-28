@@ -76,7 +76,7 @@ Ext.application({
                     scrollable: true,
                     //bodyStyle: "background: #646464",// 3892D4
                     bodyStyle: {
-                        background: 'url(http://download.1wallpaper.net/20150730/background-spots-shadows-dim-1920x1080.jpg)'
+                        background: 'url(resources/images/background.jpg)'
                     },
                     tbar: Ext.widget('tbar'),
                     layout: {

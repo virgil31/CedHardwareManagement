@@ -137,31 +137,35 @@ Ext.define('CL.controller.C_seriale_modello', {
             Ext.StoreManager.lookup("S_seriale_modello").autoSync = false;
             Ext.StoreManager.lookup("S_seriale_modello").add(values);
             Ext.StoreManager.lookup("S_seriale_modello").sync({
+                success: function(){
+                    setTimeout(function(){
+                        Ext.StoreManager.lookup("S_seriale_modello").autoSync = true;
+
+                        if(window.callbackOnCreated != null)
+                            window.callbackOnCreated();
+                        else{
+                            Ext.StoreManager.lookup("S_seriale_modello").reload({
+                                callback: function(){
+                                    var nome_modello = Ext.ComponentQuery.query("seriale_modello_create combobox[name=modello_id]")[0].getRawValue();
+                                    //window.close();
+                                    Ext.ComponentQuery.query("seriale_modello_list_by_modello")[0].setTitle('Lista Seriali ('+this.getTotalCount()+') - <b>'+nome_modello+'</b>');
+                                }
+                            });
+                        }
+
+                        window.close();
+                    }, 250);
+                },
                 failure: function(){
                     Ext.StoreManager.lookup("S_seriale_modello").autoSync = true;
-                    this.rejectChanges();
+
+                    Ext.Msg.alert("Errore!","Errore durante la creazione del seriale lato server!");
+                    Ext.StoreManager.lookup("S_seriale_modello").rejectChanges();
                     return;
                 }
             });
-            Ext.StoreManager.lookup("S_seriale_modello").autoSync = true;
 
 
-            setTimeout(function(){
-
-                if(window.callbackOnCreated != null)
-                    window.callbackOnCreated();
-                else{
-                    Ext.StoreManager.lookup("S_seriale_modello").reload({
-                        callback: function(){
-                            var nome_modello = Ext.ComponentQuery.query("seriale_modello_create combobox[name=modello_id]")[0].getRawValue();
-                            //window.close();
-                            Ext.ComponentQuery.query("seriale_modello_list_by_modello")[0].setTitle('Lista Seriali ('+this.getTotalCount()+') - <b>'+nome_modello+'</b>');
-                        }
-                    });
-                }
-
-                window.close();
-            }, 250);
         }
     }
 

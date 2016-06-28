@@ -58,7 +58,7 @@ sleep(2);
 if ($success) {
     echo json_encode(array(
         "success" => true,
-		"mail_sent" => inviaMail("RichiestaHardware-CED@SSCOL.it", $data['email'], "Richiesta Hardware #".$last_id, "Il codice identificativo della sua richiesta è <b>".$last_id.'</b>. Può utilizzare questo codice per controllare lo stato della sua richiesta <a target="_blank" href="http://localhost/projects/Extjs_6.0.0/CedHardwareManagement/#controlla_richiesta">QUI</a><br><br>Elenco materiale richiesto:<br>'.getRiepilogo($last_id)),
+		"mail_sent" => inviaMail("RichiestaHardware-CED@SSCOL.it", $data['email'], "Richiesta Hardware #".$last_id, "Il codice identificativo della sua richiesta è <b>".$last_id.'</b>. Può utilizzare questo codice per controllare lo stato della sua richiesta <a target="_blank" href="http://inventario.sar.it/#controlla_richiesta">QUI</a><br><br>Elenco materiale richiesto:<br>'.getRiepilogo($last_id)),
         "result" => array(
             "id" => $last_id
         )

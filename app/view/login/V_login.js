@@ -91,7 +91,7 @@ Ext.define('CL.view.login.V_login', {
                                     }
                                     else{
                                         Ext.ComponentQuery.query("viewport panel")[0].setBodyStyle({
-                                            background: 'url(http://download.1wallpaper.net/20150730/background-spots-shadows-dim-1920x1080.jpg)'
+                                            background: 'url(resources/images/background.jpg)'
                                         })
                                     }
                                 }
