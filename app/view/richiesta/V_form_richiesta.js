@@ -74,7 +74,7 @@ Ext.define('CL.view.richiesta.V_form_richiesta', {
                                 name: 'email',
                                 fieldLabel: 'Email',
                                 allowBlank: false,
-                                value: (Ext.util.Cookies.get("nome")+"."+Ext.util.Cookies.get("cognome")).toLowerCase()+"@beniculturali.it",//'nome.cognome@beniculturali.it',
+                                value: (Ext.util.Cookies.get("nome")+"."+Ext.util.Cookies.get("cognome")).toLowerCase().replace(/\s/g, '')+"@beniculturali.it",//'nome.cognome@beniculturali.it',
                                 vtype: 'email'
                             },
                             {xtype: 'menuseparator', width: '95%'},
@@ -250,10 +250,12 @@ Ext.define('CL.view.richiesta.V_form_richiesta', {
                             },
                             {
                                 xtype: 'checkbox',
+                                checked: true,
+                                readOnly: true,
                                 inputValue: true,
                                 uncheckedValue: false,
                                 name: "disponibile_per_usato",
-                                boxLabel  : 'Disponibilità ad utilizzare apparecchiature <b>non nuove</b> ma ritenute adeguate alle esigenze dell’ufficio.',
+                                boxLabel  : 'Disponibilità ad utilizzare apparecchiature <b>non nuove</b> ma ritenute adeguate alle esigenze dell’ufficio. (Obbligatoria)',
                                 height: 50,
                                 width: '80%'
                             }
