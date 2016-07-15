@@ -250,6 +250,7 @@ Ext.define('CL.view.richiesta.V_form_richiesta', {
                             },
                             {
                                 xtype: 'checkbox',
+                                hidden: true,
                                 checked: true,
                                 readOnly: true,
                                 inputValue: true,
