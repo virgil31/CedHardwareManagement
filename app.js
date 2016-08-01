@@ -104,7 +104,7 @@ Ext.application({
         }
 
 
-        Ext.Msg.alert("ATTENZIONEEE!","L'applicazione è stata spostata su <a href=\"http://inventario.sar.it\">inventario.sar.it</a>");
+        Ext.Msg.alert("ATTENZIONE!","L'applicazione è stata spostata su <a href=\"http://inventario.sar.it\">inventario.sar.it</a>");
     },
 
 
