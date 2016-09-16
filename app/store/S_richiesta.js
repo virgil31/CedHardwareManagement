@@ -1,6 +1,7 @@
 Ext.define('CL.store.S_richiesta',{
     extend: 'Ext.data.Store',
 
+
     autoLoad: true,
     autoSync: false,
 
@@ -9,7 +10,7 @@ Ext.define('CL.store.S_richiesta',{
     pageSize: 50,
 
     remoteSort: true,
-    sorters: { property: 'id', direction : 'DESC' }, //lo ordiniamo per id
+    sorters: { property: 'ric_id', direction : 'DESC' }, //lo ordiniamo per id
 
     //mostro un messaggio di errore quando non riesco a connetermi al db
     listeners:{
@@ -23,28 +24,7 @@ Ext.define('CL.store.S_richiesta',{
                 });
             }
         }
-    },
-
-    proxy:{
-        type:'ajax',
-        api: {
-            read: 'data/richiesta/list.php',
-            create: 'data/richiesta/create.php',
-            destroy: 'data/richiesta/destroy.php',
-            update: 'data/richiesta/edit.php'
-        },
-
-        reader:{
-            type:'json',
-            rootProperty:'result'
-        },
-
-        writer: {
-            type: 'json',
-            encode: true,
-            rootProperty: 'data',
-            writeAllFields: true
-        }
     }
+
 
 });

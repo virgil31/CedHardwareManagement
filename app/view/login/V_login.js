@@ -124,7 +124,7 @@ Ext.define('CL.view.login.V_login', {
                 {
                     xtype: 'button',
                     margin: '20 0 0 0',
-                    text: 'Richiedi Nuovo Hardware!',
+                    text: 'Richiedi nuovo hardware!',
                     height: 80,
                     width: 300,
                     scale: 'large',
@@ -132,79 +132,84 @@ Ext.define('CL.view.login.V_login', {
                         background: "#5CC25C"
                     },
                     handler: function(){
-                        var btn = this;
-                        Ext.create("Ext.window.Window",{
-                            autoShow: true,
-                            modal: true,
-                            resizable: false,
-                            constrain: true,
-                            animateTarget: btn.el,
-                            width: 330,
-                            title: '<b>Richiedi materiale Informatico</b>',
-                            name: 'login_richiesta',
-                            padding: 10,
-                            items: [
-                                {
-                                    xtype: 'form',
-                                    items: [
-                                        {
-                                            xtype: 'label',
-                                            html: 'Per richiedere del nuovo hardware è necessario fare accesso con le <u>proprie</u> credenziali di dominio. <br><br><b>NB! </b>La richiesta che verrà scaturita di seguito sarà automaticamente assegnata a tali credenziali!'
-                                        },
-                                        {
-                                            xtype: 'textfield',
-                                            name: 'username',
-                                            fieldLabel: 'Username',
-                                            width: '100%',
-                                            allowBlank: false,
-                                            margin: '10 0 0 0',
-                                            listeners: {
-                                                specialkey: function(field, e){
-                                                    if (e.getKey() == e.ENTER){
-                                                        console.log(Ext.ComponentQuery.query("window[name=login_richiesta]"));
 
-                                                        var btn = Ext.ComponentQuery.query("window[name=login_richiesta] button[action=do_login_richiesta]")[0];
-                                                        btn.fireEvent("click",btn);
+                        if(Ext.util.Cookies.get("richiedente_id") && Ext.util.Cookies.get("richiedente_nome") && Ext.util.Cookies.get("richiedente_cognome")){
+                            CL.app.getController("C_login").redirectTo("richiesta");
+                        }
+                        else {
+                            var btn = this;
+                            Ext.create("Ext.window.Window",{
+                                autoShow: true,
+                                modal: true,
+                                resizable: false,
+                                constrain: true,
+                                animateTarget: btn.el,
+                                width: 330,
+                                title: '<b>Richiedi materiale Informatico</b>',
+                                name: 'login_richiesta',
+                                padding: 10,
+                                items: [
+                                    {
+                                        xtype: 'form',
+                                        items: [
+                                            {
+                                                xtype: 'label',
+                                                html: 'Per richiedere del nuovo hardware è necessario fare accesso con le <u>proprie</u> credenziali di dominio. <br><br><b>NB! </b>La richiesta che verrà scaturita di seguito sarà automaticamente assegnata a tali credenziali!'
+                                            },
+                                            {
+                                                xtype: 'textfield',
+                                                name: 'username',
+                                                fieldLabel: 'Username',
+                                                width: '100%',
+                                                allowBlank: false,
+                                                margin: '10 0 0 0',
+                                                listeners: {
+                                                    specialkey: function(field, e){
+                                                        if (e.getKey() == e.ENTER){
+                                                            console.log(Ext.ComponentQuery.query("window[name=login_richiesta]"));
+
+                                                            var btn = Ext.ComponentQuery.query("window[name=login_richiesta] button[action=do_login_richiesta]")[0];
+                                                            btn.fireEvent("click",btn);
+                                                        }
+                                                    }
+                                                }
+                                            },
+                                            {
+                                                xtype: 'textfield',
+                                                name: 'password',
+                                                fieldLabel: 'Password',
+                                                inputType: 'password',
+                                                width: '100%',
+                                                allowBlank: false,
+                                                margin: '10 0 10 0',
+                                                listeners: {
+                                                    specialkey: function(field, e){
+                                                        if (e.getKey() == e.ENTER){
+                                                            var btn = Ext.ComponentQuery.query("window[name=login_richiesta] button[action=do_login_richiesta]")[0];
+                                                            btn.fireEvent("click",btn);
+                                                        }
                                                     }
                                                 }
                                             }
-                                        },
-                                        {
-                                            xtype: 'textfield',
-                                            name: 'password',
-                                            fieldLabel: 'Password',
-                                            inputType: 'password',
-                                            width: '100%',
-                                            allowBlank: false,
-                                            margin: '10 0 10 0',
-                                            listeners: {
-                                                specialkey: function(field, e){
-                                                    if (e.getKey() == e.ENTER){
-                                                        var btn = Ext.ComponentQuery.query("window[name=login_richiesta] button[action=do_login_richiesta]")[0];
-                                                        btn.fireEvent("click",btn);
-                                                    }
-                                                }
+                                        ],
+                                        buttonAlign: 'center',
+                                        buttons: [
+                                            {
+                                                text: 'Entra e avvia procedura',
+                                                formBind: true,
+                                                action: 'do_login_richiesta'
                                             }
-                                        }
-                                    ],
-                                    buttonAlign: 'center',
-                                    buttons: [
-                                        {
-                                            text: 'Entra e avvia procedura',
-                                            formBind: true,
-                                            action: 'do_login_richiesta'
-                                        }
-                                    ]
-                                }
-                            ]
-
-                        });
+                                        ]
+                                    }
+                                ]
+                            });
+                        }
                     }
                 },
                 {
                     xtype: 'button',
                     margin: '20 0 0 0',
-                    text: 'Verifica Stato Richiesta',
+                    text: 'Gestisci le tue richieste',
                     scale: 'large',
                     width: 300,
                     style: {

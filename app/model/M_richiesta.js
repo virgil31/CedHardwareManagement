@@ -1,28 +1,32 @@
 Ext.define('CL.model.M_richiesta', {
     extend: 'Ext.data.Model',
+
+    //idProperty: "ric_id",
+
     fields: [
-        {name: 'id',                    type: 'int'},
+        {name: 'ric_id',                    type: 'string'},
 
-        {name: 'nome',                  type: 'string'},
-        {name: 'cognome',               type: 'string'},
-        {name: 'full_nome',             type: 'string'},
+        {name: 'ric_cod_sede',          type: 'string'},
+        {name: 'ric_destinazione',      type: 'string'},
+        {name: 'ric_id_responsabile',   type: 'string'},
+        {name: 'ric_id_richiedente',    type: 'string'},
+        {name: 'ric_motivazione',       type: 'string'},
+        {name: 'ric_oggetto',           type: 'string'}
+    ],
 
-        {name: 'funzionario_id',        type: 'int'},
-        {name: 'funzionario_name',      type: 'string'},
+    proxy: {
+        type: 'rest',
+        url : 'data/richiesta/richieste.php',
+        reader:{
+            type:'json',
+            rootProperty:'result'
+        },
 
-        {name: 'email',                 type: 'string'},
-
-        {name: 'sede_id',               type: 'int'},
-        {name: 'sede_name',             type: 'string'},
-
-        {name: 'ufficio_id',            type: 'int'},
-        {name: 'ufficio_name',          type: 'string'},
-
-        {name: 'servizio',              type: 'string'},
-        {name: 'motivazione',           type: 'string'},
-
-        {name: 'disponibile_per_usato', type: 'string'},
-        {name: 'richiesta_il',          type: 'string'},
-        {name: 'assegnata_il',          type: 'string'}
-    ]
+        writer: {
+            type: 'json',
+            encode: true,
+            rootProperty: 'data',
+            writeAllFields: true
+        }
+    }
 });

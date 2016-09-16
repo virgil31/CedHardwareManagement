@@ -1,5 +1,6 @@
 <?php
 
+require_once("../util/util.php");
 
 header('Content-Type: application/json');
 
@@ -10,36 +11,44 @@ $pdo=new PDO("pgsql:host=".$ini_array['pdo_host'].";port=".$ini_array['pdo_port'
 $data = json_decode($_POST['data'],true);
 
 
-$s = $pdo->prepare("
-	UPDATE richiesta
-	SET stato = :stato,
-		assegnata_il = :assegnata_il,
-		ufficio_id =  :ufficio_id,
-		sede_id = :sede_id
-	WHERE id = :id
-");
+try{
 
-$params = array(
-	'id' => $data['id'],
-	'stato' => $data['stato'],
-	'assegnata_il' => ($data["assegnata_il"]!="") ? $data["assegnata_il"] : null,
-	'ufficio_id' => $data['ufficio_id'],
-	'sede_id' => $data['sede_id']
-);
+    $pdo->beginTransaction();
 
+	$s = $pdo->prepare("
+		UPDATE richieste
+		SET ric_cod_sede = :ric_cod_sede,
+			ric_destinazione = :ric_destinazione,
+			ric_id_responsabile = :ric_id_responsabile,
+			ric_id_richiedente = :ric_id_richiedente,
+			ric_motivazione = :ric_motivazione,
+			ric_oggetto = :ric_oggetto
 
+		WHERE ric_id = :ric_id
+	");
 
-$success = $s->execute($params);
+	$success = $s->execute(array(
+		"ric_id" => $data["ric_id"],
+		"ric_cod_sede" => $data["ric_cod_sede"],
+		"ric_destinazione" => $data["ric_destinazione"],
+		"ric_id_responsabile" => $data["ric_id_responsabile"],
+		"ric_id_richiedente" => $data["ric_id_richiedente"],
+		"ric_motivazione" => $data["ric_motivazione"],
+		"ric_oggetto" => $data["ric_oggetto"]
+	));
 
+    $pdo->commit();
 
-if ($success) {
-    echo json_encode(array(
-        "success" => true
+	echo json_encode(array(
+        "success" => $success,
+		"eventual_error" => $pdo->errorInfo()
     ));
-}
-else{
-    echo json_encode(array(
+
+}catch(PDOException $e){
+    $pdo->rollBack();
+
+	echo json_encode(array(
         "success" => false,
-        "error_message" =>  $pdo->errorInfo()
+		"ErrorMessage" => $e->getMessage()
     ));
 }

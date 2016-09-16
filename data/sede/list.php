@@ -20,16 +20,18 @@ $total = 0;
 //LIST FULL
 if(isset($_GET["flag_full"])){
 	$statement = $pdo->prepare("
-		SELECT id, nome, COUNT(*) OVER() as total
-		FROM sede
+		SELECT sed_cod_sede, sed_descrizione, COUNT(*) OVER() as total
+		FROM sedi
+
 		ORDER BY $pro $dir
 	");
 }
 else{
 	//LIST PAGINATO
 	$statement = $pdo->prepare("
-		SELECT id, nome, COUNT(*) OVER() as total
-		FROM sede
+		SELECT sed_cod_sede, sed_descrizione, COUNT(*) OVER() as total
+		FROM sedi
+
 		ORDER BY $pro $dir LIMIT $limit OFFSET $start
 	");
 }

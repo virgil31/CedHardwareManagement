@@ -116,6 +116,12 @@ Ext.application({
 
     applyOverrides: function () {
 
+        Ext.Loader.loadScript({
+                url: "ext/classic/locale/overrides/it/ext-locale-it.js",
+                scope: this
+            }
+        );
+
         Ext.override(Ext.form.field.Text,{
             msgTarget: 'side',
             blankText: 'Questo campo è obbligatorio'

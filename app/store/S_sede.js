@@ -9,8 +9,7 @@ Ext.define('CL.store.S_sede',{
     pageSize: 50,
 
     remoteSort: true,
-    sorters: { property: 'nome', direction : 'ASC' }, //lo ordiniamo per id
-
+    sorters: { property: 'sed_descrizione', direction : 'ASC' }, //lo ordiniamo per id
 
     proxy:{
         type:'ajax',

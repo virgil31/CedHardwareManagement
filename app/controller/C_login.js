@@ -75,7 +75,8 @@ Ext.define('CL.controller.C_login', {
     doLoginRichiesta: function(btn){
         var form = btn.up("form");
         if(form.isValid()){
-            var values = form.getValues();
+            var values = form.getValues();        
+
             Ext.Ajax.request({
                 url: 'data/session/login_richiesta.php',
                 method: "POST",
@@ -90,9 +91,11 @@ Ext.define('CL.controller.C_login', {
                     if(!risposta.success)
                         Ext.Msg.alert("Attenzione",risposta.message);
                     else{
-                        Ext.util.Cookies.set("richiesta_logged", true);
-                        Ext.util.Cookies.set("nome", risposta.nome);
-                        Ext.util.Cookies.set("cognome", risposta.cognome);
+                        //Ext.util.Cookies.set("richiesta_logged", true);
+                        Ext.util.Cookies.set("richiedente_id", risposta.utente.id);
+                        Ext.util.Cookies.set("richiedente_nome", risposta.utente.nome);
+                        Ext.util.Cookies.set("richiedente_cognome", risposta.utente.cognome);
+
                         btn.up("window").close();
                         CL.app.getController("C_login").redirectTo("richiesta");
                     }
