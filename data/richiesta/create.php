@@ -1,5 +1,6 @@
 <?php
 
+require_once("../util/util.php");
 
 header('Content-Type: application/json');
 
@@ -10,133 +11,42 @@ $pdo=new PDO("pgsql:host=".$ini_array['pdo_host'].";port=".$ini_array['pdo_port'
 $data = json_decode($_POST['data'],true);
 
 
-$s = $pdo->prepare("
-	INSERT INTO richiesta(nome,cognome,funzionario_id,email,sede_id,ufficio_id,servizio,motivazione,disponibile_per_usato,richiesta_il,stato)
-	VALUES(:nome,:cognome,:funzionario_id,:email,:sede_id,:ufficio_id,:servizio,:motivazione,:disponibile_per_usato,now(),'Da Valutare')
-");
+try{
 
-$params = array(
-	'nome' => $data['nome'],
-	'cognome' => $data['cognome'],
-	'funzionario_id' => $data['funzionario_id'],
-	'email' => $data['email'],
-	'sede_id' => $data['sede_id'],
-	'ufficio_id' => $data['ufficio_id'],
-	'servizio' => $data['servizio'],
-	'motivazione' => $data['motivazione'],
-	'disponibile_per_usato' => $data['disponibile_per_usato']
-);
+    $pdo->beginTransaction();
 
-$success = $s->execute($params);
-$eventual_error = $pdo->errorInfo();
-
-$last_id = $pdo->lastInsertId("richiesta_id_seq");
-
-//NaN tipi_hardware richiesti vv
-$tipi_hardware = $data["tipi_hardware"];
-foreach ($tipi_hardware as $tipo_hardware) {
 	$s = $pdo->prepare("
-		INSERT INTO richiesta_tipo_hardware(richiesta_id, tipo_hardware_id, note)
-		VALUES(:richiesta_id,:tipo_hardware_id,:note);
+		INSERT INTO richieste(ric_id,ric_cod_sede,ric_destinazione,ric_id_responsabile,ric_id_richiedente,ric_motivazione,ric_oggetto,ric_data_presentazione,ric_stato)
+		VALUES(:ric_id,:ric_cod_sede,:ric_destinazione,:ric_id_responsabile,:ric_id_richiedente,:ric_motivazione,:ric_oggetto,NOW(),'Da Valutare')
 	");
 
-	$tmp = explode("---", $tipo_hardware['id']);
-	$tipo_hardware_id = $tmp[0];
+    $id = getGUID();
 
-	$params = array(
-		'richiesta_id' => $last_id,
-		'tipo_hardware_id' => $tipo_hardware_id,
-		'note' => $tipo_hardware['note'],
-	);
+	$success = $s->execute(array(
+		"ric_id" => $id,
+		"ric_cod_sede" => $data["ric_cod_sede"],
+		"ric_destinazione" => $data["ric_destinazione"],
+		"ric_id_responsabile" => $data["ric_id_responsabile"],
+		"ric_id_richiedente" => $data["ric_id_richiedente"],
+		"ric_motivazione" => $data["ric_motivazione"],
+		"ric_oggetto" => $data["ric_oggetto"]
+	));
 
-	$success = $s->execute($params);
-}
-// ^^
+    $pdo->commit();
 
-sleep(2);
-
-if ($success) {
-    echo json_encode(array(
-        "success" => true,
-		"mail_sent" => inviaMail("RichiestaHardware-CED@SSCOL.it", $data['email'], "Richiesta Hardware #".$last_id, "Il codice identificativo della sua richiesta è <b>".$last_id.'</b>. Può utilizzare questo codice per controllare lo stato della sua richiesta <a target="_blank" href="http://inventario.sar.it/#controlla_richiesta">QUI</a><br><br>Elenco materiale richiesto:<br>'.getRiepilogo($last_id)),
+	echo json_encode(array(
+        "success" => $success,
+		"eventual_error" => $pdo->errorInfo(),
         "result" => array(
-            "id" => $last_id
+            "ric_id" => $id
         )
     ));
-}
-else{
-    echo json_encode(array(
+
+}catch(PDOException $e){
+    $pdo->rollBack();
+
+	echo json_encode(array(
         "success" => false,
-        "error_message" =>  $eventual_error
+		"ErrorMessage" => $e->getMessage()
     ));
-}
-
-
-
-/////////////////////////////////////////
-
-function getRiepilogo($richiesta_id){
-	$ini_array = parse_ini_file("../config.ini");
-
-    $pdo=new PDO("pgsql:host=".$ini_array['pdo_host'].";port=".$ini_array['pdo_port']."; dbname=".$ini_array['pdo_db'].";",$ini_array['pdo_user'],$ini_array['pdo_psw']);
-
-
-	$statement = $pdo->prepare("
-		SELECT B.nome as tipo_name,COALESCE(A.note,'-') as note
-		FROM richiesta_tipo_hardware A
-			LEFT JOIN tipo_hardware B ON B.id = A.tipo_hardware_id
-	    WHERE A.richiesta_id = $richiesta_id
-	");
-
-	$statement->execute();
-	$result = $statement->fetchAll(PDO::FETCH_OBJ);
-
-
-	$to_return = '<ul>';
-	foreach ($result as $row)
-		$to_return .= '<li><b>'.$row->tipo_name ."</b><i> (Note: ".$row->note.")</i></li>" ;
-
-	$to_return .= "</ul>";
-
-
-	return $to_return;
-}
-
-function inviaMail($from, $to, $oggetto, $testo, $allegati = null){
-	require '../../resources/lib/PHPMailer/PHPMailerAutoload.php';
-	$ini_array = parse_ini_file("../config.ini");
-
-	$mail = new PHPMailer;
-
-	//$mail->SMTPDebug = 3;
-
-	$mail->isSMTP();
-	$mail->Host = $ini_array["smtp_host"];
-	$mail->SMTPAuth = false;
-	$mail->Port = $ini_array["smtp_port"];
-
-	$mail->SMTPOptions = array(
-		'ssl' => array(
-		    'verify_peer' => false,
-		    'verify_peer_name' => false,
-		    'allow_self_signed' => true
-		)
-	);
-
-
-	$mail->setFrom($from, 'CED SSCOL');
-	$mail->addAddress($to);
-
-	$mail->CharSet = 'UTF-8';
-	$mail->Subject = $oggetto;
-	$mail->Body    = $testo."<br><br><b><i>La presente e-mail è stata generata automaticamente da un indirizzo di posta elettronica di solo invio; si chiede pertanto di non rispondere al messaggio.</i></b>";
-	//$mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
-
-	$mail->isHTML(true);
-
-	if(!$mail->send())
-	    return 'Mailer Error: ' . $mail->ErrorInfo;
-	else
-	    return 'Message has been sent';
-
 }

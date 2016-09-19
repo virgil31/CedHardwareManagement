@@ -27,16 +27,49 @@ Ext.define('CL.view.richiesta.V_form_richiesta', {
                     type: 'hbox',
                     pack: 'center'
                 },
+
+                tbar:{
+                    xtype: 'toolbar',
+                    style: {
+                        background: "transparent !important"
+                    },
+                    items: [
+                        {
+                            text: "X Disconnetti",
+                            scale: 'large',
+                            style: {
+                                background: "#5CC25C"
+                            },
+                            handler: function(){
+                                Ext.util.Cookies.clear("richiedente_id");
+                                Ext.util.Cookies.clear("richiedente_nome");
+                                Ext.util.Cookies.clear("richiedente_cognome");
+
+                                CL.app.getController("C_richiesta").redirectTo("login");
+                            }
+                        },
+                        '->',
+                        {
+                            text: "Vai alla lista delle mie richieste >",
+                            scale: 'large',
+                            style: {
+                                background: "#5CC25C"
+                            },
+                            handler: function(){
+                                CL.app.getController("C_richiesta").redirectTo("controlla_richieste");
+                            }
+                        }
+                    ]
+                },
                 items: [
+
                     {
                         xtype: 'form',
+                        trackResetOnLoad: true,
                         title: '<b>Richiesta Materiale Informatico - CED</b>',
                         titleAlign: 'center',
-                        style: {
-                            borderRadius: "20px"
-                        },
-                        padding: 10,
                         width: 500,
+                        margin: "5 5 0 0",
                         layout: {
                             type: 'vbox',
                             align: 'center',
@@ -48,223 +81,79 @@ Ext.define('CL.view.richiesta.V_form_richiesta', {
                         },
                         items: [
                             {
-                                xtype: 'textfield',
-                                name: 'nome',
-                                fieldLabel: 'Nome',
-                                readOnly: true,
-                                value: Ext.util.Cookies.get("nome"),
-                                allowBlank: false,
-                                fieldStyle: {
-                                    background: "#CAF1FF"
-                                }
+                                xtype: 'textfield',                             // HIDDEN
+                                name: 'ric_id',
+                                fieldLabel: 'ID (hidden)'//,
+                                //readOnly: true,
+                                //hidden: true
+                            },
+
+                            {
+                                xtype: 'textfield',                             // HIDDEN
+                                name: 'ric_id_richiedente',
+                                fieldLabel: 'Richiedente ID (hidden)'//,
+                                //readOnly: true,
+                                //hidden: true
                             },
                             {
                                 xtype: 'textfield',
-                                name: 'cognome',
-                                fieldLabel: 'Cognome',
-                                readOnly: true,
-                                value: Ext.util.Cookies.get("cognome"),
-                                allowBlank: false,
-                                fieldStyle: {
-                                    background: "#CAF1FF"
-                                }
+                                name: 'ric_richiedente_name',
+                                fieldLabel: 'Richiedente',
+                                readOnly: true
                             },
-                            {
-                                xtype: 'textfield',
-                                name: 'email',
-                                fieldLabel: 'Email',
-                                allowBlank: false,
-                                value: (Ext.util.Cookies.get("nome")+"."+Ext.util.Cookies.get("cognome")).toLowerCase().replace(/\s/g, '')+"@beniculturali.it",//'nome.cognome@beniculturali.it',
-                                vtype: 'email'
-                            },
-                            {xtype: 'menuseparator', width: '95%'},
+                            {xtype: 'menuseparator'},
                             {
                                 xtype: 'combobox',
-                                name: 'sede_id',
-                                fieldLabel: 'Sede',
-                                store: "S_sede",
-                                queryMode: 'local',
-                                displayField: 'nome',
-                                valueField: 'id',
-                                emptyText: 'Palazzo Massimo',
-                                anyMatch: true,
+                                name: 'ric_id_responsabile',
                                 allowBlank: false,
-                                forceSelection: true,
-                                listeners:{
-                                    select: function(){
-                                        var sede_id = this.getValue();
-                                        Ext.StoreManager.lookup("S_ufficio").load({params:{sede_id: sede_id}});
-                                        this.up('form').down("combobox[name=ufficio_id]").enable();
-                                    }
-                                }
-                            },
-                            {
-                                xtype: 'combobox',
-                                name: 'ufficio_id',
-                                fieldLabel: 'Ufficio',
-                                store: "S_ufficio",
-                                queryMode: 'local',
-                                displayField: 'nome',
-                                valueField: 'id',
-                                emptyText: 'CED',
-                                anyMatch: true,
-                                allowBlank: false,
-                                forceSelection: true,
-                                disabled: true
-                            },
-                            {
-                                xtype: 'textfield',
-                                name: 'servizio',
-                                fieldLabel: 'Servizio',
-                                emptyText: 'CED',
-                                allowBlank: false
-                            },
-                            {
-                                xtype: 'combobox',
-                                name: 'funzionario_id',
-                                fieldLabel: 'Funzionario',
+                                fieldLabel: 'Funzionario responsabile',
                                 store: "S_utente",
                                 queryMode: 'local',
-                                displayField: 'utente_name',
-                                valueField: 'id',
-                                emptyText: 'Pasquale Porreca',
                                 anyMatch: true,
+                                forceSelection: true,
+                                displayField: 'utente_name',
+                                valueField: 'ute_id'
+                            },
+                            {
+                                xtype: 'textareafield',
+                                name: 'ric_oggetto',
+                                fieldLabel: 'Oggetto della Richiesta',
                                 allowBlank: false,
-                                forceSelection: true
+                                emptyText: "Stampante a Colori per l'utilizzo d'ufficio"
                             },
-                            {xtype: 'menuseparator', width: '95%'},
-                            {
-                                xtype: 'grid',
-                                store: Ext.create('Ext.data.Store', {
-                                    fields: ['id','nome','note']
-                                }),
-                                height: 150,
-                                border: true,
-                                style:{
-                                    border: "1px solid #3892D4 !important;"
-                                },
-                                scrollable: true,
-                                tbar: [
-                                    '->',
-                                    {
-                                        xtype: 'panel',
-                                        items:[
-                                            {
-                                                xtype: 'button',
-                                                text: '+ Aggiungi Hardware alla Richiesta +',
-                                                style: {
-                                                    background: "#5CC25C"
-                                                },
-                                                handler: function(){
-                                                    var btn = this;
-                                                    Ext.create("Ext.window.Window",{
-                                                        animateTarget: btn.el,
-                                                        autoShow: true,
-                                                        modal: true,
-                                                        resizable: false,
-                                                        constrain: true,
-                                                        name: 'add_tipo_hardware',
-                                                        title: 'Aggiunta Hardware alla Richiesta',
-                                                        padding: 10,
-                                                        items: [
-                                                            {
-                                                                xtype: 'form',
-                                                                items:[
-                                                                    {
-                                                                        xtype: 'combobox',
-                                                                        name: 'tipo_hardware_id',
-                                                                        fieldLabel: 'Hardware',
-                                                                        store: "S_tipo_hardware",
-                                                                        queryMode: 'local',
-                                                                        displayField: 'nome',
-                                                                        valueField: 'id',
-                                                                        emptyText: 'Monitor',
-                                                                        anyMatch: true,
-                                                                        allowBlank: false,
-                                                                        forceSelection: true
-                                                                    },
-                                                                    {
-                                                                        xtype: 'textfield',
-                                                                        name: 'note',
-                                                                        fieldLabel: 'Note Aggiuntive'
-                                                                    }
-                                                                ],
-                                                                buttonAlign: 'center',
-                                                                buttons:[
-                                                                    {
-                                                                        text: 'Aggiungi',
-                                                                        formBind: true,
-                                                                        handler: function(){
-                                                                            var window = this.up("window"),
-                                                                                form = window.down("form"),
-                                                                                values = form.getValues();
 
-                                                                            values.nome = Ext.ComponentQuery.query("window[name=add_tipo_hardware] combobox[name=tipo_hardware_id]")[0].getRawValue();
-
-                                                                            if(form.isValid()){
-                                                                                Ext.ComponentQuery.query("form_richiesta grid")[0].getStore().add({
-                                                                                    id: values.tipo_hardware_id+"---"+Math.random(),
-                                                                                    nome: values.nome,
-                                                                                    note: values.note
-                                                                                });
-                                                                                window.close();
-                                                                            }
-                                                                        }
-                                                                    }
-                                                                ]
-                                                            }
-                                                        ]
-                                                    });
-                                                }
-                                            }
-                                        ]
-                                    },
-                                    '->'
-                                ],
-                                columns: [
-                                    { text: 'Materiale',    dataIndex: 'nome', flex: 1 },
-                                    { text: 'Note',         dataIndex: 'note', flex: 1 },
-                                    {
-                                        xtype:'actioncolumn',
-                                        width:50,
-                                        items: [
-                                            {
-                                                iconCls: 'x-fa fa-remove',
-                                                tooltip: 'Rimuovi Richiesta',
-                                                handler: function(grid, rowIndex, colIndex) {
-                                                    var rec = grid.getStore().getAt(rowIndex);
-                                                    grid.getStore().remove(rec);
-                                                }
-                                            }
-                                        ]
-                                    }
-                                ]
-                            },
                             {
-                                xtype     : 'textareafield',
-                                name      : 'motivazione',
-                                fieldLabel: 'Motivazione Richiesta',
+                                xtype: 'combobox',
+                                name: 'ric_cod_sede',
+                                emptyText: 'Sede di destinazione delle componenti richieste',
                                 allowBlank: false,
-                                height: 75,
-                                minLength: 30
+                                fieldLabel: 'Sede di destinazione',
+                                store: "S_sede",
+                                queryMode: 'local',
+                                anyMatch: true,
+                                forceSelection: true,
+                                displayField: 'sed_descrizione',
+                                valueField: 'sed_cod_sede'
                             },
                             {
-                                xtype: 'checkbox',
-                                hidden: true,
-                                checked: true,
-                                readOnly: true,
-                                inputValue: true,
-                                uncheckedValue: false,
-                                name: "disponibile_per_usato",
-                                boxLabel  : 'Disponibilità ad utilizzare apparecchiature <b>non nuove</b> ma ritenute adeguate alle esigenze dell’ufficio. (Obbligatoria)',
-                                height: 50,
-                                width: '80%'
+                                xtype: 'textareafield',
+                                name: 'ric_destinazione',
+                                fieldLabel: 'Destinazione',
+                                allowBlank: false,
+                                emptyText: 'Ufficio Tecnico del secondo piano'
+                            },
+                            {
+                                xtype: 'textareafield',
+                                name: 'ric_motivazione',
+                                fieldLabel: 'Eventuali motivazioni particolari',
+                                //allowBlank: false,
+                                emptyText: 'Necessità di stampare cartine e materiale a colori'
                             }
                         ],
                         buttonAlign: 'center',
                         buttons:[
                             {
-                                text: "Invia Richiesta",
+                                text: "Salva richiesta",
                                 formBind: true,
                                 scale: 'large',
                                 action: 'doRichiesta',
@@ -282,7 +171,7 @@ Ext.define('CL.view.richiesta.V_form_richiesta', {
                         title: '<i><b>Guida & Info</b></i>',
                         width: 325,
                         height: 600,
-                        padding: 10,
+                        margin: "5 0 0 5",
                         layout: {
                             type: 'vbox',
                             align: 'center'
@@ -290,6 +179,7 @@ Ext.define('CL.view.richiesta.V_form_richiesta', {
                         items: [
                             {
                                 xtype: 'image',
+                                alt: ' ',
                                 src: 'resources/images/information.png',
                                 width: 65 ,
                                 height: 60,

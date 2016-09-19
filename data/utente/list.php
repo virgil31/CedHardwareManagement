@@ -18,20 +18,19 @@ $start = $_GET['start'];
 $total = 0;
 
 
-//LIST FULL SOLO FUNZIONARI
+//LIST FULL SOLO FUNZIONARI - Per ora è uguale a LIST FULL
 if(isset($_GET["flag_solo_funzionari"])){
 	$statement = $pdo->prepare("
-		SELECT id, nome, cognome, funzionario,CONCAT(nome,' ',cognome) as utente_name, COUNT(*) OVER() as total
-		FROM utente
-		WHERE funzionario = TRUE
-		ORDER BY nome ASC,cognome ASC
+		SELECT ute_id, ute_nome, ute_cognome,CONCAT(ute_cognome,' ',ute_nome) as utente_name, ute_funzionario, COUNT(*) OVER() as total
+		FROM utenti
+		ORDER BY utente_name ASC
 	");
 }
 //LIST FULL
 else if(isset($_GET["flag_full"])){
 	$statement = $pdo->prepare("
-		SELECT id, nome, cognome,CONCAT(nome,' ',cognome) as utente_name, funzionario, COUNT(*) OVER() as total
-		FROM utente
+		SELECT ute_id, ute_nome, ute_cognome,CONCAT(ute_cognome,' ',ute_nome) as utente_name, ute_funzionario, COUNT(*) OVER() as total
+		FROM utenti
 		ORDER BY utente_name ASC
 	");
 }
