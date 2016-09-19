@@ -1,5 +1,5 @@
 Ext.application({
-    // extend: 'Ext.app.Application',
+    extend: 'Ext.app.Application',
 
     name: 'CL',
 
@@ -27,7 +27,7 @@ Ext.application({
         'C_richiesta',
 
         'C_assegnazione',
-        'C_controlla_richieste',
+        'C_controlla_richiesta',
         'C_albero_risorse',
         'C_cerca_per_utente'
     ],
@@ -62,9 +62,6 @@ Ext.application({
 
         //applico tutti i miei overrides
         this.applyOverrides();
-
-        // carico le costanti
-        this.caricaCostanti();
 
         //previene la creazione dei context menu del browser
         //Ext.getDoc().on('contextmenu', function(ev) {
@@ -107,7 +104,7 @@ Ext.application({
         }
 
 
-        //Ext.Msg.alert("ATTENZIONE!","L'applicazione è stata spostata su <a href=\"http://inventario.sar.it\">inventario.sar.it</a>");
+        Ext.Msg.alert("ATTENZIONE!","L'applicazione è stata spostata su <a href=\"http://inventario.sar.it\">inventario.sar.it</a>");
     },
 
 
@@ -116,41 +113,8 @@ Ext.application({
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
-    caricaCostanti: function(){
-        Ext.Ajax.request({
-            scope: CL.app,
-            url: 'data/costanti.php',
-            params:{
-                flag_echo: true
-            },
-            success: function(response, opts) {
-                var costanti = Ext.decode(response.responseText);
-
-                Ext.define('COSTANTI', {
-                    singleton: true,
-
-                    stati: costanti.stati
-                });
-            },
-            failure: function(response, opts) {
-                Ext.Msg.show({
-                    title:"<b>Critical Error</b>",
-                    message: "Impossibile caricare le costanti!</b>Ricaricare l'applicazione con F5 prego.",
-                    icon: Ext.Msg.ERROR,
-                    closable: false
-                });
-            }
-        });
-    },
 
     applyOverrides: function () {
-
-        Ext.Loader.loadScript({
-                url: "ext/classic/locale/overrides/it/ext-locale-it.js",
-                scope: this
-            }
-        );
 
         Ext.override(Ext.form.field.Text,{
             msgTarget: 'side',

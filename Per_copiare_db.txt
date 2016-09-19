@@ -1,4 +1,0 @@
-Bisogna creare un file *sql di backup dal db di origine per poi importarlo in quello di destinazione.
-
-1 - pg_dump -h <sourcehost> -U <user> <sourcedb> > my_backup.sql
-2 - psql -h <targethost> -U <user> <targetdb> < my_backup.sql
