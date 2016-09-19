@@ -2,7 +2,7 @@ Ext.define('CL.store.S_richiesta',{
     extend: 'Ext.data.Store',
 
 
-    autoLoad: true,
+    autoLoad: false, //prima era TRUE
     autoSync: false,
 
     model: 'CL.model.M_richiesta',
@@ -10,7 +10,7 @@ Ext.define('CL.store.S_richiesta',{
     pageSize: 50,
 
     remoteSort: true,
-    sorters: { property: 'ric_id', direction : 'DESC' }, //lo ordiniamo per id
+    sorters: { property: 'ric_numero', direction : 'DESC' }, //lo ordiniamo per id
 
     //mostro un messaggio di errore quando non riesco a connetermi al db
     listeners:{

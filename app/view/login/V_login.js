@@ -216,7 +216,78 @@ Ext.define('CL.view.login.V_login', {
                         background: "#CB9A2D"
                     },
                     handler: function(){
-                        CL.app.getController("C_login").redirectTo("controlla_richiesta");
+
+                        if(Ext.util.Cookies.get("richiedente_id") && Ext.util.Cookies.get("richiedente_nome") && Ext.util.Cookies.get("richiedente_cognome")){
+                            CL.app.getController("C_login").redirectTo("controlla_richieste");
+                        }
+                        else {
+                            var btn = this;
+                            Ext.create("Ext.window.Window",{
+                                autoShow: true,
+                                modal: true,
+                                resizable: false,
+                                constrain: true,
+                                animateTarget: btn.el,
+                                width: 330,
+                                title: '<b>Gestisci le tue richieste</b>',
+                                name: 'login_richiesta',
+                                padding: 10,
+                                items: [
+                                    {
+                                        xtype: 'form',
+                                        items: [
+                                            {
+                                                xtype: 'label',
+                                                html: 'Per gestire le proprie richieste di hardware è necessario fare accesso con le <u>proprie</u> credenziali di dominio. <br><br><b>NB! </b>La richieste che verranno scaturite di seguito saranno automaticamente assegnate a tali credenziali!'
+                                            },
+                                            {
+                                                xtype: 'textfield',
+                                                name: 'username',
+                                                fieldLabel: 'Username',
+                                                width: '100%',
+                                                allowBlank: false,
+                                                margin: '10 0 0 0',
+                                                listeners: {
+                                                    specialkey: function(field, e){
+                                                        if (e.getKey() == e.ENTER){
+                                                            console.log(Ext.ComponentQuery.query("window[name=login_richiesta]"));
+
+                                                            var btn = Ext.ComponentQuery.query("window[name=login_richiesta] button[action=do_login_controlla_richieste]")[0];
+                                                            btn.fireEvent("click",btn);
+                                                        }
+                                                    }
+                                                }
+                                            },
+                                            {
+                                                xtype: 'textfield',
+                                                name: 'password',
+                                                fieldLabel: 'Password',
+                                                inputType: 'password',
+                                                width: '100%',
+                                                allowBlank: false,
+                                                margin: '10 0 10 0',
+                                                listeners: {
+                                                    specialkey: function(field, e){
+                                                        if (e.getKey() == e.ENTER){
+                                                            var btn = Ext.ComponentQuery.query("window[name=login_richiesta] button[action=do_login_controlla_richieste]")[0];
+                                                            btn.fireEvent("click",btn);
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        ],
+                                        buttonAlign: 'center',
+                                        buttons: [
+                                            {
+                                                text: 'Entra e avvia procedura',
+                                                formBind: true,
+                                                action: 'do_login_controlla_richieste'
+                                            }
+                                        ]
+                                    }
+                                ]
+                            });
+                        }
                     }
                 }
             ]

@@ -27,6 +27,11 @@ Ext.define('CL.controller.C_login', {
             //DO LOGIN RICHIESTA
             'window button[action=do_login_richiesta]':{
                 click: this.doLoginRichiesta
+            },
+
+            //DO LOGIN CONTROLLA RICHIESTE
+            'window button[action=do_login_controlla_richieste]':{
+                click: this.doLoginControllaRichieste
             }
 
         }, this);
@@ -75,7 +80,7 @@ Ext.define('CL.controller.C_login', {
     doLoginRichiesta: function(btn){
         var form = btn.up("form");
         if(form.isValid()){
-            var values = form.getValues();        
+            var values = form.getValues();
 
             Ext.Ajax.request({
                 url: 'data/session/login_richiesta.php',
@@ -98,6 +103,39 @@ Ext.define('CL.controller.C_login', {
 
                         btn.up("window").close();
                         CL.app.getController("C_login").redirectTo("richiesta");
+                    }
+                }
+            });
+        }
+    },
+
+    //DO LOGIN CONTROLLA RICHIESTE
+    doLoginControllaRichieste: function(btn){
+        var form = btn.up("form");
+        if(form.isValid()){
+            var values = form.getValues();
+
+            Ext.Ajax.request({
+                url: 'data/session/login_richiesta.php',
+                method: "POST",
+
+                params: {
+                    username: values.username,
+                    password: btoa(btoa(btoa(values.password)))
+                },
+
+                success: function(response, opts) {
+                    var risposta = Ext.decode(response.responseText);
+                    if(!risposta.success)
+                        Ext.Msg.alert("Attenzione",risposta.message);
+                    else{
+                        //Ext.util.Cookies.set("richiesta_logged", true);
+                        Ext.util.Cookies.set("richiedente_id", risposta.utente.id);
+                        Ext.util.Cookies.set("richiedente_nome", risposta.utente.nome);
+                        Ext.util.Cookies.set("richiedente_cognome", risposta.utente.cognome);
+
+                        btn.up("window").close();
+                        CL.app.getController("C_login").redirectTo("controlla_richieste");
                     }
                 }
             });

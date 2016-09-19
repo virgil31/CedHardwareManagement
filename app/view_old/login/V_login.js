@@ -211,7 +211,7 @@ Ext.define('CL.view.login.V_login', {
                         background: "#CB9A2D"
                     },
                     handler: function(){
-                        CL.app.getController("C_login").redirectTo("controlla_richiesta");
+                        CL.app.getController("C_login").redirectTo("controlla_richieste");
                     }
                 }
             ]

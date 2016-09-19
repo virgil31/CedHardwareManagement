@@ -35,7 +35,7 @@ Ext.define('CL.view.richiesta.V_form_richiesta', {
                     },
                     items: [
                         {
-                            text: "< Disconnetti",
+                            text: "X Disconnetti",
                             scale: 'large',
                             style: {
                                 background: "#5CC25C"
@@ -44,7 +44,7 @@ Ext.define('CL.view.richiesta.V_form_richiesta', {
                                 Ext.util.Cookies.clear("richiedente_id");
                                 Ext.util.Cookies.clear("richiedente_nome");
                                 Ext.util.Cookies.clear("richiedente_cognome");
-                                
+
                                 CL.app.getController("C_richiesta").redirectTo("login");
                             }
                         },
@@ -52,9 +52,11 @@ Ext.define('CL.view.richiesta.V_form_richiesta', {
                         {
                             text: "Vai alla lista delle mie richieste >",
                             scale: 'large',
-                            //action: 'doRichiesta',
                             style: {
                                 background: "#5CC25C"
+                            },
+                            handler: function(){
+                                CL.app.getController("C_richiesta").redirectTo("controlla_richieste");
                             }
                         }
                     ]
@@ -67,7 +69,7 @@ Ext.define('CL.view.richiesta.V_form_richiesta', {
                         title: '<b>Richiesta Materiale Informatico - CED</b>',
                         titleAlign: 'center',
                         width: 500,
-                        margin: "10 5 0 0",
+                        margin: "5 5 0 0",
                         layout: {
                             type: 'vbox',
                             align: 'center',
@@ -89,13 +91,13 @@ Ext.define('CL.view.richiesta.V_form_richiesta', {
                             {
                                 xtype: 'textfield',                             // HIDDEN
                                 name: 'ric_id_richiedente',
-                                fieldLabel: 'Richiedente ID (hidden)',
-                                readOnly: true,
-                                hidden: true
+                                fieldLabel: 'Richiedente ID (hidden)'//,
+                                //readOnly: true,
+                                //hidden: true
                             },
                             {
                                 xtype: 'textfield',
-                                name: 'richiedente',
+                                name: 'ric_richiedente_name',
                                 fieldLabel: 'Richiedente',
                                 readOnly: true
                             },
@@ -169,7 +171,7 @@ Ext.define('CL.view.richiesta.V_form_richiesta', {
                         title: '<i><b>Guida & Info</b></i>',
                         width: 325,
                         height: 600,
-                        margin: "10 0 0 5",
+                        margin: "5 0 0 5",
                         layout: {
                             type: 'vbox',
                             align: 'center'
