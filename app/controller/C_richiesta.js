@@ -50,10 +50,8 @@ Ext.define('CL.controller.C_richiesta', {
 
     //ROUTES
 
-    showView: function(){
-
-
-        if(Ext.util.Cookies.get("richiedente_id") != "null" && Ext.util.Cookies.get("richiedente_nome") != "null" && Ext.util.Cookies.get("richiedente_cognome") != "null"){
+    showView: function() {
+        if(Ext.util.Cookies.get("richiedente_id") != "null" && Ext.util.Cookies.get("richiedente_nome") != "null" && Ext.util.Cookies.get("richiedente_cognome") != "null") {
             if(Ext.ComponentQuery.query('form_richiesta').length == 0)
                 Ext.ComponentQuery.query('viewport panel[name=card]')[0].add({xtype: 'form_richiesta'});
 
@@ -66,7 +64,7 @@ Ext.define('CL.controller.C_richiesta', {
             Ext.ComponentQuery.query("form_richiesta textfield[name=ric_richiedente_name]")[0].setValue(Ext.util.Cookies.get("richiedente_cognome")+" "+Ext.util.Cookies.get("richiedente_nome"));
 
         }
-        else{
+        else {
             this.redirectTo('login');
         }
 
@@ -81,44 +79,35 @@ Ext.define('CL.controller.C_richiesta', {
             values = form.getValues();
 
 
-
-        if(form.isValid()){
-
-            //controllo se è possibile modificarla
-            if(record_richiesta.get("ric_stato") == "da_valutare" || record_richiesta.get("ric_stato") == "in_valutazione"){
-                // MODIFICA
-                if(values.ric_id){
-                    if(form.isDirty()){
-                        Ext.getBody().mask("Salvataggio richiesta in corso...");
-                        record_richiesta.set(values);
-                    }
-                }
-                // CREAZIONE
-                else{
-                    Ext.getBody().mask("Salvataggio richiesta in corso...");
-                    var record_richiesta = Ext.create('CL.model.M_richiesta', values);
-                }
-
+        if (form.isValid()) {
+            //controllo se è una CREAZIONE (basandomi sulla presenza del "record_richiesta")
+            if (record_richiesta == null) {
+                Ext.getBody().mask("Salvataggio richiesta in corso...");
+                var record_richiesta = Ext.create('CL.model.M_richiesta', values);
+            }
+            //altrimenti vuol dire che sono in fase di MODIFICA
+            else{
                 if(form.isDirty()){
-                    record_richiesta.save({
-                        failure: function(){
-                            Ext.getBody().unmask();
-                            //store.rejectChanges();
-                            Ext.Msg.alert("Attenzione!","Errore interno. Si è pregati di riprovare più tardi.")
-                        },
-                        success: function(richiesta) {
-                            Ext.getBody().unmask();
-
-                            // ricarico il form con il loadRecord per resettare il "dirty" del form (grazie al "trackResetOnLoad")
-                            form.loadRecord(richiesta);
-
-                            Ext.Msg.alert("Successo!","Il salvataggio della richiesta è stata correttamente effettuato!");
-                        }
-                    });
+                    Ext.getBody().mask("Salvataggio richiesta in corso...");
+                    record_richiesta.set(values);
                 }
             }
-            else {
-                Ext.Msg.alert("Attenzione","Non è più possibile modificare tale richiesta.");
+            if(form.isDirty()){
+                record_richiesta.save({
+                    failure: function(){
+                        Ext.getBody().unmask();
+                        //store.rejectChanges();
+                        Ext.Msg.alert("Attenzione!","Errore interno. Si è pregati di riprovare più tardi.")
+                    },
+                    success: function(richiesta) {
+                        Ext.getBody().unmask();
+
+                        // ricarico il form con il loadRecord per resettare il "dirty" del form (grazie al "trackResetOnLoad")
+                        form.loadRecord(richiesta);
+
+                        Ext.Msg.alert("Successo!","Il salvataggio della richiesta è stata correttamente effettuato!");
+                    }
+                });
             }
         }
     },

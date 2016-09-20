@@ -10,7 +10,6 @@ $pdo=new PDO("pgsql:host=".$ini_array['pdo_host'].";port=".$ini_array['pdo_port'
 
 // LISTA
 if($_SERVER['REQUEST_METHOD'] === "GET"){
-    sleep(1);
     lista($pdo);
 }
 

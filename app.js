@@ -106,8 +106,6 @@ Ext.application({
             Ext.ComponentQuery.query('viewport panel[name=card]')[0].minHeight = window.innerHeight-88-88;
         }
 
-
-        Ext.Msg.alert("ATTENZIONE!","L'applicazione è stata spostata su <a href=\"http://inventario.sar.it\">inventario.sar.it</a>");
     },
 
 
