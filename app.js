@@ -66,6 +66,8 @@ Ext.application({
         // carico le costanti
         this.caricaCostanti();
 
+        Ext.enableAriaButtons = false;
+
         //previene la creazione dei context menu del browser
         //Ext.getDoc().on('contextmenu', function(ev) {
         //     ev.preventDefault();
@@ -104,6 +106,7 @@ Ext.application({
 
         window.onresize = function(){
             Ext.ComponentQuery.query('viewport panel[name=card]')[0].minHeight = window.innerHeight-88-88;
+            Ext.ComponentQuery.query('home grid')[0].height = window.innerHeight-88-88-38;
         }
 
     },

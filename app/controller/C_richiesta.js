@@ -64,7 +64,7 @@ Ext.define('CL.controller.C_richiesta', {
             Ext.ComponentQuery.query("form_richiesta form")[0].reset(true);
 
             Ext.ComponentQuery.query("form_richiesta textfield[name=ric_id_richiedente]")[0].setValue(Ext.util.Cookies.get("richiedente_id"));
-            Ext.ComponentQuery.query("form_richiesta textfield[name=nome_cognome_richiedente]")[0].setValue(Ext.util.Cookies.get("richiedente_cognome")+" "+Ext.util.Cookies.get("richiedente_nome"));
+            Ext.ComponentQuery.query("form_richiesta textfield[name=cognome_nome_richiedente]")[0].setValue(Ext.util.Cookies.get("richiedente_cognome")+" "+Ext.util.Cookies.get("richiedente_nome"));
 
         }
         else {

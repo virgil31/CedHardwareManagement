@@ -7,26 +7,78 @@ Ext.define('CL.view.home.V_home', {
     bodyStyle: 'backgroundColor: transparent',  //per rendere il corpo invisibile
 
     layout: {
-        type: 'hbox',
-        align: 'center',
-        pack: 'center'
+        type: 'vbox',
+        align: 'center'
     },
 
     initComponent: function() {
         var this_view = this;
 
+        Ext.StoreManager.lookup("S_richiesta").load();
+
         this_view.items = [
+            {
+                xtype: 'toolbar',
+                height: 38,
+                width: '100%',
+                items:[
+                    {
+                        text:'Vista ad albero',
+                        icon: 'resources/images/icon_tree.png'
+                    },
+                    {
+                        text: 'Cerca materiale per utente',
+                        icon: "resources/images/icon_utente.png"
+                    },
+                    {
+                        text: 'Cerca info seriale',
+                        icon: "resources/images/icon_serial.png"
+                    },
+                    {
+                        text: 'Tabelle',
+                        icon: "resources/images/icon_list.png",
+                        menu:[
+                            {
+                                text: 'Tipologie HW'
+                            },
+                            {
+                                text: 'Marche HW'
+                            },
+                            {
+                                text: 'Modelli HW'
+                            },
+                            {
+                                text: 'Fatture'
+                            },
+                            {
+                                text: 'Tipi di Ditte'
+                            },
+                            {
+                                text: 'Fornitori'
+                            },
+                            {
+                                text: 'Sedi'
+                            },
+                            {
+                                text: 'Uffici'
+                            },
+                            {
+                                text: 'Utenti'
+                            }
+                        ]
+                    }
+                ]
+            },
             {
                 xtype: 'grid',
                 border: true,
-                //title: 'Richieste Nuovo Hardware',
-                store: 'S_richiesta',
-                height: '98%',
-                //width: '60%',
-                flex: 60,
-                autoscroll: true,
-                overflowX: 'hidden',
-                overflowY: 'auto',
+                store: "S_richiesta",
+                padding: "10 0 10 0",
+                height: window.innerHeight-88-88-38,
+                width: '100%',
+                //autoscroll: true,
+                //overflowX: 'hidden',
+                //overflowY: 'auto',
 
                 disableSelection: true,
 
@@ -152,6 +204,32 @@ Ext.define('CL.view.home.V_home', {
 
                 columns: [
                     {
+                        dataIndex: "ric_numero",
+                        text: '# Richiesta',
+                        flex:1
+                    },
+                    {
+                        dataIndex: "cognome_nome_richiedente",
+                        text: 'Richiedente',
+                        flex:1
+                    },
+                    {
+                        dataIndex: "ric_stato",
+                        text: 'Stato',
+                        flex:1,
+                        renderer: function(value){
+                            return COSTANTI.stati[value].value;
+                        }
+                    },
+                    {
+                        xtype: 'datecolumn',
+                        format:'d/m/Y',
+                        text: 'Data presentazione richiesta',
+                        dataIndex: 'ric_data_presentazione',
+                        flex: 1
+                    }
+                    /*
+                    {
                         dataIndex: 'stato',
                         flex: 0.1,
                         sortable: false,
@@ -196,9 +274,9 @@ Ext.define('CL.view.home.V_home', {
                                 }
                             }
                         ]
-                    }
+                    }*/
                 ]
-            },
+            },/*
             {
                 flex: 1
             },
@@ -350,7 +428,7 @@ Ext.define('CL.view.home.V_home', {
                         }
                     }
                 ]
-            }
+            }*/
         ];
 
         this.callParent(arguments);

@@ -88,7 +88,7 @@ function lista($pdo){
     else if(isset($_GET["ric_id_richiedente"])){
         $ric_id_richiedente = $_GET["ric_id_richiedente"];
         $statement = $pdo->prepare("
-    		SELECT A.ric_id, A.ric_numero, A.ric_id_richiedente, CONCAT(B.ute_cognome,' ',B.ute_nome) as nome_cognome_richiedente, A.ric_id_responsabile, CONCAT(C.ute_cognome,' ',C.ute_nome) as ric_richiedente_name,
+    		SELECT A.ric_id, A.ric_numero, A.ric_id_richiedente, CONCAT(B.ute_cognome,' ',B.ute_nome) as cognome_nome_richiedente, A.ric_id_responsabile, CONCAT(C.ute_cognome,' ',C.ute_nome) as ric_richiedente_name,
     			ric_cod_sede, D.sed_descrizione as ric_sede_name,ric_oggetto,ric_motivazione,ric_destinazione,ric_data_presentazione,ric_data_accettazione,ric_data_chiusura,
     			ric_stato,ric_note_stato,ric_note, COUNT(*) OVER() as total
 
@@ -106,7 +106,7 @@ function lista($pdo){
 	else{
 		//LIST PAGINATO
         $statement = $pdo->prepare("
-    		SELECT A.ric_id, A.ric_numero, A.ric_id_richiedente, CONCAT(B.ute_cognome,' ',B.ute_nome) as nome_cognome_richiedente, A.ric_id_responsabile, CONCAT(C.ute_cognome,' ',C.ute_nome) as ric_richiedente_name,
+    		SELECT A.ric_id, A.ric_numero, A.ric_id_richiedente, CONCAT(B.ute_cognome,' ',B.ute_nome) as cognome_nome_richiedente, A.ric_id_responsabile, CONCAT(C.ute_cognome,' ',C.ute_nome) as ric_richiedente_name,
     			ric_cod_sede, D.sed_descrizione as ric_sede_name,ric_oggetto,ric_motivazione,ric_destinazione,ric_data_presentazione,ric_data_accettazione,ric_data_chiusura,
     			ric_stato,ric_note_stato,ric_note, COUNT(*) OVER() as total
 
@@ -114,6 +114,7 @@ function lista($pdo){
     			LEFT JOIN utenti B ON B.ute_id = A.ric_id_richiedente
     			LEFT JOIN utenti C ON C.ute_id = A.ric_id_responsabile
     			LEFT JOIN sedi D ON D.sed_cod_sede = A.ric_cod_sede
+
     		ORDER BY $pro $dir LIMIT $limit OFFSET $start
     	");
 	}

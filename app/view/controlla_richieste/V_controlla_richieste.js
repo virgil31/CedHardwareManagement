@@ -37,7 +37,8 @@ Ext.define('CL.view.controlla_richieste.V_controlla_richieste', {
                     items:[
                         {
                             xtype: 'button',
-                            text: 'X Disconnetti',
+                            text: 'Disconnetti',
+                            icon: 'resources/images/icon_logout.png',
                             handler: function(){
                                 Ext.util.Cookies.clear("richiedente_id");
                                 Ext.util.Cookies.clear("richiedente_nome");
@@ -59,7 +60,8 @@ Ext.define('CL.view.controlla_richieste.V_controlla_richieste', {
                         '->',
                         {
                             xtype: 'button',
-                            text: '+ Nuova richiesta',
+                            text: 'Nuova richiesta',
+                            icon: 'resources/images/icon_plus.gif',
                             handler: function(){
                                 CL.app.getController("C_controlla_richieste").redirectTo("richiesta");
                             }
@@ -75,6 +77,18 @@ Ext.define('CL.view.controlla_richieste.V_controlla_richieste', {
                         store: "S_richiesta",
                         height: 500,
                         width: '95%',
+                        listeners:{
+                            itemdblclick: function( grid, rec, item, index, e, eOpts ){
+                                CL.app.getController("C_controlla_richieste").redirectTo("richiesta");
+
+                                setTimeout(function(){
+                                    var form = Ext.ComponentQuery.query("form_richiesta form")[0];
+                                    form.reset(true);
+                                    //form.trackResetOnLoad = true,
+                                    form.loadRecord(rec);
+                                }, 250);
+                            }
+                        },
                         columns:[
                             {
                                 dataIndex: "ric_numero",

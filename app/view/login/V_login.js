@@ -40,7 +40,7 @@ Ext.define('CL.view.login.V_login', {
                 },
                 {
                     xtype: 'form',
-                    title: 'Login Amministratori',
+                    title: '<b>Login Amministratori</b>',
                     border: true,
                     bodyPadding: 10,
                     width: 310,
@@ -113,6 +113,7 @@ Ext.define('CL.view.login.V_login', {
                             }
                         }
                     ],
+                    buttonAlign: 'center',
                     buttons: [
                         {
                             text: 'Login',

@@ -35,11 +35,9 @@ Ext.define('CL.view.richiesta.V_form_richiesta', {
                     },
                     items: [
                         {
-                            text: "X Disconnetti",
+                            text: 'Disconnetti',
+                            icon: 'resources/images/icon_logout.png',
                             scale: 'large',
-                            style: {
-                                background: "#5CC25C"
-                            },
                             handler: function(){
                                 Ext.util.Cookies.clear("richiedente_id");
                                 Ext.util.Cookies.clear("richiedente_nome");
@@ -50,11 +48,9 @@ Ext.define('CL.view.richiesta.V_form_richiesta', {
                         },
                         '->',
                         {
-                            text: "Vai alla lista delle mie richieste >",
+                            text: "Vai alla lista delle mie richieste",
+                            icon: 'resources/images/icon_list.png',
                             scale: 'large',
-                            style: {
-                                background: "#5CC25C"
-                            },
                             handler: function(){
                                 CL.app.getController("C_richiesta").redirectTo("controlla_richieste");
                             }
@@ -75,6 +71,9 @@ Ext.define('CL.view.richiesta.V_form_richiesta', {
                             align: 'center',
                             pack: 'center'
                         },
+                        style: {
+                            borderRadius: "5px"
+                        },
                         defaults:{
                             width: '95%',
                             margin: '5 0 5 0'
@@ -83,21 +82,21 @@ Ext.define('CL.view.richiesta.V_form_richiesta', {
                             {
                                 xtype: 'textfield',                             // HIDDEN
                                 name: 'ric_id',
-                                fieldLabel: 'ID (hidden)'//,
-                                //readOnly: true,
-                                //hidden: true
+                                fieldLabel: 'ID (hidden)',
+                                readOnly: true,
+                                hidden: true
                             },
 
                             {
                                 xtype: 'textfield',                             // HIDDEN
                                 name: 'ric_id_richiedente',
-                                fieldLabel: 'Richiedente ID (hidden)'//,
-                                //readOnly: true,
-                                //hidden: true
+                                fieldLabel: 'Richiedente ID (hidden)',
+                                readOnly: true,
+                                hidden: true
                             },
                             {
                                 xtype: 'textfield',
-                                name: 'nome_cognome_richiedente',
+                                name: 'cognome_nome_richiedente',
                                 fieldLabel: 'Richiedente',
                                 readOnly: true
                             },
@@ -158,6 +157,7 @@ Ext.define('CL.view.richiesta.V_form_richiesta', {
                                 scale: 'large',
                                 action: 'doRichiesta',
                                 allowBlank: false,
+                                icon: 'resources/images/icon_floppy.png',
                                 style: {
                                     background: "#5CC25C"
                                 }
