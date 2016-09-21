@@ -161,8 +161,6 @@ Ext.define('CL.view.login.V_login', {
                                             listeners: {
                                                 specialkey: function(field, e){
                                                     if (e.getKey() == e.ENTER){
-                                                        console.log(Ext.ComponentQuery.query("window[name=login_richiesta]"));
-
                                                         var btn = Ext.ComponentQuery.query("window[name=login_richiesta] button[action=do_login_richiesta]")[0];
                                                         btn.fireEvent("click",btn);
                                                     }

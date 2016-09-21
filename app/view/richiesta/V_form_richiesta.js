@@ -16,7 +16,7 @@ Ext.define('CL.view.richiesta.V_form_richiesta', {
         var this_view = this;
 
         Ext.StoreManager.lookup("S_sede").load({params:{flag_full: true}});
-        Ext.StoreManager.lookup("S_utente").load({params:{flag_solo_funzionari: true}});
+        Ext.StoreManager.lookup("S_utente").load({params:{flag_full: true}});
 
         this_view.items = [
             {
@@ -97,7 +97,7 @@ Ext.define('CL.view.richiesta.V_form_richiesta', {
                             },
                             {
                                 xtype: 'textfield',
-                                name: 'ric_richiedente_name',
+                                name: 'nome_cognome_richiedente',
                                 fieldLabel: 'Richiedente',
                                 readOnly: true
                             },

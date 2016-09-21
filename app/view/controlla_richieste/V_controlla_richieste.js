@@ -86,7 +86,7 @@ Ext.define('CL.view.controlla_richieste.V_controlla_richieste', {
                                 text: 'Stato',
                                 flex:1,
                                 renderer: function(value){
-                                    return COSTANTI.stati[value];
+                                    return COSTANTI.stati[value].value;
                                 }
                             },
                             {
@@ -111,7 +111,7 @@ Ext.define('CL.view.controlla_richieste.V_controlla_richieste', {
                                             setTimeout(function(){
                                                 var form = Ext.ComponentQuery.query("form_richiesta form")[0];
                                                 form.reset(true);
-                                                form.trackResetOnLoad = true,
+                                                //form.trackResetOnLoad = true,
                                                 form.loadRecord(rec);
                                             }, 250);
 
@@ -121,9 +121,11 @@ Ext.define('CL.view.controlla_richieste.V_controlla_richieste', {
                                         iconCls: 'x-fa fa-trash',
                                         tooltip: 'Annulla richiesta',
                                         handler: function(grid, rowIndex, colIndex) {
-                                            var rec = grid.getStore().getAt(rowIndex);
+                                            var rec = grid.getStore().getAt(rowIndex),
+                                                stato = rec.get("ric_stato");
 
-                                            if(rec.get("ric_stato") == "da_valutare"){
+                                            // controllo se con l'attuale stato puo eliminare
+                                            if(COSTANTI.stati[stato].puo_eliminare){
                                                 Ext.Msg.confirm("Attenzione","Sei sicuro di voler annullare la richiesta <strong>#"+rec.get("ric_numero")+"</strong>",function(btnId){
                                                     if(btnId == "yes"){
                                                         rec.erase();

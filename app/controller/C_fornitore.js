@@ -71,8 +71,6 @@ Ext.define('CL.controller.C_fornitore', {
             record = form.getRecord(),
             values = form.getValues();
 
-            console.log(record);
-
         Ext.Msg.confirm('Attenzione!', "Modificare il fornitore?",function(btn){
             if (btn === 'yes'){
                 record.set(values);
