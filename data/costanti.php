@@ -2,41 +2,55 @@
 
 header('Content-Type: application/json');
 
-
 /*
  STATI
 */
 $stati = array(
-    "da_valutare" => array(                         // L'utente può ancora modificare ed eliminare la propria richiesta
+    // La richiesta non è ancora stata presa in esame;
+    // L'utente può ancora modificare ed eliminare la propria richiesta
+    "da_valutare" => array(
         "key" => "da_valutare",
-        "value" => "Da Valutare",
+        "value" => "Da valutare",
         "puo_modificare" => true,
         "puo_eliminare" => true
     ),
-    "in_valutazione" => array(                      // L'utente può ancora modificare la sua richiesta ma NON eliminarla
+
+    // La richiesta è in corso di esame;
+    // L'utente può ancora modificare la sua richiesta ma NON eliminarla    
+    "in_valutazione" => array(
         "key" => "in_valutazione",
-        "value" => "In Valutazione",
+        "value" => "In valutazione",
         "puo_modificare" => true,
         "puo_eliminare" => false
     ),
-    "in_esecuzione" => array(                       // L'utente NON può più modificare ed eliminare la propria richiesta
+
+    // la richiesta è in corso di esecuzione (materiale ordinato, ecc.);
+    // L'utente NON può più modificare ed eliminare la propria richiesta
+    "in_esecuzione" => array(
         "key" => "in_esecuzione",
-        "value" => "In Esecuzione",
+        "value" => "In esecuzione",
         "puo_modificare" => false,
         "puo_eliminare" => false
     ),
-    "in_consegna" => array(                         // L'utente NON può più modificare ed eliminare la propria richiesta
+    
+    // l'oggetto della richiesta è in corso di consegna, non più quindi di competenza del CED;
+    // L'utente NON può più modificare ed eliminare la propria richiesta    
+    "in_consegna" => array(
         "key" => "in_consegna",
-        "value" => "In Consegna",
+        "value" => "In consegna",
         "puo_modificare" => false,
         "puo_eliminare" => false
     ),
-    "chiusa" => array(                              // L'utente NON può più modificare ed eliminare la propria richiesta
+
+    // la richiesta (accettata o no) è chiusa e non richiede trattazione;
+    // L'utente NON può più modificare ed eliminare la propria richiesta    
+    "chiusa" => array(
         "key" => "chiusa",
         "value" => "Chiusa",
         "puo_modificare" => false,
         "puo_eliminare" => false
     )
+    
 );
 
 $GLOBALS['COSTANTI'] = array(

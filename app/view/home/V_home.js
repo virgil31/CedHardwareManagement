@@ -51,7 +51,7 @@ Ext.define('CL.view.home.V_home', {
                                 text: 'Fatture'
                             },
                             {
-                                text: 'Tipi di Ditte'
+                                text: 'Tipi di ditte'
                             },
                             {
                                 text: 'Fornitori'
@@ -214,6 +214,11 @@ Ext.define('CL.view.home.V_home', {
                         flex:1
                     },
                     {
+                        dataIndex: "ric_sede_name",
+                        text: 'Sede',
+                        flex:1
+                    },
+                    {
                         dataIndex: "ric_stato",
                         text: 'Stato',
                         flex:1,
@@ -230,38 +235,6 @@ Ext.define('CL.view.home.V_home', {
                     }
                     /*
                     {
-                        dataIndex: 'stato',
-                        flex: 0.1,
-                        sortable: false,
-                        renderer: function(value){
-                            return '<img src="resources/images/'+value+'.png" alt=" " height="16" width="16" title="'+value+'">';
-                        }
-                    },
-                    {
-                        text: 'ID',
-                        dataIndex: 'id',
-                        flex: 0.3
-                    },
-                    {
-                        text: 'Richiesta da',
-                        dataIndex: 'full_nome',
-                        sortable: false,
-                        flex: 0.8
-                    },
-                    {
-                        text: 'Sede',
-                        dataIndex: 'sede_name',
-                        flex: 1,
-                        sortable: false
-                    },
-                    {
-                        xtype: 'datecolumn',
-                        text: 'Richiesta il',
-                        dataIndex: 'richiesta_il',
-                        format:'d/m/Y',
-                        flex: 0.5
-                    },
-                    {
                         xtype: 'actioncolumn',
                         width: 60,
                         items: [
@@ -276,159 +249,7 @@ Ext.define('CL.view.home.V_home', {
                         ]
                     }*/
                 ]
-            },/*
-            {
-                flex: 1
-            },
-            {
-                xtype: 'panel',
-                height: '98%',
-                flex: 20,
-                bodyStyle: 'backgroundColor: transparent',
-                layout: {
-                    type: 'vbox',
-                    align: 'center',
-                    pack: 'center'
-                },
-                items: [
-                    {
-                        xtype: 'button',
-                        text: 'Ricerche Varie',
-                        flex: 5,
-                        width: '100%',
-                        style: 'backgroundColor: green',
-                        disabled: true
-                    },
-
-                    {
-                        flex: 0.1
-                    },
-                    {
-                        xtype: 'button',
-                        text: 'Albero Risorse',
-                        icon: "resources/images/icon_tree.png",
-                        flex: 1,
-                        width: '100%',
-                        style: 'backgroundColor: #3892D4',
-                        handler: function(){
-                            CL.app.getController('C_home').redirectTo("albero_risorse");
-                        }
-                    },
-                    {
-                        xtype: 'button',
-                        text: 'Cerca per Utente',
-                        icon: "resources/images/icon_utente.png",
-                        flex: 1,
-                        width: '100%',
-                        style: 'backgroundColor: green',
-                        handler: function(){
-                            CL.app.getController('C_home').redirectTo("cerca_per_utente");
-                        }
-                    },
-                    {
-                        xtype: 'button',
-                        text: 'Tipi HW',
-                        flex: 1,
-                        width: '100%',
-                        style: 'backgroundColor: #CC8D00',
-                        handler: function(){
-                            CL.app.getController('C_home').redirectTo("tipi_hardware");
-                        }
-                    },
-                    {
-                        xtype: 'button',
-                        text: 'Marche HW',
-                        flex: 1,
-                        width: '100%',
-                        style: 'backgroundColor: #CC8D00',
-                        handler: function(){
-                            CL.app.getController('C_home').redirectTo("marche_hardware");
-                        }
-                    },
-                    {
-                        xtype: 'button',
-                        text: 'Modelli HW',
-                        flex: 1,
-                        icon: "resources/images/icon_laptop.png",
-                        width: '100%',
-                        style: 'backgroundColor: #CC8D00',
-                        handler: function(){
-                            CL.app.getController('C_home').redirectTo("modelli_hardware");
-                        }
-                    },
-                    {
-                        xtype: 'button',
-                        text: 'Cerca Seriali',
-                        flex: 1,
-                        icon: "resources/images/icon_serial.png",
-                        width: '100%',
-                        style: 'backgroundColor: #CC8D00',
-                        handler: function(){
-                            CL.app.getController('C_home').redirectTo("cerca_seriali");
-                        }
-                    },
-                    {
-                        xtype: 'button',
-                        text: 'Fatture',
-                        flex: 1,
-                        width: '100%',
-                        style: 'backgroundColor: #CC8D00',
-                        handler: function(){
-                            CL.app.getController('C_home').redirectTo("fatture");
-                        }
-                    },
-                    {
-                        xtype: 'button',
-                        text: 'Tipi Ditte',
-                        flex: 1,
-                        width: '100%',
-                        style: 'backgroundColor: #333333',
-                        handler: function(){
-                            CL.app.getController('C_home').redirectTo("tipi_ditte");
-                        }
-                    },
-                    {
-                        xtype: 'button',
-                        text: 'Fornitori',
-                        flex: 1,
-                        width: '100%',
-                        style: 'backgroundColor: #333333',
-                        handler: function(){
-                            CL.app.getController('C_home').redirectTo("fornitori");
-                        }
-                    },
-                    {
-                        xtype: 'button',
-                        text: 'Sedi',
-                        flex: 1,
-                        width: '100%',
-                        style: 'backgroundColor: #AD3636',
-                        handler: function(){
-                            CL.app.getController('C_home').redirectTo("sedi");
-                        }
-                    },
-                    {
-                        xtype: 'button',
-                        text: 'Uffici',
-                        flex: 1,
-                        width: '100%',
-                        style: 'backgroundColor: #AD3636',
-                        handler: function(){
-                            CL.app.getController('C_home').redirectTo("uffici");
-                        }
-                    },
-                    {
-                        xtype: 'button',
-                        text: 'Utenti',
-                        flex: 1,
-                        width: '100%',
-                        style: 'backgroundColor: #AD3636',
-                        handler: function(){
-                            CL.app.getController('C_home').redirectTo("utenti");
-                        }
-                    }
-                ]
-            }*/
+            }
         ];
 
         this.callParent(arguments);

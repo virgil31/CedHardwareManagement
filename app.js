@@ -66,6 +66,7 @@ Ext.application({
         // carico le costanti
         this.caricaCostanti();
 
+        // disabilito il controllo di accessibilità ARIA sui bottoni
         Ext.enableAriaButtons = false;
 
         //previene la creazione dei context menu del browser
@@ -73,7 +74,7 @@ Ext.application({
         //     ev.preventDefault();
         //});
 
-        Ext.create('Ext.container.Viewport',{
+        Ext.create('Ext.container.Viewport', {
             layout: 'fit',
             items:[
                 {
@@ -94,7 +95,7 @@ Ext.application({
                             name: 'card',
                             layout: 'card',
                             width: 960,
-                            minHeight: window.innerHeight-88-88,
+                            minHeight: window.innerHeight - 88 - 88,
                             bodyStyle: 'backgroundColor: transparent'
                         }
                     ],
@@ -104,9 +105,11 @@ Ext.application({
         });
 
 
-        window.onresize = function(){
-            Ext.ComponentQuery.query('viewport panel[name=card]')[0].minHeight = window.innerHeight-88-88;
-            Ext.ComponentQuery.query('home grid')[0].height = window.innerHeight-88-88-38;
+        window.onresize = function() {
+            try{
+                Ext.ComponentQuery.query('viewport panel[name=card]')[0].minHeight = window.innerHeight - 88 - 88;
+                Ext.ComponentQuery.query('home grid')[0].height = window.innerHeight - 88 - 88 - 38;
+            }catch(e){}
         }
 
     },

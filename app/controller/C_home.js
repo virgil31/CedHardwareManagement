@@ -16,23 +16,19 @@ Ext.define('CL.controller.C_home', {
     ],
 
     /////////////////////////////////////////////////
-    init: function () {
-        this.control({
-
+    init: function() {
+        this.control( {
             // EXPORT CSV
             'home button[action=export_csv]':{
                 click: this.exportCSV
             }
-
-        }, this);
+        },
+        this);
     },
     /////////////////////////////////////////////////
 
     //ROUTES
-
-    showView: function(){
-        //Ext.ComponentQuery.query("window").forEach(function(win){win.destroy();});  //per eliminare le vecchie windows
-
+    showView: function() {
         if(Ext.util.Cookies.get("ced_logged") !== null){
             if(Ext.ComponentQuery.query('home').length == 0)
                 Ext.ComponentQuery.query('viewport panel[name=card]')[0].add({xtype: 'home'});

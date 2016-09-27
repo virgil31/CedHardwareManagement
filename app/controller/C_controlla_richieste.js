@@ -40,13 +40,6 @@ Ext.define('CL.controller.C_controlla_richieste', {
 
         store.loadPage(1);
 
-        /*
-        Ext.StoreManager.lookup("S_richiesta").load({
-            params:{
-                ric_id_richiedente: Ext.util.Cookies.get("richiedente_id")
-            }
-        });*/
-
     }
 
 });

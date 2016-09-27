@@ -126,6 +126,10 @@ Ext.define('CL.view.controlla_richieste.V_controlla_richieste', {
                                                 var form = Ext.ComponentQuery.query("form_richiesta form")[0];
                                                 form.reset(true);
                                                 //form.trackResetOnLoad = true,
+
+                                                Ext.ComponentQuery.query("form_richiesta form combobox[name=ric_stato]")[0].enable();
+                                                Ext.ComponentQuery.query("form_richiesta form combobox[name=ric_stato]")[0].show();
+
                                                 form.loadRecord(rec);
                                             }, 250);
 

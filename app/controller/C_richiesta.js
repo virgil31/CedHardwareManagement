@@ -6,10 +6,12 @@ Ext.define('CL.controller.C_richiesta', {
     },
 
     stores: [
-        'S_richiesta'
+        'S_richiesta',
+        'S_stato'
     ],
     models: [
-        'CL.model.M_richiesta'
+        'CL.model.M_richiesta',
+        'CL.model.M_stato'
     ],
     views: [
         'richiesta.V_form_richiesta',
@@ -65,7 +67,6 @@ Ext.define('CL.controller.C_richiesta', {
 
             Ext.ComponentQuery.query("form_richiesta textfield[name=ric_id_richiedente]")[0].setValue(Ext.util.Cookies.get("richiedente_id"));
             Ext.ComponentQuery.query("form_richiesta textfield[name=cognome_nome_richiedente]")[0].setValue(Ext.util.Cookies.get("richiedente_cognome")+" "+Ext.util.Cookies.get("richiedente_nome"));
-
         }
         else {
             this.redirectTo('login');

@@ -100,6 +100,17 @@ Ext.define('CL.view.richiesta.V_form_richiesta', {
                                 fieldLabel: 'Richiedente',
                                 readOnly: true
                             },
+                            {
+                                xtype: 'combobox',
+                                name: 'ric_stato',
+                                fieldLabel: 'Stato',
+                                store: "S_stato",
+                                displayField: 'value',
+                                valueField: 'key',
+                                readOnly: true,
+                                disabled: true,
+                                hidden: true
+                            },
                             {xtype: 'menuseparator'},
                             {
                                 xtype: 'combobox',
@@ -175,6 +186,9 @@ Ext.define('CL.view.richiesta.V_form_richiesta', {
                         layout: {
                             type: 'vbox',
                             align: 'center'
+                        },
+                        style: {
+                            borderRadius: "5px"
                         },
                         items: [
                             {
