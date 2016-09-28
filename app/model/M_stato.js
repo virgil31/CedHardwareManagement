@@ -4,5 +4,20 @@ Ext.define('CL.model.M_stato', {
     fields: [
         {name: 'key',                       type: 'string'},
         {name: 'value',                     type: 'string'}
-    ]
+    ],
+
+    proxy: {
+        type: 'rest',
+        url : 'data/stato/stati.php',
+        reader:{
+            type:'json',
+            rootProperty:'result'
+        },
+        writer: {
+            type: 'json',
+            encode: true,
+            rootProperty: 'data',
+            writeAllFields: true
+        }
+    }
 });
