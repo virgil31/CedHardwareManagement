@@ -4,7 +4,7 @@ Ext.define('CL.view.controlla_richieste.V_controlla_richieste', {
     itemId: 'controlla_richieste_id',
     alias: 'widget.controlla_richieste',
 
-    bodyStyle: 'backgroundColor: transparent',  //per rendere il corpo invisibile
+    bodyStyle: 'backgroundColor: transparent',
 
     layout: {
         type: 'hbox',
@@ -79,14 +79,7 @@ Ext.define('CL.view.controlla_richieste.V_controlla_richieste', {
                         width: '95%',
                         listeners:{
                             itemdblclick: function( grid, rec, item, index, e, eOpts ){
-                                CL.app.getController("C_controlla_richieste").redirectTo("richiesta");
-
-                                setTimeout(function(){
-                                    var form = Ext.ComponentQuery.query("form_richiesta form")[0];
-                                    form.reset(true);
-                                    //form.trackResetOnLoad = true,
-                                    form.loadRecord(rec);
-                                }, 250);
+                                CL.app.getController("C_controlla_richieste").onEdit(rec);
                             }
                         },
                         columns:[
@@ -119,20 +112,7 @@ Ext.define('CL.view.controlla_richieste.V_controlla_richieste', {
                                         tooltip: 'Vedi/Modifica richiesta',
                                         handler: function(grid, rowIndex, colIndex) {
                                             var rec = grid.getStore().getAt(rowIndex);
-
-                                            CL.app.getController("C_controlla_richieste").redirectTo("richiesta");
-
-                                            setTimeout(function(){
-                                                var form = Ext.ComponentQuery.query("form_richiesta form")[0];
-                                                form.reset(true);
-                                                //form.trackResetOnLoad = true,
-
-                                                Ext.ComponentQuery.query("form_richiesta form combobox[name=ric_stato]")[0].enable();
-                                                Ext.ComponentQuery.query("form_richiesta form combobox[name=ric_stato]")[0].show();
-
-                                                form.loadRecord(rec);
-                                            }, 250);
-
+                                            CL.app.getController("C_controlla_richieste").onEdit(rec);
                                         }
                                     },
                                     {

@@ -37,13 +37,14 @@ Ext.define('CL.controller.C_richiesta', {
             if(Ext.ComponentQuery.query('form_richiesta').length == 0)
                 Ext.ComponentQuery.query('viewport panel[name=card]')[0].add({xtype: 'form_richiesta'});
 
-            Ext.ComponentQuery.query('form_richiesta')[0].destroy();                                    // -
-            Ext.ComponentQuery.query('viewport panel[name=card]')[0].add({xtype: 'form_richiesta'});    // -
-
             Ext.ComponentQuery.query('viewport panel[name=card]')[0].getLayout().setActiveItem('form_richiesta_id');
 
             //
-            Ext.ComponentQuery.query("form_richiesta form")[0].reset(true);
+
+            //mi assicuro che il form sia pulito, e dato che ha il "trackResetOnLoad" devo farlo manualmente
+            Ext.ComponentQuery.query("form_richiesta form")[0].getForm().getFields().each(function(f){
+                f.originalValue=undefined;
+            });
 
             //carico gli store usati nel form adeguatamente
             Ext.StoreManager.lookup("S_sede").load({params:{flag_full: true}});

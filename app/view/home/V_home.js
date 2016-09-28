@@ -4,7 +4,7 @@ Ext.define('CL.view.home.V_home', {
     itemId: 'home_id',
     alias: 'widget.home',
 
-    bodyStyle: 'backgroundColor: transparent',  //per rendere il corpo invisibile
+    bodyStyle: 'backgroundColor: transparent',
 
     layout: {
         type: 'vbox',

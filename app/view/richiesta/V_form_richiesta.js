@@ -4,7 +4,7 @@ Ext.define('CL.view.richiesta.V_form_richiesta', {
     itemId: 'form_richiesta_id',
     alias: 'widget.form_richiesta',
 
-    bodyStyle: 'backgroundColor: transparent',  //per rendere il corpo invisibile
+    bodyStyle: 'backgroundColor: transparent',
 
     layout: {
         type: 'hbox',
@@ -15,13 +15,10 @@ Ext.define('CL.view.richiesta.V_form_richiesta', {
     initComponent: function() {
         var this_view = this;
 
-        //Ext.StoreManager.lookup("S_sede").load({params:{flag_full: true}});
-        //Ext.StoreManager.lookup("S_utente").load({params:{flag_full: true}});
-
         this_view.items = [
             {
                 xtype: 'panel',
-                bodyStyle: 'backgroundColor: transparent',  //per rendere il corpo invisibile
+                bodyStyle: 'backgroundColor: transparent',
 
                 layout: {
                     type: 'hbox',
@@ -231,7 +228,6 @@ Ext.define('CL.view.richiesta.V_form_richiesta', {
 
         this.callParent(arguments);
     }
-
 
 
 });

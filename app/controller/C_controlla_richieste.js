@@ -40,6 +40,20 @@ Ext.define('CL.controller.C_controlla_richieste', {
 
         store.loadPage(1);
 
+    },
+
+
+    // ON EDIT
+    onEdit: function(record){
+        CL.app.getController("C_controlla_richieste").redirectTo("richiesta");
+
+        setTimeout(function(){
+            var form = Ext.ComponentQuery.query("form_richiesta form")[0];
+            //form.reset(true);
+            Ext.ComponentQuery.query("form_richiesta form combobox[name=ric_stato]")[0].enable();
+            Ext.ComponentQuery.query("form_richiesta form combobox[name=ric_stato]")[0].show();
+            form.loadRecord(record);
+        }, 250);
     }
 
 });
