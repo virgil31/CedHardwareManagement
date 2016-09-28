@@ -76,15 +76,12 @@ Ext.define('CL.view.home.V_home', {
                 padding: "10 0 10 0",
                 height: window.innerHeight-88-88-38,
                 width: '100%',
-                //autoscroll: true,
-                //overflowX: 'hidden',
-                //overflowY: 'auto',
 
                 disableSelection: true,
 
                 dockedItems: [{
                     xtype: 'pagingtoolbar',
-                    store: 'S_richiesta',//'S_user', // same store GridPanel is using
+                    store: 'S_richiesta',
                     dock: 'bottom',
                     displayInfo: true
                 }],
@@ -123,31 +120,29 @@ Ext.define('CL.view.home.V_home', {
                         '->',
                         {
                             xtype: 'combobox',
-                            valueField: 'value',
-                            displayField: 'name',
-                            width: 120,
-                            editable: false,
+                            fieldLabel: 'Filtra per stato',
+                            store: 'S_stato',
+                            valueField: 'key',
+                            displayField: 'value',
+                            forceSelection: true,
+                            queryMode:'local',
+                            anyMatch: true,
                             tpl: Ext.create('Ext.XTemplate',
                                 '<ul class="x-list-plain"><tpl for=".">',
-                                    '<li role="option" class="x-boundlist-item"><img src="resources/images/{value}.png" alt=" " style="width:16px;height:16px;">&nbsp;&nbsp;{name}</li>',
+                                    '<li role="option" class="x-boundlist-item"><img src="resources/images/icon_{key}.png" alt=" " style="width:16px;height:16px;">&nbsp;&nbsp;{value}</li>',
                                 '</tpl></ul>'
                             ),
-                            store: Ext.create('Ext.data.Store', {
-                                fields: ['name'],
-                                data : [
-                                    {"name":"Tutte",        "value":"Tutte"},
-                                    {"name":"Da Valutare",  "value":"Da Valutare"},
-                                    {"name":"Rifiutate",    "value":"Rifiutata"},
-                                    {"name":"Accettate",    "value":"Accettata"},
-                                    {"name":"Completate",   "value":"Completata"},
-                                    {"name":"Pregresso",   "value":"Pregresso"}
-                                ]
-                            }),
-                            value: "Tutte",
                             listeners: {
                                 select: function(combo,record){
-                                    Ext.StoreManager.lookup("S_richiesta").proxy.extraParams.stato = record.get("value");
+                                    Ext.StoreManager.lookup("S_richiesta").proxy.extraParams.ric_stato = record.get("key");
                                     Ext.StoreManager.lookup("S_richiesta").loadPage(1);
+                                },
+                                change: function(){
+                                    if(this.getValue() === null)
+                                        this.reset();
+
+                                        delete Ext.StoreManager.lookup("S_richiesta").proxy.extraParams.ric_stato;
+                                        Ext.StoreManager.lookup("S_richiesta").loadPage(1)
                                 }
                             }
                         },
@@ -156,14 +151,14 @@ Ext.define('CL.view.home.V_home', {
                         },
                         {
                             xtype: 'textfield',
-                            emptyText: 'ID richiesta',
-                            name: 'query_id',
+                            emptyText: '# richiesta',
+                            name: 'ric_numero',
                             width: 100,
                             listeners: {
                                 specialkey: function(field, e){
                                     if (e.getKey() == e.ENTER){
                                         if(field.getValue().length != 0){
-                                            var btn = Ext.ComponentQuery.query("home button[action=do_query_id]")[0];
+                                            var btn = Ext.ComponentQuery.query("home button[action=do_query_ric_numero]")[0];
                                             btn.fireEvent("click",btn);
                                         }
                                         else{
@@ -177,16 +172,14 @@ Ext.define('CL.view.home.V_home', {
                             xtype: 'button',
                             iconCls: 'x-fa fa-search',
                             tooltip: 'Ricerca per ID',
-                            action: 'do_query_id',
+                            action: 'do_query_ric_numero',
                             listeners:{
                                 click: function(){
-                                    if(Ext.ComponentQuery.query("home textfield[name=query_id]")[0].getValue().length != 0){
-                                        Ext.StoreManager.lookup("S_richiesta").load({
-                                            params:{
-                                                query_id: Ext.ComponentQuery.query("home textfield[name=query_id]")[0].getValue()
-                                            }
-                                        });
-                                    }
+                                    Ext.StoreManager.lookup("S_richiesta").load({
+                                        params:{
+                                            ric_numero: Ext.ComponentQuery.query("home textfield[name=ric_numero]")[0].getValue()
+                                        }
+                                    });
                                 }
                             }
                         }
@@ -195,7 +188,8 @@ Ext.define('CL.view.home.V_home', {
 
                 listeners:{
                     itemdblclick: function( grid, record, item, index, e, eOpts ){
-                        CL.app.getController("C_richiesta").onEdit(item,record);
+                        alert("todo doppio click => apro scheda richiesta");
+                        //CL.app.getController("C_richiesta").onEdit(item,record);
                     }
                 },
 

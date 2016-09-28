@@ -38,7 +38,7 @@ Ext.application({
     // ^^
 
     launch: function () {
-
+        
         //rimuovo l'icona di caricamento
         var item = document.getElementById("img_loader_id");
         item.parentNode.removeChild(item);
