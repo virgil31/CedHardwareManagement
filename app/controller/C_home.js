@@ -18,10 +18,7 @@ Ext.define('CL.controller.C_home', {
     /////////////////////////////////////////////////
     init: function() {
         this.control( {
-            // EXPORT CSV
-            'home button[action=export_csv]':{
-                click: this.exportCSV
-            }
+            
         },
         this);
     },
@@ -37,22 +34,9 @@ Ext.define('CL.controller.C_home', {
         }
         else
             this.redirectTo('login');
-    },
+    }
 
     /////////////////////////////////////////////////
-
-    //EXPORT CSV
-    exportCSV: function () {
-
-        var form = Ext.create('Ext.form.Panel', {
-            standardSubmit: true
-        });
-
-        form.submit({
-            url: 'data/export/assegnazioni_csv.php'
-        });
-
-    }
 
 
 });

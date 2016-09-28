@@ -13,21 +13,5 @@ Ext.define('CL.model.M_richiesta', {
         {name: 'ric_motivazione',           type: 'string'},
         {name: 'ric_oggetto',               type: 'string'},
         {name: 'ric_data_presentazione',    type: 'date', dateReadFormat: 'Y-m-d',  dateWriteFormat: 'd-m-Y'},
-    ],
-
-    proxy: {
-        type: 'rest',
-        url : 'data/richiesta/richieste.php',
-        reader:{
-            type:'json',
-            rootProperty:'result'
-        },
-
-        writer: {
-            type: 'json',
-            encode: true,
-            rootProperty: 'data',
-            writeAllFields: true
-        }
-    }
+    ]
 });

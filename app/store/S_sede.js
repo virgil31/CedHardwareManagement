@@ -1,30 +1,21 @@
 Ext.define('CL.store.S_sede',{
     extend: 'Ext.data.Store',
 
-    //autoLoad: true,
-    autoSync: true,
+    autoLoad: false,
+    autoSync: false,
 
-    model: 'CL.model.M_generic',
-
-    pageSize: 50,
+    model: 'CL.model.M_sede',
 
     remoteSort: true,
-    sorters: { property: 'sed_descrizione', direction : 'ASC' }, //lo ordiniamo per id
+    sorters: { property: 'sed_descrizione', direction : 'ASC' },
 
-    proxy:{
-        type:'ajax',
-        api: {
-            read: 'data/sede/list.php',
-            create: 'data/sede/create.php',
-            destroy: 'data/sede/destroy.php',
-            update: 'data/sede/edit.php'
-        },
-
+    proxy: {
+        type: 'rest',
+        url : 'data/sede/sedi.php',
         reader:{
             type:'json',
             rootProperty:'result'
         },
-
         writer: {
             type: 'json',
             encode: true,
@@ -32,5 +23,4 @@ Ext.define('CL.store.S_sede',{
             writeAllFields: true
         }
     }
-
 });

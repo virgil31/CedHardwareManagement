@@ -15,8 +15,8 @@ Ext.define('CL.view.richiesta.V_form_richiesta', {
     initComponent: function() {
         var this_view = this;
 
-        Ext.StoreManager.lookup("S_sede").load({params:{flag_full: true}});
-        Ext.StoreManager.lookup("S_utente").load({params:{flag_full: true}});
+        //Ext.StoreManager.lookup("S_sede").load({params:{flag_full: true}});
+        //Ext.StoreManager.lookup("S_utente").load({params:{flag_full: true}});
 
         this_view.items = [
             {
@@ -209,6 +209,7 @@ Ext.define('CL.view.richiesta.V_form_richiesta', {
                             },
                             {
                                 xtype: 'image',
+                                alt: ' ',
                                 src: 'resources/images/clippy.gif',
                                 width: 90 ,
                                 height: 80,

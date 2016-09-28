@@ -4,32 +4,15 @@ Ext.application({
     name: 'CL',
 
     controllers: [
-        'C_not_found',
         'C_login',
         'C_home',
-        'C_second',
-
         'C_bbar',
         'C_tbar',
 
-        'C_sede',
-        'C_ufficio',
-        'C_tipo_ditta',
-        'C_fornitore',
         'C_utente',
-        'C_tipo_hardware',
-        'C_marca_hardware',
-        'C_modello_hardware',
-        'C_seriale_modello',
-
-        'C_fattura',
-
+        'C_sede',
         'C_richiesta',
-
-        'C_assegnazione',
-        'C_controlla_richieste',
-        'C_albero_risorse',
-        'C_cerca_per_utente'
+        'C_controlla_richieste'
     ],
 
     // vv ROUTING

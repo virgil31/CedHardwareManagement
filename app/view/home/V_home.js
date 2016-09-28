@@ -112,10 +112,7 @@ Ext.define('CL.view.home.V_home', {
                             xtype: 'button',
                             icon: 'resources/images/icon_plus.gif',
                             text: 'Assegnazione Rapida',
-                            tooltip: 'Assegnazione Rapida',
-                            handler: function(){
-                                CL.app.getController("C_richiesta").onQuickCreate(this.el);
-                            }
+                            tooltip: 'Assegnazione Rapida'
                         },
                         {
                             xtype: 'button',
