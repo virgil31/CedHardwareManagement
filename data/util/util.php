@@ -1,5 +1,18 @@
 <?php
 
+function verificaConnessioneDB(){
+    $ini_array = parse_ini_file("config.ini");
+
+    $success = true;
+
+    try {
+        $pdo=new PDO("pgsql:host=".$ini_array['pdo_host'].";port=".$ini_array['pdo_port']."; dbname=".$ini_array['pdo_db'].";",$ini_array['pdo_user'],$ini_array['pdo_psw']);
+    } catch (PDOException $e) {
+        $success = false;
+    }
+
+    return $success;
+}
 
 function getGUID(){
     if (function_exists('com_create_guid')){

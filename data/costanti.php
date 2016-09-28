@@ -2,6 +2,8 @@
 
 header('Content-Type: application/json');
 
+require_once("util/util.php");
+
 /*
  STATI
 */
@@ -16,7 +18,7 @@ $stati = array(
     ),
 
     // La richiesta è in corso di esame;
-    // L'utente può ancora modificare la sua richiesta ma NON eliminarla    
+    // L'utente può ancora modificare la sua richiesta ma NON eliminarla
     "in_valutazione" => array(
         "key" => "in_valutazione",
         "value" => "In valutazione",
@@ -32,9 +34,9 @@ $stati = array(
         "puo_modificare" => false,
         "puo_eliminare" => false
     ),
-    
+
     // l'oggetto della richiesta è in corso di consegna, non più quindi di competenza del CED;
-    // L'utente NON può più modificare ed eliminare la propria richiesta    
+    // L'utente NON può più modificare ed eliminare la propria richiesta
     "in_consegna" => array(
         "key" => "in_consegna",
         "value" => "In consegna",
@@ -43,14 +45,14 @@ $stati = array(
     ),
 
     // la richiesta (accettata o no) è chiusa e non richiede trattazione;
-    // L'utente NON può più modificare ed eliminare la propria richiesta    
+    // L'utente NON può più modificare ed eliminare la propria richiesta
     "chiusa" => array(
         "key" => "chiusa",
         "value" => "Chiusa",
         "puo_modificare" => false,
         "puo_eliminare" => false
     )
-    
+
 );
 
 $GLOBALS['COSTANTI'] = array(
@@ -59,4 +61,7 @@ $GLOBALS['COSTANTI'] = array(
 
 
 if(isset($_POST["flag_echo"]))
-    echo json_encode($GLOBALS['COSTANTI']);
+    echo json_encode(array(
+        "COSTANTI" => $GLOBALS['COSTANTI'],
+        "connessione_db" => verificaConnessioneDB()
+    ));

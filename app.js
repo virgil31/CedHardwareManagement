@@ -112,7 +112,18 @@ Ext.application({
                 flag_echo: true
             },
             success: function(response, opts) {
-                var costanti = Ext.decode(response.responseText);
+                var risposta = Ext.decode(response.responseText),
+                    costanti = risposta.COSTANTI,
+                    connessione_db = risposta.connessione_db;
+
+                if(!connessione_db){
+                    Ext.Msg.show({
+                        title:"<b>Errore Critico!</b>",
+                        message: "<b>Impossibile connettersi al database!</b> Ricaricare l'applicazione con F5 prego.",
+                        icon: Ext.Msg.ERROR,
+                        closable: false
+                    });
+                }
 
                 Ext.define('COSTANTI', {
                     singleton: true,
