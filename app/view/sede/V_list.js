@@ -12,6 +12,8 @@ Ext.define('CL.view.sede.V_list', {
         pack: 'center'
     },
 
+
+
     initComponent: function() {
         var this_view = this;
 
@@ -21,13 +23,12 @@ Ext.define('CL.view.sede.V_list', {
                 border: true,
                 store: 'S_sede',
                 height: '98%',
-                flex: 60,
+                width: 500,
                 autoscroll: true,
                 overflowX: 'hidden',
                 overflowY: 'auto',
 
                 disableSelection: true,
-
 
                 dockedItems: [{
                     xtype: 'pagingtoolbar',
@@ -42,21 +43,13 @@ Ext.define('CL.view.sede.V_list', {
                     style: 'backgroundColor: #F5F5F5',
                     items: [
                         {
-                            xtype: 'button',
-                            text: 'Indietro',
-                            icon: 'resources/images/icon_back.png',
-                            handler: function(){
-                                CL.app.getController('C_sede').redirectTo('home');
-                            }
-                        },
-                        {
                             xtype: 'label',
                             html: '<b>Lista Sedi</b>',
                             style: 'color: #157fcc;font-size: 15px;font-weight: 300;font-family: helvetica, arial, verdana, sans-serif;line-height: 16px'
                         },
                         {
                             xtype: 'button',
-                            tooltip: 'Nuova richiesta Hardware',
+                            tooltip: 'Crea nuova sede',
                             icon: 'resources/images/icon_plus.gif',
                             action: 'on_create'
                         }
@@ -73,12 +66,22 @@ Ext.define('CL.view.sede.V_list', {
                     {
                         text: 'Codice',
                         dataIndex: 'sed_cod_sede',
-                        flex: 1
+                        width: 65
                     },
                     {
                         text: 'Descrizione',
                         dataIndex: 'sed_descrizione',
-                        flex: 2
+                        flex: 1
+                    },
+                    {
+                        dataIndex: 'sed_note',
+                        width: 38,
+                        renderer: function(value,metaData,record){
+                            if(record.get("sed_note") !== "")
+                                return '<img title="Sono presenti delle note!" src="http://gestionaleamica.com/Sviluppatori/docs/amicanet/icons/AlertNote.png" alt=" " height="16" width="16" >';
+                            else
+                                return "";
+                        }
                     },
                     {
                         xtype:'actioncolumn',

@@ -7,8 +7,9 @@ Ext.define('CL.view.home.V_home', {
     bodyStyle: 'backgroundColor: transparent',
 
     layout: {
-        type: 'vbox',
-        align: 'center'
+        type: 'hbox',
+        align: 'center',
+        pack: 'center'
     },
 
     initComponent: function() {
@@ -18,72 +19,10 @@ Ext.define('CL.view.home.V_home', {
 
         this_view.items = [
             {
-                xtype: 'toolbar',
-                height: 38,
-                width: '100%',
-                items:[
-                    {
-                        text:'Vista ad albero',
-                        icon: 'resources/images/icon_tree.png'
-                    },
-                    {
-                        text: 'Cerca materiale per utente',
-                        icon: "resources/images/icon_utente.png"
-                    },
-                    {
-                        text: 'Cerca info seriale',
-                        icon: "resources/images/icon_serial.png"
-                    },
-                    {
-                        text: 'Tabelle',
-                        icon: "resources/images/icon_list.png",
-                        menu:[
-                            {
-                                text: 'Tipologie HW',
-                                route: 'todo'
-                            },
-                            {
-                                text: 'Marche HW',
-                                route: 'todo'
-                            },
-                            {
-                                text: 'Modelli HW',
-                                route: 'todo'
-                            },
-                            {
-                                text: 'Fatture',
-                                route: 'todo'
-                            },
-                            {
-                                text: 'Tipi di ditte',
-                                route: 'todo'
-                            },
-                            {
-                                text: 'Fornitori',
-                                route: 'todo'
-                            },
-                            {
-                                text: '<b>Sedi</b>',
-                                route: 'sedi'
-                            },
-                            {
-                                text: 'Uffici',
-                                route: 'todo'
-                            },
-                            {
-                                text: 'Utenti',
-                                route: 'todo'
-                            }
-                        ]
-                    }
-                ]
-            },
-            {
                 xtype: 'grid',
                 border: true,
                 store: "S_richiesta",
-                padding: "10 0 10 0",
-                height: window.innerHeight-88-88-38,
+                height: '98%',
                 width: '100%',
 
                 disableSelection: true,

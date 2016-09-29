@@ -8,6 +8,7 @@ Ext.application({
         'C_home',
         'C_bbar',
         'C_tbar',
+        'C_navbar',
 
         'C_utente',
         'C_sede',
@@ -38,7 +39,7 @@ Ext.application({
     // ^^
 
     launch: function () {
-        
+
         //rimuovo l'icona di caricamento
         var item = document.getElementById("img_loader_id");
         item.parentNode.removeChild(item);
@@ -79,7 +80,8 @@ Ext.application({
                             layout: 'card',
                             width: 960,
                             minHeight: window.innerHeight - 88 - 88,
-                            bodyStyle: 'backgroundColor: transparent'
+                            bodyStyle: 'backgroundColor: transparent',
+                            tbar: {xtype: 'navbar'}
                         }
                     ],
                     bbar: Ext.widget('bbar')
@@ -89,10 +91,7 @@ Ext.application({
 
 
         window.onresize = function() {
-            try{
-                Ext.ComponentQuery.query('viewport panel[name=card]')[0].minHeight = window.innerHeight - 88 - 88;
-                Ext.ComponentQuery.query('home grid')[0].height = window.innerHeight - 88 - 88 - 38;
-            }catch(e){}
+            Ext.ComponentQuery.query('viewport panel[name=card]')[0].minHeight = window.innerHeight - 88 - 88;
         }
 
     },

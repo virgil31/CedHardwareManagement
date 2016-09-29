@@ -7,10 +7,13 @@ Ext.define('CL.view.sede.V_form', {
     autoShow: true,
     modal: true,
     constrain: true,
+    resizable: false,
 
     bodyStyle: 'backgroundColor: transparent',
 
     padding: 10,
+
+    width: 400,
 
     initComponent: function() {
 
@@ -19,6 +22,9 @@ Ext.define('CL.view.sede.V_form', {
         this_view.items = [
             {
                 xtype: 'form',
+                defaults:{
+                    width: '100%'
+                },
                 items: [
                     {
                         xtype: 'textfield',
@@ -38,6 +44,11 @@ Ext.define('CL.view.sede.V_form', {
                         name: 'sed_descrizione',
                         fieldLabel: 'Descrizione',
                         allowBlank: false
+                    },
+                    {
+                        xtype: 'textareafield',
+                        name: 'sed_note',
+                        fieldLabel: 'Note'
                     }
                 ],
                 buttonAlign: 'center',

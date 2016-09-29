@@ -8,6 +8,7 @@ $pdo=new PDO("pgsql:host=".$ini_array['pdo_host'].";port=".$ini_array['pdo_port'
 
 // LISTA
 if($_SERVER['REQUEST_METHOD'] === "GET"){
+    sleep(1);
     lista($pdo);
 }
 
@@ -42,7 +43,7 @@ function lista($pdo){
     // LIST FULL
     if(isset($_GET["flag_full"])){
         $statement = $pdo->prepare("
-    		SELECT sed_cod_sede, sed_descrizione, COUNT(*) OVER() as total
+    		SELECT sed_cod_sede, sed_descrizione, sed_note, COUNT(*) OVER() as total
     		FROM sedi
     		ORDER BY $pro $dir
     	");
@@ -50,7 +51,7 @@ function lista($pdo){
     // LIST PAGINATO
     else{
         $statement = $pdo->prepare("
-    		SELECT sed_cod_sede, sed_descrizione, COUNT(*) OVER() as total
+    		SELECT sed_cod_sede, sed_descrizione, sed_note, COUNT(*) OVER() as total
     		FROM sedi
             ORDER BY $pro $dir LIMIT $limit OFFSET $start
     	");
@@ -79,12 +80,13 @@ function crea($pdo){
         $pdo->beginTransaction();
 
     	$s = $pdo->prepare("
-    		INSERT INTO sedi(sed_cod_sede,sed_descrizione)
-    		VALUES(:sed_cod_sede,:sed_descrizione)
+    		INSERT INTO sedi(sed_cod_sede,sed_descrizione, sed_note)
+    		VALUES(:sed_cod_sede,:sed_descrizione,:sed_note)
     	");
 
     	$success = $s->execute(array(
     		"sed_cod_sede" => $data["sed_cod_sede"],
+    		"sed_descrizione" => $data["sed_descrizione"],
     		"sed_descrizione" => $data["sed_descrizione"]
     	));
 
@@ -117,12 +119,14 @@ function modifica($pdo){
 
     	$s = $pdo->prepare("
     		UPDATE sedi
-    		SET sed_descrizione = :sed_descrizione
+    		SET sed_descrizione = :sed_descrizione,
+                sed_note = :sed_note
     		WHERE sed_cod_sede = :sed_cod_sede
     	");
 
     	$success = $s->execute(array(
     		"sed_descrizione" => $data["sed_descrizione"],
+    		"sed_note" => $data["sed_note"],
     		"sed_cod_sede" => $data["sed_cod_sede"]
     	));
 

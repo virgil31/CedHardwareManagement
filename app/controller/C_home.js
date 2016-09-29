@@ -19,13 +19,6 @@ Ext.define('CL.controller.C_home', {
     init: function() {
         this.control( {
 
-            // VOCI MENU A TENDINA
-            'home menuitem' : {
-                click: function(menuitem){
-                    this.redirectTo(menuitem.route);
-                }
-            }
-            
         },
         this);
     },
