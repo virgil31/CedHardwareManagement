@@ -1,7 +1,5 @@
 <?php
 
-require_once("../util/util.php");
-
 header('Content-Type: application/json');
 
 $ini_array = parse_ini_file("../config.ini");
@@ -12,7 +10,7 @@ $pdo=new PDO("pgsql:host=".$ini_array['pdo_host'].";port=".$ini_array['pdo_port'
 if($_SERVER['REQUEST_METHOD'] === "GET"){
     lista($pdo);
 }
-/*
+
 // CREAZIONE
 else if($_SERVER['REQUEST_METHOD'] === "POST"){
     crea($pdo);
@@ -27,7 +25,7 @@ else if($_SERVER['REQUEST_METHOD'] === "PUT"){
 else if($_SERVER['REQUEST_METHOD'] === "DELETE"){
     elimina($pdo);
 }
-*/
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -42,12 +40,21 @@ function lista($pdo){
 	$total = 0;
 
     // LIST FULL
-    $statement = $pdo->prepare("
-		SELECT sed_cod_sede, sed_descrizione, COUNT(*) OVER() as total
-		FROM sedi
-		ORDER BY $pro $dir
-	");
-
+    if(isset($_GET["flag_full"])){
+        $statement = $pdo->prepare("
+    		SELECT sed_cod_sede, sed_descrizione, COUNT(*) OVER() as total
+    		FROM sedi
+    		ORDER BY $pro $dir
+    	");
+    }
+    // LIST PAGINATO
+    else{
+        $statement = $pdo->prepare("
+    		SELECT sed_cod_sede, sed_descrizione, COUNT(*) OVER() as total
+    		FROM sedi
+            ORDER BY $pro $dir LIMIT $limit OFFSET $start
+    	");
+    }
 
 	$statement->execute();
 	$result = $statement->fetchAll(PDO::FETCH_OBJ);
@@ -63,41 +70,29 @@ function lista($pdo){
 }
 
 
-/*
+
 // CREAZIONE
 function crea($pdo){
     $data = json_decode($_POST['data'],true);
 
     try{
-
         $pdo->beginTransaction();
 
     	$s = $pdo->prepare("
-    		INSERT INTO richieste(ric_id,ric_cod_sede,ric_destinazione,ric_id_responsabile,ric_id_richiedente,ric_motivazione,ric_oggetto,ric_data_presentazione,ric_stato)
-    		VALUES(:ric_id,:ric_cod_sede,:ric_destinazione,:ric_id_responsabile,:ric_id_richiedente,:ric_motivazione,:ric_oggetto,NOW(),'da_valutare')
+    		INSERT INTO sedi(sed_cod_sede,sed_descrizione)
+    		VALUES(:sed_cod_sede,:sed_descrizione)
     	");
 
-        $id = getGUID();
-
     	$success = $s->execute(array(
-    		"ric_id" => $id,
-    		"ric_cod_sede" => $data["ric_cod_sede"],
-    		"ric_destinazione" => $data["ric_destinazione"],
-    		"ric_id_responsabile" => $data["ric_id_responsabile"],
-    		"ric_id_richiedente" => $data["ric_id_richiedente"],
-    		"ric_motivazione" => $data["ric_motivazione"],
-    		"ric_oggetto" => $data["ric_oggetto"]
+    		"sed_cod_sede" => $data["sed_cod_sede"],
+    		"sed_descrizione" => $data["sed_descrizione"]
     	));
 
         $pdo->commit();
 
     	echo json_encode(array(
             "success" => $success,
-    		"eventual_error" => $pdo->errorInfo(),
-            "result" => array(
-                "ric_id" => $id,
-                "ric_stato" => "da_valutare"
-            )
+    		"eventual_error" => $pdo->errorInfo()
         ));
 
     }catch(PDOException $e){
@@ -121,25 +116,14 @@ function modifica($pdo){
         $pdo->beginTransaction();
 
     	$s = $pdo->prepare("
-    		UPDATE richieste
-    		SET ric_cod_sede = :ric_cod_sede,
-    			ric_destinazione = :ric_destinazione,
-    			ric_id_responsabile = :ric_id_responsabile,
-    			ric_id_richiedente = :ric_id_richiedente,
-    			ric_motivazione = :ric_motivazione,
-    			ric_oggetto = :ric_oggetto
-
-    		WHERE ric_id = :ric_id
+    		UPDATE sedi
+    		SET sed_descrizione = :sed_descrizione
+    		WHERE sed_cod_sede = :sed_cod_sede
     	");
 
     	$success = $s->execute(array(
-    		"ric_id" => $data["ric_id"],
-    		"ric_cod_sede" => $data["ric_cod_sede"],
-    		"ric_destinazione" => $data["ric_destinazione"],
-    		"ric_id_responsabile" => $data["ric_id_responsabile"],
-    		"ric_id_richiedente" => $data["ric_id_richiedente"],
-    		"ric_motivazione" => $data["ric_motivazione"],
-    		"ric_oggetto" => $data["ric_oggetto"]
+    		"sed_descrizione" => $data["sed_descrizione"],
+    		"sed_cod_sede" => $data["sed_cod_sede"]
     	));
 
         $pdo->commit();
@@ -169,12 +153,12 @@ function elimina($pdo){
         $pdo->beginTransaction();
 
     	$s = $pdo->prepare("
-    		DELETE FROM richieste
-            WHERE ric_id = :ric_id
+    		DELETE FROM sedi
+            WHERE sed_cod_sede = :sed_cod_sede
     	");
 
     	$success = $s->execute(array(
-    		"ric_id" => $data["ric_id"]
+    		"sed_cod_sede" => $data["sed_cod_sede"]
     	));
 
         $pdo->commit();
@@ -194,4 +178,3 @@ function elimina($pdo){
     }
 
 }
-*/

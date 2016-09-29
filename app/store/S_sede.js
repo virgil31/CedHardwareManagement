@@ -6,6 +6,8 @@ Ext.define('CL.store.S_sede',{
 
     model: 'CL.model.M_sede',
 
+    pageSize: 50,
+
     remoteSort: true,
     sorters: { property: 'sed_descrizione', direction : 'ASC' }
 });

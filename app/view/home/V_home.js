@@ -39,31 +39,40 @@ Ext.define('CL.view.home.V_home', {
                         icon: "resources/images/icon_list.png",
                         menu:[
                             {
-                                text: 'Tipologie HW'
+                                text: 'Tipologie HW',
+                                route: 'todo'
                             },
                             {
-                                text: 'Marche HW'
+                                text: 'Marche HW',
+                                route: 'todo'
                             },
                             {
-                                text: 'Modelli HW'
+                                text: 'Modelli HW',
+                                route: 'todo'
                             },
                             {
-                                text: 'Fatture'
+                                text: 'Fatture',
+                                route: 'todo'
                             },
                             {
-                                text: 'Tipi di ditte'
+                                text: 'Tipi di ditte',
+                                route: 'todo'
                             },
                             {
-                                text: 'Fornitori'
+                                text: 'Fornitori',
+                                route: 'todo'
                             },
                             {
-                                text: 'Sedi'
+                                text: '<b>Sedi</b>',
+                                route: 'sedi'
                             },
                             {
-                                text: 'Uffici'
+                                text: 'Uffici',
+                                route: 'todo'
                             },
                             {
-                                text: 'Utenti'
+                                text: 'Utenti',
+                                route: 'todo'
                             }
                         ]
                     }
