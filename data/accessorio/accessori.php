@@ -33,36 +33,50 @@ else if($_SERVER['REQUEST_METHOD'] === "DELETE"){
 
 // LISTA
 function lista($pdo){
-    $sort = (isset($_GET['sort']) ? $_GET['sort'] : $_GET['sort']);
-	$tmp = json_decode($sort,true);
-	$pro = $tmp[0]['property'];
-	$dir = $tmp[0]['direction'];
+    $sort = $_GET['sort'];
+	$json = json_decode($sort,true);
+	$property = $json[0]['property'];
+	$direction = $json[0]['direction'];
 	$limit = $_GET['limit'];
 	$start = $_GET['start'];
 	$total = 0;
 
-    // LIST FULL
-    if(isset($_GET["flag_full"])){
-        $statement = $pdo->prepare("
-            SELECT acc_id as id_accessorio,acc_tipo as tipo,acc_marca as marca,acc_modello as modello,acc_caratteristiche as caratteristiche,
-                acc_note as note, acc_quantita as quantita, COUNT(*) OVER() as total
-    		FROM accessori
-    		ORDER BY $pro $dir
-    	");
+    $query = "";
+    $where = "";
+    $parametri = array();
+
+    // SELECT / FROM
+    $query .= "
+        SELECT acc_id as id_accessorio,acc_tipo as tipo,acc_marca as marca,acc_modello as modello,acc_caratteristiche as caratteristiche,
+            acc_note as note, acc_quantita as quantita, COUNT(*) OVER() as total
+        FROM accessori
+    ";
+    // WHERE
+    if(isset($_GET["tipo"])) {
+        $where .= " AND acc_tipo = :tipo";
+        $parametri['tipo'] = $_GET["tipo"];
     }
-    // LIST PAGINATO
-    else{
-        $statement = $pdo->prepare("
-            SELECT acc_id as id_accessorio,acc_tipo as tipo,acc_marca as marca,acc_modello as modello,acc_caratteristiche as caratteristiche,
-                acc_note as note, acc_quantita as quantita, COUNT(*) OVER() as total
-            FROM accessori
-            ORDER BY $pro $dir LIMIT $limit OFFSET $start
-    	");
+    if(isset($_GET["marca"])) {
+        $where .= " AND acc_marca = :marca";
+        $parametri['marca'] = $_GET["marca"];
+    }
+    if(isset($_GET["modello"])) {
+        $where .= " AND acc_modello = :modello";
+        $parametri['modello'] = $_GET["modello"];
+    }
+    if(strlen($where) > 0) {
+        $where = " WHERE " . substr($where, 5);
+        $query .= $where;
+    }
+    // ORDER
+    $query .= " ORDER BY $property $direction ";
+    if(!isset($_GET["flag_full"])) {
+        $query .= " LIMIT $limit OFFSET $start ";
     }
 
-	$statement->execute();
-	$result = $statement->fetchAll(PDO::FETCH_OBJ);
-
+    $statement = $pdo->prepare($query);
+    $statement->execute($parametri);
+    $result = $statement->fetchAll(PDO::FETCH_OBJ);
 
 	if(count($result) != 0)
 		$total = $result[0]->total;

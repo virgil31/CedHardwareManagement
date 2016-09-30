@@ -7,8 +7,8 @@ Ext.define('CL.model.M_accessorio', {
         {name: 'marca',                 type: 'string'},
         {name: 'modello',               type: 'string'},
         {name: 'caratteristiche',       type: 'string'},
-        {name: 'note',                  tpye: 'string'},
-        {name: 'quantita',              tpye: 'int'}
+        {name: 'quantita',              tpye: 'int'},
+        {name: 'note',                  tpye: 'string'}
     ],
 
     proxy: {

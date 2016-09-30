@@ -6,10 +6,12 @@ Ext.define('CL.controller.C_accessorio', {
     },
 
     stores: [
-        'S_accessorio'
+        'S_accessorio',
+        'S_marca'
     ],
     models: [
-        'M_accessorio'
+        'M_accessorio',
+        'M_marca'
     ],
     views: [
         'accessorio.V_list',

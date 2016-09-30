@@ -19,6 +19,8 @@ Ext.define('CL.view.accessorio.V_form', {
 
         var this_view = this;
 
+        Ext.StoreManager.lookup("S_marca").load();
+
         this_view.items = [
             {
                 xtype: 'form',
@@ -33,10 +35,16 @@ Ext.define('CL.view.accessorio.V_form', {
                         allowBlank: false
                     },
                     {
-                        xtype: 'textfield',
+                        xtype: 'combobox',
                         name: 'marca',
                         fieldLabel: 'Marca',
-                        allowBlank: false
+                        allowBlank: false,
+                        queryMode: 'local',
+                        anyMatch: true,
+                        store: 'S_marca',
+                        displayField: 'marca',
+                        valueField: 'marca',
+                        hideTrigger: true
                     },
                     {
                         xtype: 'textfield',
