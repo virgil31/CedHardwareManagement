@@ -1,8 +1,8 @@
-Ext.define('CL.view.sede.V_form', {
+Ext.define('CL.view.accessorio.V_form', {
     extend: 'Ext.window.Window',
-    xtype: 'sede_form',
-    itemId: 'sede_form_id',
-    alias: 'widget.sede_form',
+    xtype: 'accessorio_form',
+    itemId: 'accessorio_form_id',
+    alias: 'widget.accessorio_form',
 
     autoShow: true,
     modal: true,
@@ -28,21 +28,32 @@ Ext.define('CL.view.sede.V_form', {
                 items: [
                     {
                         xtype: 'textfield',
-                        fieldLabel: 'Codice',
-                        name: 'cod_sede',
-                        allowBlank: false,
-                        minLength: 3,
-                        maxLength: 3,
-                        listeners: {
-                            change: function(){
-                                this.setValue(this.getValue().toUpperCase());
-                            }
-                        }
+                        name: 'tipo',
+                        fieldLabel: 'Tipo',
+                        allowBlank: false
                     },
                     {
                         xtype: 'textfield',
-                        name: 'descrizione',
-                        fieldLabel: 'Descrizione',
+                        name: 'marca',
+                        fieldLabel: 'Marca',
+                        allowBlank: false
+                    },
+                    {
+                        xtype: 'textfield',
+                        name: 'modello',
+                        fieldLabel: 'Modello',
+                        allowBlank: false
+                    },
+                    {
+                        xtype: 'textfield',
+                        name: 'caratteristiche',
+                        fieldLabel: 'Caratteristiche',
+                        allowBlank: false
+                    },
+                    {
+                        xtype: 'numberfield',
+                        name: 'quantita',
+                        fieldLabel: 'Quantita',
                         allowBlank: false
                     },
                     {

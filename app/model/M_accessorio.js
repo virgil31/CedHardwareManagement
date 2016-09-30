@@ -1,18 +1,19 @@
 Ext.define('CL.model.M_accessorio', {
     extend: 'Ext.data.Model',
     fields: [
-        {name: 'acc_id',                    type: 'string'},
+        {name: 'id_accessorio',         type: 'string'},
 
-        {name: 'acc_tipo',                  type: 'string'},
-        {name: 'acc_marca',                 type: 'string'},
-        {name: 'acc_modello',               type: 'string'},
-        {name: 'acc_caratteristiche',       type: 'string'},
-        {name: 'acc_quantita',              tpye: 'int'}
+        {name: 'tipo',                  type: 'string'},
+        {name: 'marca',                 type: 'string'},
+        {name: 'modello',               type: 'string'},
+        {name: 'caratteristiche',       type: 'string'},
+        {name: 'note',                  tpye: 'string'},
+        {name: 'quantita',              tpye: 'int'}
     ],
 
     proxy: {
         type: 'rest',
-        url : 'data/utente/utenti.php',
+        url : 'data/accessorio/accessori.php',
         reader:{
             type:'json',
             rootProperty:'result'

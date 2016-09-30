@@ -13,7 +13,9 @@ Ext.application({
         'C_utente',
         'C_sede',
         'C_richiesta',
-        'C_controlla_richieste'
+        'C_controlla_richieste',
+
+        'C_accessorio'
     ],
 
     // vv ROUTING

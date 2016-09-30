@@ -15,7 +15,9 @@ Ext.define('CL.view.home.V_home', {
     initComponent: function() {
         var this_view = this;
 
-        Ext.StoreManager.lookup("S_richiesta").load();
+        setTimeout(function(){
+            Ext.StoreManager.lookup("S_richiesta").loadPage(1);
+        }, 250);                
 
         this_view.items = [
             {
@@ -72,7 +74,7 @@ Ext.define('CL.view.home.V_home', {
                             store: 'S_stato',
                             valueField: 'key',
                             displayField: 'value',
-                            forceSelection: true,
+                            //forceSelection: true,
                             queryMode:'local',
                             anyMatch: true,
                             tpl: Ext.create('Ext.XTemplate',
@@ -82,15 +84,15 @@ Ext.define('CL.view.home.V_home', {
                             ),
                             listeners: {
                                 select: function(combo,record){
-                                    Ext.StoreManager.lookup("S_richiesta").proxy.extraParams.ric_stato = record.get("key");
+                                    Ext.StoreManager.lookup("S_richiesta").proxy.extraParams.stato = record.get("key");
                                     Ext.StoreManager.lookup("S_richiesta").loadPage(1);
                                 },
-                                change: function(){
-                                    if(this.getValue() === null)
+                                blur: function(){
+                                    if(this.getValue() === null){
                                         this.reset();
-
-                                        delete Ext.StoreManager.lookup("S_richiesta").proxy.extraParams.ric_stato;
-                                        Ext.StoreManager.lookup("S_richiesta").loadPage(1)
+                                        delete Ext.StoreManager.lookup("S_richiesta").proxy.extraParams.stato;
+                                        Ext.StoreManager.lookup("S_richiesta").loadPage(1);
+                                    }
                                 }
                             }
                         },
@@ -100,13 +102,13 @@ Ext.define('CL.view.home.V_home', {
                         {
                             xtype: 'textfield',
                             emptyText: '# richiesta',
-                            name: 'ric_numero',
+                            name: 'numero',
                             width: 100,
                             listeners: {
                                 specialkey: function(field, e){
                                     if (e.getKey() == e.ENTER){
                                         if(field.getValue().length != 0){
-                                            var btn = Ext.ComponentQuery.query("home button[action=do_query_ric_numero]")[0];
+                                            var btn = Ext.ComponentQuery.query("home button[action=do_query_numero]")[0];
                                             btn.fireEvent("click",btn);
                                         }
                                         else{
@@ -119,15 +121,20 @@ Ext.define('CL.view.home.V_home', {
                         {
                             xtype: 'button',
                             iconCls: 'x-fa fa-search',
-                            tooltip: 'Ricerca per ID',
-                            action: 'do_query_ric_numero',
+                            tooltip: 'Ricerca',
+                            action: 'do_query_numero',
                             listeners:{
                                 click: function(){
-                                    Ext.StoreManager.lookup("S_richiesta").load({
-                                        params:{
-                                            ric_numero: Ext.ComponentQuery.query("home textfield[name=ric_numero]")[0].getValue()
-                                        }
-                                    });
+                                    if(Ext.ComponentQuery.query("home textfield[name=numero]")[0].getValue() != ""){
+                                        Ext.StoreManager.lookup("S_richiesta").load({
+                                            params:{
+                                                numero: Ext.ComponentQuery.query("home textfield[name=numero]")[0].getValue()
+                                            }
+                                        });
+                                    }
+                                    else {
+                                        Ext.StoreManager.lookup("S_richiesta").loadPage(1)
+                                    }
                                 }
                             }
                         }
@@ -143,22 +150,22 @@ Ext.define('CL.view.home.V_home', {
 
                 columns: [
                     {
-                        dataIndex: "ric_numero",
+                        dataIndex: "numero",
                         text: '# Richiesta',
                         flex:1
                     },
                     {
-                        dataIndex: "cognome_nome_richiedente",
+                        dataIndex: "richiedente",
                         text: 'Richiedente',
                         flex:1
                     },
                     {
-                        dataIndex: "ric_sede_name",
+                        dataIndex: "sede",
                         text: 'Sede',
                         flex:1
                     },
                     {
-                        dataIndex: "ric_stato",
+                        dataIndex: "stato",
                         text: 'Stato',
                         flex:1,
                         renderer: function(value){
@@ -169,7 +176,7 @@ Ext.define('CL.view.home.V_home', {
                         xtype: 'datecolumn',
                         format:'d/m/Y',
                         text: 'Data presentazione richiesta',
-                        dataIndex: 'ric_data_presentazione',
+                        dataIndex: 'data_presentazione',
                         flex: 1
                     }
                     /*

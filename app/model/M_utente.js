@@ -1,11 +1,11 @@
 Ext.define('CL.model.M_utente', {
     extend: 'Ext.data.Model',
     fields: [
-        {name: 'ute_id',                    type: 'string'},
+        {name: 'id_utente',                    type: 'string'},
 
-        {name: 'ute_nome',                  type: 'string'},
-        {name: 'ute_cognome',               type: 'string'},
-        {name: 'ute_funzionario',           type: 'boolean'}
+        {name: 'nome',                  type: 'string'},
+        {name: 'cognome',               type: 'string'},
+        {name: 'funzionario',           type: 'boolean'}
     ],
 
     proxy: {

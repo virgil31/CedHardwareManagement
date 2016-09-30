@@ -1,19 +1,19 @@
-Ext.define('CL.controller.C_sede', {
+Ext.define('CL.controller.C_accessorio', {
     extend: 'Ext.app.Controller',
 
     routes: {
-        'sedi' : 'showView'
+        'accessori' : 'showView'
     },
 
     stores: [
-        'S_sede'
+        'S_accessorio'
     ],
     models: [
-        'M_sede'
+        'M_accessorio'
     ],
     views: [
-        'sede.V_list',
-        'sede.V_form'
+        'accessorio.V_list',
+        'accessorio.V_form'
     ],
 
     /////////////////////////////////////////////////
@@ -21,12 +21,12 @@ Ext.define('CL.controller.C_sede', {
         this.control({
 
             // ON CREATE
-            'sede_list button[action=on_create]':{
+            'accessorio_list button[action=on_create]':{
                 click: this.onCreate
             },
 
             // SAVE FORM
-            'sede_form button[action=save]':{
+            'accessorio_form button[action=save]':{
                 click: this.saveForm
             }
 
@@ -38,17 +38,16 @@ Ext.define('CL.controller.C_sede', {
     //ROUTES
     showView: function() {
         if(Ext.util.Cookies.get("ced_logged") !== null){
-            if(Ext.ComponentQuery.query('sede_list').length == 0)
-                Ext.ComponentQuery.query('viewport panel[name=card]')[0].add({xtype: 'sede_list'});
+            if(Ext.ComponentQuery.query('accessorio_list').length == 0)
+                Ext.ComponentQuery.query('viewport panel[name=card]')[0].add({xtype: 'accessorio_list'});
 
-            Ext.ComponentQuery.query('viewport panel[name=card]')[0].getLayout().setActiveItem('sede_list_id');
+            Ext.ComponentQuery.query('viewport panel[name=card]')[0].getLayout().setActiveItem('accessorio_list_id');
 
             //
 
             setTimeout(function(){
-                Ext.StoreManager.lookup("S_sede").loadPage(1);
+                Ext.StoreManager.lookup("S_accessorio").loadPage(1);
             }, 250);
-
         }
         else
             this.redirectTo('login');
@@ -56,22 +55,20 @@ Ext.define('CL.controller.C_sede', {
 
     // ON CREATE
     onCreate: function(btn){
-        Ext.widget("sede_form",{
+        Ext.widget("accessorio_form",{
             animateTarget: btn.el,
-            title: '<b>Crea nuova sede</b>',
+            title: '<b>Crea nuova accessorio</b>',
             action: 'create'
         });
     },
 
     // ON EDIT
     onEdit: function(targetEl,rec){
-        var win = Ext.widget("sede_form",{
+        var win = Ext.widget("accessorio_form",{
             animateTarget: targetEl,
-            title: '<b>Modifica sede</b>',
+            title: '<b>Modifica accessorio</b>',
             action: 'edit'
         });
-
-        Ext.ComponentQuery.query("sede_form textfield[name=cod_sede]")[0].setReadOnly(true);
 
         win.down("form").loadRecord(rec);
     },
@@ -86,7 +83,7 @@ Ext.define('CL.controller.C_sede', {
         if(form.isValid()){
             // CREAZIONE
             if(win.action == "create"){
-                record = Ext.create('CL.model.M_sede', values);
+                record = Ext.create('CL.model.M_accessorio', values);
             }
             // MODIFICA
             else{
@@ -102,7 +99,7 @@ Ext.define('CL.controller.C_sede', {
                     Ext.getBody().unmask();
                     Ext.Msg.alert("Successo!","Il salvataggio è stata correttamente effettuato!");
                     win.close();
-                    Ext.StoreManager.lookup("S_sede").loadPage(1);
+                    Ext.StoreManager.lookup("S_accessorio").loadPage(1);
                 }
             });
         }
@@ -110,7 +107,7 @@ Ext.define('CL.controller.C_sede', {
 
     // ON DESTROY
     onDestroy: function(rec){
-        Ext.Msg.confirm("Attenzione","Sei sicuro di voler eliminare la sede <strong>"+rec.get("descrizione")+"</strong>",function(btnId){
+        Ext.Msg.confirm("Attenzione","Sei sicuro di voler eliminare la accessorio <strong>"+rec.get("modello")+"</strong>",function(btnId){
             if(btnId == "yes"){
                 rec.erase();
             }

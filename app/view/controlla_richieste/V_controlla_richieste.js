@@ -84,12 +84,12 @@ Ext.define('CL.view.controlla_richieste.V_controlla_richieste', {
                         },
                         columns:[
                             {
-                                dataIndex: "ric_numero",
+                                dataIndex: "numero",
                                 text: '# Richiesta',
                                 flex:1
                             },
                             {
-                                dataIndex: "ric_stato",
+                                dataIndex: "stato",
                                 text: 'Stato',
                                 flex:1,
                                 renderer: function(value){
@@ -100,7 +100,7 @@ Ext.define('CL.view.controlla_richieste.V_controlla_richieste', {
                                 xtype: 'datecolumn',
                                 format:'d/m/Y',
                                 text: 'Data presentazione richiesta',
-                                dataIndex: 'ric_data_presentazione',
+                                dataIndex: 'data_presentazione',
                                 flex: 1
                             },
                             {

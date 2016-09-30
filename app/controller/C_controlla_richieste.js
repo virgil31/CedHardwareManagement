@@ -36,9 +36,11 @@ Ext.define('CL.controller.C_controlla_richieste', {
 
         var store = Ext.StoreManager.lookup("S_richiesta");
 
-        store.proxy.extraParams.ric_id_richiedente = Ext.util.Cookies.get("richiedente_id");
+        store.proxy.extraParams.id_richiedente = Ext.util.Cookies.get("richiedente_id");
 
-        store.loadPage(1);
+        setTimeout(function(){
+            store.loadPage(1);
+        }, 250);        
 
     },
 
@@ -49,9 +51,8 @@ Ext.define('CL.controller.C_controlla_richieste', {
 
         setTimeout(function(){
             var form = Ext.ComponentQuery.query("form_richiesta form")[0];
-            //form.reset(true);
-            Ext.ComponentQuery.query("form_richiesta form combobox[name=ric_stato]")[0].enable();
-            Ext.ComponentQuery.query("form_richiesta form combobox[name=ric_stato]")[0].show();
+            Ext.ComponentQuery.query("form_richiesta form combobox[name=stato]")[0].enable();
+            Ext.ComponentQuery.query("form_richiesta form combobox[name=stato]")[0].show();
             form.loadRecord(record);
         }, 250);
     }

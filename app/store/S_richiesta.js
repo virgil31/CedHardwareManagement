@@ -9,6 +9,6 @@ Ext.define('CL.store.S_richiesta',{
     pageSize: 50,
 
     remoteSort: true,
-    sorters: { property: 'ric_numero', direction : 'DESC' }
+    sorters: { property: 'numero', direction : 'DESC' }
 
 });

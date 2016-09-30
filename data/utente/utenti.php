@@ -33,25 +33,46 @@ else if($_SERVER['REQUEST_METHOD'] === "DELETE"){
 
 // LISTA
 function lista($pdo){
-    $sort = (isset($_GET['sort']) ? $_GET['sort'] : $_GET['sort']);
-	$tmp = json_decode($sort,true);
-	$pro = $tmp[0]['property'];
-	$dir = $tmp[0]['direction'];
+    $sort = $_GET['sort'];
+	$json = json_decode($sort,true);
+	$property = $json[0]['property'];
+	$direction = $json[0]['direction'];
 	$limit = $_GET['limit'];
 	$start = $_GET['start'];
 	$total = 0;
 
-    // LIST FULL
-    $statement = $pdo->prepare("
-        SELECT ute_id, ute_nome, ute_cognome,CONCAT(ute_cognome,' ',ute_nome) as utente_name, ute_funzionario, COUNT(*) OVER() as total
+    $query = "";
+    $where = "";
+    $parametri = array();
+
+    // SELECT / FROM
+    $query .= "
+        SELECT ute_id as id_utente, ute_nome as nome, ute_cognome as cognome,CONCAT(ute_cognome,' ',ute_nome) as utente_name,
+            ute_funzionario as funzionario, COUNT(*) OVER() as total
         FROM utenti
-        ORDER BY $pro $dir
-    ");
+    ";
+    // WHERE
+    if(isset($_GET["nome"])) {
+        $where .= " AND ute_nome = :nome";
+        $parametri['nome'] = $_GET["nome"];
+    }
+    if(isset($_GET["cognome"])) {
+        $where .= " AND ute_cognome = :cognome";
+        $parametri['cognome'] = $_GET["cognome"];
+    }    
+    if(strlen($where) > 0) {
+        $where = " WHERE " . substr($where, 5);
+        $query .= $where;
+    }
+    // ORDER
+    $query .= " ORDER BY $property $direction ";
+    if(!isset($_GET["flag_full"])) {
+        $query .= " LIMIT $limit OFFSET $start ";
+    }
 
-
-	$statement->execute();
-	$result = $statement->fetchAll(PDO::FETCH_OBJ);
-
+    $statement = $pdo->prepare($query);
+    $statement->execute($parametri);
+    $result = $statement->fetchAll(PDO::FETCH_OBJ);
 
 	if(count($result) != 0)
 		$total = $result[0]->total;

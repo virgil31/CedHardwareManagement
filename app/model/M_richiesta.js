@@ -1,18 +1,17 @@
 Ext.define('CL.model.M_richiesta', {
     extend: 'Ext.data.Model',
 
-    //idProperty: "ric_id",
 
     fields: [
-        {name: 'ric_id',                    type: 'string'},
+        {name: 'id_richiesta',              type: 'string'},
 
-        {name: 'ric_cod_sede',              type: 'string'},
-        {name: 'ric_destinazione',          type: 'string'},
-        {name: 'ric_id_responsabile',       type: 'string'},
-        {name: 'ric_id_richiedente',        type: 'string'},
-        {name: 'ric_motivazione',           type: 'string'},
-        {name: 'ric_oggetto',               type: 'string'},
-        {name: 'ric_data_presentazione',    type: 'date', dateReadFormat: 'Y-m-d',  dateWriteFormat: 'd-m-Y'}
+        {name: 'cod_sede',              type: 'string'},
+        {name: 'destinazione',          type: 'string'},
+        {name: 'id_responsabile',       type: 'string'},
+        {name: 'id_richiedente',        type: 'string'},
+        {name: 'motivazione',           type: 'string'},
+        {name: 'oggetto',               type: 'string'},
+        {name: 'data_presentazione',    type: 'date', dateReadFormat: 'Y-m-d',  dateWriteFormat: 'd-m-Y'}
     ],
 
     proxy: {

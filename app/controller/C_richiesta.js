@@ -31,26 +31,29 @@ Ext.define('CL.controller.C_richiesta', {
     /////////////////////////////////////////////////
 
     //ROUTES
-
     showView: function() {
         if(Ext.util.Cookies.get("richiedente_id") != null && Ext.util.Cookies.get("richiedente_nome") != null && Ext.util.Cookies.get("richiedente_cognome") != null) {
-            if(Ext.ComponentQuery.query('form_richiesta').length == 0)
-                Ext.ComponentQuery.query('viewport panel[name=card]')[0].add({xtype: 'form_richiesta'});
+            /*if(Ext.ComponentQuery.query('form_richiesta').length == 0)
+                Ext.ComponentQuery.query('viewport panel[name=card]')[0].add({xtype: 'form_richiesta'});*/
+
+            if(Ext.ComponentQuery.query('form_richiesta').length != 0)
+                Ext.ComponentQuery.query('form_richiesta')[0].destroy();
+            Ext.ComponentQuery.query('viewport panel[name=card]')[0].add({xtype: 'form_richiesta'});
 
             Ext.ComponentQuery.query('viewport panel[name=card]')[0].getLayout().setActiveItem('form_richiesta_id');
 
             //
 
             //mi assicuro che il form sia pulito, e dato che ha il "trackResetOnLoad" devo farlo manualmente
-            Ext.ComponentQuery.query("form_richiesta form")[0].getForm().getFields().each(function(f){
+            /*Ext.ComponentQuery.query("form_richiesta form")[0].getForm().getFields().each(function(f){
                 f.originalValue=undefined;
-            });
+            });*/
 
             //carico gli store usati nel form adeguatamente
             Ext.StoreManager.lookup("S_sede").load({params:{flag_full: true}});
             Ext.StoreManager.lookup("S_utente").load({params:{flag_full: true}});
 
-            Ext.ComponentQuery.query("form_richiesta textfield[name=ric_id_richiedente]")[0].setValue(Ext.util.Cookies.get("richiedente_id"));
+            Ext.ComponentQuery.query("form_richiesta textfield[name=id_richiedente]")[0].setValue(Ext.util.Cookies.get("richiedente_id"));
             Ext.ComponentQuery.query("form_richiesta textfield[name=cognome_nome_richiedente]")[0].setValue(Ext.util.Cookies.get("richiedente_cognome")+" "+Ext.util.Cookies.get("richiedente_nome"));
         }
         else {
@@ -79,7 +82,7 @@ Ext.define('CL.controller.C_richiesta', {
             else{
                 //controllo se ci sono stati reali cambiamenti
                 if(form.isDirty()){
-                    var stato = record_richiesta.get("ric_stato");
+                    var stato = record_richiesta.get("stato");
                     //controllo che sia attualmente modificabile (check dello stato)
                     if(COSTANTI.stati[stato].puo_modificare){
                         Ext.getBody().mask("Salvataggio richiesta in corso...");

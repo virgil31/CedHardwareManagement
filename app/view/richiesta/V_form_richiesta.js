@@ -78,7 +78,7 @@ Ext.define('CL.view.richiesta.V_form_richiesta', {
                         items: [
                             {
                                 xtype: 'textfield',                             // HIDDEN
-                                name: 'ric_id',
+                                name: 'id_richiesta',
                                 fieldLabel: 'ID (hidden)',
                                 readOnly: true,
                                 hidden: true
@@ -86,7 +86,7 @@ Ext.define('CL.view.richiesta.V_form_richiesta', {
 
                             {
                                 xtype: 'textfield',                             // HIDDEN
-                                name: 'ric_id_richiedente',
+                                name: 'id_richiedente',
                                 fieldLabel: 'Richiedente ID (hidden)',
                                 readOnly: true,
                                 hidden: true
@@ -99,7 +99,7 @@ Ext.define('CL.view.richiesta.V_form_richiesta', {
                             },
                             {
                                 xtype: 'combobox',
-                                name: 'ric_stato',
+                                name: 'stato',
                                 fieldLabel: 'Stato',
                                 store: "S_stato",
                                 displayField: 'value',
@@ -111,7 +111,7 @@ Ext.define('CL.view.richiesta.V_form_richiesta', {
                             {xtype: 'menuseparator'},
                             {
                                 xtype: 'combobox',
-                                name: 'ric_id_responsabile',
+                                name: 'id_responsabile',
                                 allowBlank: false,
                                 fieldLabel: 'Funzionario responsabile',
                                 store: "S_utente",
@@ -119,11 +119,11 @@ Ext.define('CL.view.richiesta.V_form_richiesta', {
                                 anyMatch: true,
                                 forceSelection: true,
                                 displayField: 'utente_name',
-                                valueField: 'ute_id'
+                                valueField: 'id_utente'
                             },
                             {
                                 xtype: 'textareafield',
-                                name: 'ric_oggetto',
+                                name: 'oggetto',
                                 fieldLabel: 'Oggetto della Richiesta',
                                 allowBlank: false,
                                 emptyText: "Stampante a Colori per l'utilizzo d'ufficio"
@@ -131,7 +131,7 @@ Ext.define('CL.view.richiesta.V_form_richiesta', {
 
                             {
                                 xtype: 'combobox',
-                                name: 'ric_cod_sede',
+                                name: 'cod_sede',
                                 emptyText: 'Sede di destinazione delle componenti richieste',
                                 allowBlank: false,
                                 fieldLabel: 'Sede di destinazione',
@@ -139,19 +139,19 @@ Ext.define('CL.view.richiesta.V_form_richiesta', {
                                 queryMode: 'local',
                                 anyMatch: true,
                                 forceSelection: true,
-                                displayField: 'sed_descrizione',
-                                valueField: 'sed_cod_sede'
+                                displayField: 'descrizione',
+                                valueField: 'cod_sede'
                             },
                             {
                                 xtype: 'textareafield',
-                                name: 'ric_destinazione',
+                                name: 'destinazione',
                                 fieldLabel: 'Destinazione',
                                 allowBlank: false,
                                 emptyText: 'Ufficio Tecnico del secondo piano'
                             },
                             {
                                 xtype: 'textareafield',
-                                name: 'ric_motivazione',
+                                name: 'motivazione',
                                 fieldLabel: 'Eventuali motivazioni particolari',
                                 //allowBlank: false,
                                 emptyText: 'Necessità di stampare cartine e materiale a colori'

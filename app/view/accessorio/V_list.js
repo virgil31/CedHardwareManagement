@@ -1,8 +1,8 @@
-Ext.define('CL.view.sede.V_list', {
+Ext.define('CL.view.accessorio.V_list', {
     extend: 'Ext.panel.Panel',
-    xtype: 'sede_list',
-    itemId: 'sede_list_id',
-    alias: 'widget.sede_list',
+    xtype: 'accessorio_list',
+    itemId: 'accessorio_list_id',
+    alias: 'widget.accessorio_list',
 
     bodyStyle: 'backgroundColor: transparent',  //per rendere il corpo invisibile
 
@@ -21,9 +21,9 @@ Ext.define('CL.view.sede.V_list', {
             {
                 xtype: 'grid',
                 border: true,
-                store: 'S_sede',
+                store: 'S_accessorio',
                 height: '98%',
-                width: 500,
+                width: "100%",
                 autoscroll: true,
                 overflowX: 'hidden',
                 overflowY: 'auto',
@@ -32,7 +32,7 @@ Ext.define('CL.view.sede.V_list', {
 
                 dockedItems: [{
                     xtype: 'pagingtoolbar',
-                    store: 'S_sede', // same store GridPanel is using
+                    store: 'S_accessorio', // same store GridPanel is using
                     dock: 'bottom',
                     displayInfo: true
                 }],
@@ -44,12 +44,12 @@ Ext.define('CL.view.sede.V_list', {
                     items: [
                         {
                             xtype: 'label',
-                            html: '<b>Lista Sedi</b>',
+                            html: '<b>Lista Accessori</b>',
                             style: 'color: #157fcc;font-size: 15px;font-weight: 300;font-family: helvetica, arial, verdana, sans-serif;line-height: 16px'
                         },
                         {
                             xtype: 'button',
-                            tooltip: 'Crea nuova sede',
+                            tooltip: 'Crea nuovo accessorio',
                             icon: 'resources/images/icon_plus.gif',
                             action: 'on_create'
                         }
@@ -58,19 +58,34 @@ Ext.define('CL.view.sede.V_list', {
 
                 listeners: {
                     itemdblclick: function( grid, record, item, index, e, eOpts ){
-                        CL.app.getController("C_sede").onEdit(item,record);
+                        CL.app.getController("C_accessorio").onEdit(item,record);
                     }
                 },
 
                 columns: [
                     {
-                        text: 'Codice',
-                        dataIndex: 'cod_sede',
-                        width: 65
+                        text: 'Tipo',
+                        dataIndex: 'tipo',
+                        flex: 1
                     },
                     {
-                        text: 'Descrizione',
-                        dataIndex: 'descrizione',
+                        text: 'Marca',
+                        dataIndex: 'marca',
+                        flex: 1
+                    },
+                    {
+                        text: 'Modello',
+                        dataIndex: 'modello',
+                        flex: 1
+                    },
+                    {
+                        text: 'Caratteristiche',
+                        dataIndex: 'caratteristiche',
+                        flex: 1
+                    },
+                    {
+                        text: 'Quantita',
+                        dataIndex: 'quantita',
                         flex: 1
                     },
                     {
@@ -92,7 +107,7 @@ Ext.define('CL.view.sede.V_list', {
                                 tooltip: 'Modifica',
                                 handler: function(grid, rowIndex, colIndex) {
                                     var rec = grid.getStore().getAt(rowIndex);
-                                    CL.app.getController("C_sede").onEdit(this.el,rec);
+                                    CL.app.getController("C_accessorio").onEdit(this.el,rec);
                                 }
                             },
                             {
@@ -100,7 +115,7 @@ Ext.define('CL.view.sede.V_list', {
                                 tooltip: 'Elimina',
                                 handler: function(grid, rowIndex, colIndex) {
                                     var rec = grid.getStore().getAt(rowIndex);
-                                    CL.app.getController("C_sede").onDestroy(rec);
+                                    CL.app.getController("C_accessorio").onDestroy(rec);
                                 }
                             }
                         ]

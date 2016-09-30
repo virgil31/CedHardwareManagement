@@ -24,21 +24,17 @@ Ext.define('CL.view.navbar.V_navbar', {
                     }
                 },
                 {
-                    text:'Vista ad albero',
-                    icon: 'resources/images/icon_tree.png'
-                },
-                {
-                    text: 'Cerca materiale per utente',
-                    icon: "resources/images/icon_utente.png"
-                },
-                {
-                    text: 'Cerca info seriale',
-                    icon: "resources/images/icon_serial.png"
-                },
-                {
                     text: 'Tabelle',
                     icon: "resources/images/icon_list.png",
                     menu:[
+                        {
+                            text: '<b>Sedi</b>',
+                            route: 'sedi'
+                        },
+                        {
+                            text: '<b>Accessori</b>',
+                            route: 'accessori'
+                        },
                         {
                             text: 'Tipologie HW',
                             route: 'todo'
@@ -64,10 +60,6 @@ Ext.define('CL.view.navbar.V_navbar', {
                             route: 'todo'
                         },
                         {
-                            text: '<b>Sedi</b>',
-                            route: 'sedi'
-                        },
-                        {
                             text: 'Uffici',
                             route: 'todo'
                         },
@@ -76,6 +68,18 @@ Ext.define('CL.view.navbar.V_navbar', {
                             route: 'todo'
                         }
                     ]
+                },
+                {
+                    text:'Vista ad albero',
+                    icon: 'resources/images/icon_tree.png'
+                },
+                {
+                    text: 'Cerca materiale per utente',
+                    icon: "resources/images/icon_utente.png"
+                },
+                {
+                    text: 'Cerca info seriale',
+                    icon: "resources/images/icon_serial.png"
                 }
     		]
         }
