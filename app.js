@@ -146,6 +146,7 @@ Ext.application({
 
     applyOverrides: function () {
 
+        // setto il locale
         Ext.Loader.loadScript({
                 url: "ext/classic/locale/overrides/it/ext-locale-it.js",
                 scope: this
@@ -153,10 +154,9 @@ Ext.application({
         );
 
         Ext.override(Ext.form.field.Text,{
-            msgTarget: 'side',
-            blankText: 'Questo campo è obbligatorio'
+            msgTarget: 'side'                           // modifico la posizione dell'icona della validazione dei campi
         });
-        Ext.override(Ext.form.field.Number,{
+        Ext.override(Ext.form.field.Number,{            // modifico la posizione dell'icona della validazione dei campi
             msgTarget: 'side'
         });
 

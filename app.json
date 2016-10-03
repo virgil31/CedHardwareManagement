@@ -463,7 +463,8 @@
             "path": "resources",
             "output": "shared"
         },
-        "data"
+        "data",
+        "ext/classic/locale/overrides/it/ext-locale-it.js"
     ],
 
     /**
