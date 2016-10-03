@@ -36,6 +36,10 @@ Ext.define('CL.view.navbar.V_navbar', {
                             route: 'accessori'
                         },
                         {
+                            text: '<b>Acquisti</b>',
+                            route: 'acquisti'
+                        },
+                        {
                             text: 'Tipologie HW',
                             route: 'todo'
                         },

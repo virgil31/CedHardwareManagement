@@ -3,7 +3,7 @@ Ext.define('CL.model.M_richiesta', {
 
 
     fields: [
-        {name: 'id_richiesta',              type: 'string'},
+        {name: 'id_richiesta',          type: 'string'},
 
         {name: 'cod_sede',              type: 'string'},
         {name: 'destinazione',          type: 'string'},

@@ -1,8 +1,8 @@
-Ext.define('CL.view.sede.V_form', {
+Ext.define('CL.view.acquisto.V_acquisto_form', {
     extend: 'Ext.window.Window',
-    xtype: 'sede_form',
-    itemId: 'sede_form_id',
-    alias: 'widget.sede_form',
+    xtype: 'acquisto_form',
+    itemId: 'acquisto_form_id',
+    alias: 'widget.acquisto_form',
 
     autoShow: true,
     modal: true,
@@ -19,6 +19,8 @@ Ext.define('CL.view.sede.V_form', {
 
         var this_view = this;
 
+        Ext.StoreManager.lookup("S_marca").load();
+
         this_view.items = [
             {
                 xtype: 'form',
@@ -28,21 +30,28 @@ Ext.define('CL.view.sede.V_form', {
                 items: [
                     {
                         xtype: 'textfield',
-                        fieldLabel: 'Codice',
-                        name: 'cod_sede',
-                        allowBlank: false,
-                        minLength: 3,
-                        maxLength: 3,
-                        listeners: {
-                            change: function(){
-                                this.setValue(this.getValue().toUpperCase());
-                            }
-                        }
+                        name: 'num_fattura',
+                        fieldLabel: '# Fattura'
+                    },
+                    {
+                        xtype: 'datefield',
+                        name: 'data_fattura',
+                        fieldLabel: 'Data Fattura'
                     },
                     {
                         xtype: 'textfield',
-                        name: 'descrizione',
-                        fieldLabel: 'Descrizione',
+                        name: 'num_ddt',
+                        fieldLabel: '# DDT'
+                    },
+                    {
+                        xtype: 'datefield',
+                        name: 'data_ddt',
+                        fieldLabel: 'Data DDT'
+                    },
+                    {
+                        xtype: 'textfield',
+                        name: 'fornitore',
+                        fieldLabel: 'Fornitore',
                         allowBlank: false
                     },
                     {

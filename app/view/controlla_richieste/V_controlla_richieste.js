@@ -98,7 +98,6 @@ Ext.define('CL.view.controlla_richieste.V_controlla_richieste', {
                             },
                             {
                                 xtype: 'datecolumn',
-                                format:'d/m/Y',
                                 text: 'Data presentazione richiesta',
                                 dataIndex: 'data_presentazione',
                                 flex: 1

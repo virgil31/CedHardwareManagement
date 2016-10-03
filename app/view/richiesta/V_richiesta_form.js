@@ -1,4 +1,4 @@
-Ext.define('CL.view.richiesta.V_form_richiesta', {
+Ext.define('CL.view.richiesta.V_richiesta_form', {
     extend: 'Ext.panel.Panel',
     xtype: 'form_richiesta',
     itemId: 'form_richiesta_id',

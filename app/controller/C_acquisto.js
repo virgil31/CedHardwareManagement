@@ -1,21 +1,19 @@
-Ext.define('CL.controller.C_accessorio', {
+Ext.define('CL.controller.C_acquisto', {
     extend: 'Ext.app.Controller',
 
     routes: {
-        'accessori' : 'showView'
+        'acquisti' : 'showView'
     },
 
     stores: [
-        'S_accessorio',
-        'S_marca'
+        'S_acquisto'
     ],
     models: [
-        'M_accessorio',
-        'M_marca'
+        'M_acquisto'
     ],
     views: [
-        'accessorio.V_accessorio_list',
-        'accessorio.V_accessorio_form'
+        'acquisto.V_acquisto_list',
+        'acquisto.V_acquisto_form'
     ],
 
     /////////////////////////////////////////////////
@@ -23,12 +21,12 @@ Ext.define('CL.controller.C_accessorio', {
         this.control({
 
             // ON CREATE
-            'accessorio_list button[action=on_create]':{
+            'acquisto_list button[action=on_create]':{
                 click: this.onCreate
             },
 
             // SAVE FORM
-            'accessorio_form button[action=save]':{
+            'acquisto_form button[action=save]':{
                 click: this.saveForm
             }
 
@@ -40,15 +38,15 @@ Ext.define('CL.controller.C_accessorio', {
     //ROUTES
     showView: function() {
         if(Ext.util.Cookies.get("ced_logged") !== null){
-            if(Ext.ComponentQuery.query('accessorio_list').length == 0)
-                Ext.ComponentQuery.query('viewport panel[name=card]')[0].add({xtype: 'accessorio_list'});
+            if(Ext.ComponentQuery.query('acquisto_list').length == 0)
+                Ext.ComponentQuery.query('viewport panel[name=card]')[0].add({xtype: 'acquisto_list'});
 
-            Ext.ComponentQuery.query('viewport panel[name=card]')[0].getLayout().setActiveItem('accessorio_list_id');
+            Ext.ComponentQuery.query('viewport panel[name=card]')[0].getLayout().setActiveItem('acquisto_list_id');
 
             //
 
             setTimeout(function(){
-                Ext.StoreManager.lookup("S_accessorio").loadPage(1);
+                Ext.StoreManager.lookup("S_acquisto").loadPage(1);
             }, 250);
         }
         else
@@ -57,18 +55,18 @@ Ext.define('CL.controller.C_accessorio', {
 
     // ON CREATE
     onCreate: function(btn){
-        Ext.widget("accessorio_form",{
+        Ext.widget("acquisto_form",{
             animateTarget: btn.el,
-            title: '<b>Crea nuova accessorio</b>',
+            title: '<b>Crea nuova acquisto</b>',
             action: 'create'
         });
     },
 
     // ON EDIT
     onEdit: function(targetEl,rec){
-        var win = Ext.widget("accessorio_form",{
+        var win = Ext.widget("acquisto_form",{
             animateTarget: targetEl,
-            title: '<b>Modifica accessorio</b>',
+            title: '<b>Modifica acquisto</b>',
             action: 'edit'
         });
 
@@ -85,7 +83,7 @@ Ext.define('CL.controller.C_accessorio', {
         if(form.isValid()){
             // CREAZIONE
             if(win.action == "create"){
-                record = Ext.create('CL.model.M_accessorio', values);
+                record = Ext.create('CL.model.M_acquisto', values);
             }
             // MODIFICA
             else{
@@ -101,7 +99,7 @@ Ext.define('CL.controller.C_accessorio', {
                     Ext.getBody().unmask();
                     Ext.Msg.alert("Successo!","Il salvataggio è stata correttamente effettuato!");
                     win.close();
-                    Ext.StoreManager.lookup("S_accessorio").loadPage(1);
+                    Ext.StoreManager.lookup("S_acquisto").loadPage(1);
                 }
             });
         }
@@ -109,7 +107,7 @@ Ext.define('CL.controller.C_accessorio', {
 
     // ON DESTROY
     onDestroy: function(rec){
-        Ext.Msg.confirm("Attenzione","Sei sicuro di voler eliminare l'accessorio <strong>"+rec.get("modello")+"</strong>",function(btnId){
+        Ext.Msg.confirm("Attenzione","Sei sicuro di voler eliminare l'acquisto?",function(btnId){
             if(btnId == "yes"){
                 rec.erase();
             }

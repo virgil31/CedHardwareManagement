@@ -14,7 +14,7 @@ Ext.define('CL.controller.C_richiesta', {
         'CL.model.M_stato'
     ],
     views: [
-        'richiesta.V_form_richiesta'
+        'richiesta.V_richiesta_form'
     ],
 
     /////////////////////////////////////////////////

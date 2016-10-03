@@ -17,7 +17,7 @@ Ext.define('CL.view.home.V_home', {
 
         setTimeout(function(){
             Ext.StoreManager.lookup("S_richiesta").loadPage(1);
-        }, 250);                
+        }, 250);
 
         this_view.items = [
             {
@@ -26,7 +26,6 @@ Ext.define('CL.view.home.V_home', {
                 store: "S_richiesta",
                 height: '98%',
                 width: '100%',
-
                 disableSelection: true,
 
                 dockedItems: [{
@@ -74,7 +73,6 @@ Ext.define('CL.view.home.V_home', {
                             store: 'S_stato',
                             valueField: 'key',
                             displayField: 'value',
-                            //forceSelection: true,
                             queryMode:'local',
                             anyMatch: true,
                             tpl: Ext.create('Ext.XTemplate',
@@ -174,26 +172,10 @@ Ext.define('CL.view.home.V_home', {
                     },
                     {
                         xtype: 'datecolumn',
-                        format:'d/m/Y',
                         text: 'Data presentazione richiesta',
                         dataIndex: 'data_presentazione',
                         flex: 1
                     }
-                    /*
-                    {
-                        xtype: 'actioncolumn',
-                        width: 60,
-                        items: [
-                            {
-                                iconCls: 'x-fa fa-search',
-                                tooltip: 'Scheda Richiesta',
-                                handler: function(grid, rowIndex, colIndex) {
-                                    var rec = grid.getStore().getAt(rowIndex);
-                                    CL.app.getController("C_richiesta").onEdit(this.el,rec);
-                                }
-                            }
-                        ]
-                    }*/
                 ]
             }
         ];

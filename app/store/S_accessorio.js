@@ -9,5 +9,5 @@ Ext.define('CL.store.S_accessorio',{
     pageSize: 50,
 
     remoteSort: true,
-    sorters: { property: 'acc_tipo', direction : 'ASC' }
+    sorters: { property: 'tipo', direction : 'ASC' }
 });

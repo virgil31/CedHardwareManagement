@@ -12,8 +12,8 @@ Ext.define('CL.controller.C_sede', {
         'M_sede'
     ],
     views: [
-        'sede.V_list',
-        'sede.V_form'
+        'sede.V_sede_list',
+        'sede.V_sede_form'
     ],
 
     /////////////////////////////////////////////////

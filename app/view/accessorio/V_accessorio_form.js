@@ -1,4 +1,4 @@
-Ext.define('CL.view.accessorio.V_form', {
+Ext.define('CL.view.accessorio.V_accessorio_form', {
     extend: 'Ext.window.Window',
     xtype: 'accessorio_form',
     itemId: 'accessorio_form_id',
@@ -8,19 +8,13 @@ Ext.define('CL.view.accessorio.V_form', {
     modal: true,
     constrain: true,
     resizable: false,
-
     bodyStyle: 'backgroundColor: transparent',
-
     padding: 10,
-
     width: 400,
 
     initComponent: function() {
-
         var this_view = this;
-
         Ext.StoreManager.lookup("S_marca").load();
-
         this_view.items = [
             {
                 xtype: 'form',
@@ -53,7 +47,7 @@ Ext.define('CL.view.accessorio.V_form', {
                         allowBlank: false
                     },
                     {
-                        xtype: 'textfield',
+                        xtype: 'textareafield',
                         name: 'caratteristiche',
                         fieldLabel: 'Caratteristiche',
                         allowBlank: false
@@ -82,9 +76,5 @@ Ext.define('CL.view.accessorio.V_form', {
         ];
 
         this.callParent(arguments);
-
     }
-
-
-
 });

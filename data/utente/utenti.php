@@ -59,7 +59,7 @@ function lista($pdo){
     if(isset($_GET["cognome"])) {
         $where .= " AND ute_cognome = :cognome";
         $parametri['cognome'] = $_GET["cognome"];
-    }    
+    }
     if(strlen($where) > 0) {
         $where = " WHERE " . substr($where, 5);
         $query .= $where;

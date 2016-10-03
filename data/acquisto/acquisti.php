@@ -47,22 +47,30 @@ function lista($pdo){
 
     // SELECT / FROM
     $query .= "
-        SELECT acc_id as id_accessorio,acc_tipo as tipo,acc_marca as marca,acc_modello as modello,acc_caratteristiche as caratteristiche,
-            acc_note as note, acc_quantita as quantita, COUNT(*) OVER() as total
-        FROM accessori
+        SELECT acq_id as id_acquisto, acq_num_fattura as num_fattura, acq_data_fattura as data_fattura,
+            acq_num_ddt as num_ddt, acq_data_ddt as data_ddt, acq_fornitore as fornitore, acq_note as note, COUNT(*) OVER() as total
+        FROM acquisti
     ";
     // WHERE
-    if(isset($_GET["tipo"])) {
-        $where .= " AND acc_tipo = :tipo";
-        $parametri['tipo'] = $_GET["tipo"];
+    if(isset($_GET["num_fattura"])) {
+        $where .= " AND acq_num_fattura = :num_fattura";
+        $parametri['num_fattura'] = $_GET["num_fattura"];
     }
-    if(isset($_GET["marca"])) {
-        $where .= " AND acc_marca = :marca";
-        $parametri['marca'] = $_GET["marca"];
+    if(isset($_GET["data_fattura"])) {
+        $where .= " AND acq_data_fattura = :data_fattura";
+        $parametri['data_fattura'] = $_GET["data_fattura"];
     }
-    if(isset($_GET["modello"])) {
-        $where .= " AND acc_modello = :modello";
-        $parametri['modello'] = $_GET["modello"];
+    if(isset($_GET["num_ddt"])) {
+        $where .= " AND acq_num_ddt = :num_ddt";
+        $parametri['num_ddt'] = $_GET["num_ddt"];
+    }
+    if(isset($_GET["data_ddt"])) {
+        $where .= " AND acq_data_ddt = :data_ddt";
+        $parametri['data_ddt'] = $_GET["data_ddt"];
+    }
+    if(isset($_GET["fornitore"])) {
+        $where .= " AND acq_fornitore = :fornitore";
+        $parametri['fornitore'] = $_GET["fornitore"];
     }
     if(strlen($where) > 0) {
         $where = " WHERE " . substr($where, 5);
@@ -97,19 +105,19 @@ function crea($pdo){
         $pdo->beginTransaction();
 
     	$s = $pdo->prepare("
-    		INSERT INTO accessori(acc_id,acc_tipo,acc_marca,acc_modello,acc_caratteristiche,acc_quantita,acc_note)
-    		VALUES(:id_accessorio,:tipo,:marca,:modello,:caratteristiche,:quantita,:note)
+    		INSERT INTO acquisti(acq_id, acq_num_fattura, acq_data_fattura, acq_num_ddt, acq_data_ddt, acq_fornitore, acq_note)
+    		VALUES(:id_acquisto, :num_fattura, :data_fattura, :num_ddt, :data_ddt, :fornitore, :note)
     	");
 
         $id = getGUID();
 
     	$success = $s->execute(array(
-    		"id_accessorio" => $id,
-    		"tipo" => $data["tipo"],
-    		"marca" => $data["marca"],
-    		"modello" => $data["modello"],
-    		"caratteristiche" => $data["caratteristiche"],
-    		"quantita" => $data["quantita"],
+    		"id_acquisto" => $id,
+            "num_fattura" => $data["num_fattura"],
+            "data_fattura" => ($data["data_fattura"] == "") ? null : $data["data_fattura"],
+            "num_ddt" => $data["num_ddt"],
+            "data_ddt" => ($data["data_ddt"] == "") ? null : $data["data_ddt"],
+            "fornitore" => $data["fornitore"],
     		"note" => $data["note"]
     	));
 
@@ -119,11 +127,11 @@ function crea($pdo){
             "success" => $success,
     		"eventual_error" => $pdo->errorInfo(),
             "result" => array(
-                "id_accessorio" => $id
+                "id_acquisto" => $id
             )
         ));
 
-    } catch(PDOException $e){
+    }catch(PDOException $e){
         $pdo->rollBack();
 
     	echo json_encode(array(
@@ -142,25 +150,25 @@ function modifica($pdo){
     try{
 
         $pdo->beginTransaction();
-
     	$s = $pdo->prepare("
-    		UPDATE accessori
-    		SET acc_tipo = :tipo,
-                acc_marca = :marca,
-                acc_modello = :modello,
-                acc_caratteristiche = :caratteristiche,
-                acc_quantita = :quantita,
-                acc_note = :note
-    		WHERE acc_id = :id_accessorio
+    		UPDATE acquisti
+    		SET acq_id = :id_acquisto,
+                acq_num_fattura = :num_fattura,
+                acq_data_fattura = :data_fattura,
+                acq_num_ddt = :num_ddt,
+                acq_data_ddt = :data_ddt,
+                acq_fornitore = :fornitore,
+                acq_note = :note
+    		WHERE acq_id = :id_acquisto
     	");
 
         $success = $s->execute(array(
-    		"id_accessorio" => $data["id_accessorio"],
-    		"tipo" => $data["tipo"],
-    		"marca" => $data["marca"],
-    		"modello" => $data["modello"],
-    		"caratteristiche" => $data["caratteristiche"],
-    		"quantita" => $data["quantita"],
+    		"id_acquisto" => $data["id_acquisto"],
+    		"num_fattura" => $data["num_fattura"],
+    		"data_fattura" => ($data["data_fattura"] == "") ? null : $data["data_fattura"],
+    		"num_ddt" => $data["num_ddt"],
+    		"data_ddt" => ($data["data_ddt"] == "") ? null : $data["data_ddt"],
+    		"fornitore" => $data["fornitore"],
     		"note" => $data["note"]
     	));
 
@@ -186,17 +194,17 @@ function elimina($pdo){
     parse_str(file_get_contents("php://input"),$params);
     $data = json_decode($params['data'],true);
 
-    try {
+    try{
 
         $pdo->beginTransaction();
 
     	$s = $pdo->prepare("
-    		DELETE FROM accessori
-            WHERE acc_id = :id_accessorio
+    		DELETE FROM acquisti
+            WHERE acq_id = :id_acquisto
     	");
 
     	$success = $s->execute(array(
-    		"id_accessorio" => $data["id_accessorio"]
+    		"id_acquisto" => $data["id_acquisto"]
     	));
 
         $pdo->commit();
@@ -206,7 +214,7 @@ function elimina($pdo){
     		"eventual_error" => $pdo->errorInfo()
         ));
 
-    } catch(PDOException $e) {
+    }catch(PDOException $e){
         $pdo->rollBack();
 
         echo json_encode(array(
