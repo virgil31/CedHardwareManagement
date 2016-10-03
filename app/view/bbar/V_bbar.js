@@ -15,11 +15,11 @@ Ext.define('CL.view.bbar.V_bbar', {
         if(Ext.util.Cookies.get("ced_logged") !== null){
             this_view.items = [
                 '->',
-                {
+                /*{
         			html: '<marquee behavior="scroll" scrollamount="5" direction="left" width="900">'+
         				'Uno studente disse al suo Maestro: "Tu mi insegni a combattere e mi parli di pace, come puoi conciliare le due cose?".  Il Maestro rispose: "E\' meglio essere un guerriero in un giardino, che un giardiniere in guerra."'+
         				'</marquee>'
-        		},
+        		},*/
                 '->'
             ];
         }

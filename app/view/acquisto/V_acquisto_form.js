@@ -19,8 +19,6 @@ Ext.define('CL.view.acquisto.V_acquisto_form', {
 
         var this_view = this;
 
-        Ext.StoreManager.lookup("S_marca").load();
-
         this_view.items = [
             {
                 xtype: 'form',
@@ -36,7 +34,8 @@ Ext.define('CL.view.acquisto.V_acquisto_form', {
                     {
                         xtype: 'datefield',
                         name: 'data_fattura',
-                        fieldLabel: 'Data Fattura'
+                        fieldLabel: 'Data Fattura',
+                        submitFormat: 'm/d/Y'
                     },
                     {
                         xtype: 'textfield',
@@ -46,7 +45,8 @@ Ext.define('CL.view.acquisto.V_acquisto_form', {
                     {
                         xtype: 'datefield',
                         name: 'data_ddt',
-                        fieldLabel: 'Data DDT'
+                        fieldLabel: 'Data DDT',
+                        submitFormat: 'm/d/Y'
                     },
                     {
                         xtype: 'textfield',

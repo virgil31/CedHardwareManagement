@@ -153,10 +153,11 @@ Ext.application({
             }
         );
 
+        // modifico la posizione dell'icona della validazione dei campi
         Ext.override(Ext.form.field.Text,{
-            msgTarget: 'side'                           // modifico la posizione dell'icona della validazione dei campi
+            msgTarget: 'side'
         });
-        Ext.override(Ext.form.field.Number,{            // modifico la posizione dell'icona della validazione dei campi
+        Ext.override(Ext.form.field.Number,{
             msgTarget: 'side'
         });
 

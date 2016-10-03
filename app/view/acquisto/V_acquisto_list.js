@@ -72,6 +72,7 @@ Ext.define('CL.view.acquisto.V_acquisto_list', {
                         xtype: 'datecolumn',
                         text: 'Data Fattura',
                         dataIndex: 'data_fattura',
+                        format:'d/m/Y',
                         flex: 1
                     },
                     {
@@ -83,6 +84,7 @@ Ext.define('CL.view.acquisto.V_acquisto_list', {
                         xtype: 'datecolumn',
                         text: 'Data DDT',
                         dataIndex: 'data_ddt',
+                        format:'d/m/Y',
                         flex: 1
                     },
                     {
