@@ -65,8 +65,10 @@
      *      ]
      */
     "requires": [
-        "font-awesome"
+        "font-awesome",
+        "ext-locale"
     ],
+    "locale": "it",
 
     /**
      * Fashion build configuration properties.
@@ -463,8 +465,7 @@
             "path": "resources",
             "output": "shared"
         },
-        "data",
-        "ext/classic/locale/overrides/it/ext-locale-it.js"
+        "data"
     ],
 
     /**

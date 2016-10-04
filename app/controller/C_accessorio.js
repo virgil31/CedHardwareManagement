@@ -101,7 +101,7 @@ Ext.define('CL.controller.C_accessorio', {
                     Ext.getBody().unmask();
                     Ext.Msg.alert("Successo!","Il salvataggio è stata correttamente effettuato!");
                     win.close();
-                    Ext.StoreManager.lookup("S_accessorio").loadPage(1);
+                    Ext.StoreManager.lookup("S_accessorio").reload();
                 }
             });
         }
@@ -111,7 +111,11 @@ Ext.define('CL.controller.C_accessorio', {
     onDestroy: function(rec){
         Ext.Msg.confirm("Attenzione","Sei sicuro di voler eliminare l'accessorio <strong>"+rec.get("modello")+"</strong>",function(btnId){
             if(btnId == "yes"){
-                rec.erase();
+                rec.erase({
+                    failure: function(record, operation) {
+                        Ext.Msg.alert("Attenzione!","Errore interno. Si è pregati di riprovare più tardi.");
+                    }
+                });
             }
         });
     }

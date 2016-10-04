@@ -16,7 +16,8 @@ Ext.application({
         'C_controlla_richieste',
 
         'C_accessorio',
-        'C_acquisto'
+        'C_acquisto',
+        'C_utente_dominio'
     ],
 
     // vv ROUTING
@@ -146,19 +147,27 @@ Ext.application({
 
     applyOverrides: function () {
 
-        // setto il locale
-        Ext.Loader.loadScript({
-                url: "ext/classic/locale/overrides/it/ext-locale-it.js",
-                scope: this
+        Ext.override(Ext.form.field.Text, {
+            msgTarget: 'side',
+            listeners: {
+                blur: function() {
+                    if(this.xtype != "datefield" && this.xtype != "combobox") {
+                        var value = this.getValue();
+                        this.setValue(value.trim());
+                    }
+                }
             }
-        );
-
-        // modifico la posizione dell'icona della validazione dei campi
-        Ext.override(Ext.form.field.Text,{
+        });
+        Ext.override(Ext.form.field.Number, {
             msgTarget: 'side'
         });
-        Ext.override(Ext.form.field.Number,{
-            msgTarget: 'side'
+        Ext.override(Ext.form.field.TextArea, {
+            listeners: {
+                blur: function() {
+                    var value = this.getValue();
+                    this.setValue(value.trim());
+                }
+            }
         });
 
         /*

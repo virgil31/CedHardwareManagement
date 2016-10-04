@@ -1,8 +1,8 @@
-Ext.define('CL.view.acquisto.V_acquisto_list', {
+Ext.define('CL.view.utente.V_utente_list', {
     extend: 'Ext.panel.Panel',
-    xtype: 'acquisto_list',
-    itemId: 'acquisto_list_id',
-    alias: 'widget.acquisto_list',
+    xtype: 'utente_list',
+    itemId: 'utente_list_id',
+    alias: 'widget.utente_list',
 
     bodyStyle: 'backgroundColor: transparent',  //per rendere il corpo invisibile
 
@@ -18,7 +18,7 @@ Ext.define('CL.view.acquisto.V_acquisto_list', {
             {
                 xtype: 'grid',
                 border: true,
-                store: 'S_acquisto',
+                store: 'S_utente',
                 height: '98%',
                 width: "100%",
                 autoscroll: true,
@@ -29,7 +29,7 @@ Ext.define('CL.view.acquisto.V_acquisto_list', {
 
                 dockedItems: [{
                     xtype: 'pagingtoolbar',
-                    store: 'S_acquisto', // same store GridPanel is using
+                    store: 'S_utente', // same store GridPanel is using
                     dock: 'bottom',
                     displayInfo: true
                 }],
@@ -46,7 +46,7 @@ Ext.define('CL.view.acquisto.V_acquisto_list', {
                         },
                         {
                             xtype: 'button',
-                            tooltip: 'Crea nuovo acquisto',
+                            tooltip: 'Crea nuovo utente',
                             icon: 'resources/images/icon_plus.gif',
                             action: 'on_create'
                         }
@@ -55,37 +55,54 @@ Ext.define('CL.view.acquisto.V_acquisto_list', {
 
                 listeners: {
                     itemdblclick: function( grid, record, item, index, e, eOpts ){
-                        CL.app.getController("C_acquisto").onEdit(item,record);
+                        CL.app.getController("C_utente").onEdit(item,record);
                     }
                 },
 
                 columns: [
                     {
-                        text: '# Fattura',
-                        dataIndex: 'num_fattura',
+                        text: 'Cognome',
+                        dataIndex: 'cognome',
+                        flex: 0.7
+                    },
+                    {
+                        text: 'Nome',
+                        dataIndex: 'nome',
+                        flex: 0.7
+                    },
+                    {
+                        text: 'Email',
+                        dataIndex: 'email',
                         flex: 1
                     },
                     {
-                        xtype: 'datecolumn',
-                        text: 'Data Fattura',
-                        dataIndex: 'data_fattura',
+                        text: 'Amministrazione',
+                        dataIndex: 'amministrazione',
                         flex: 1
                     },
                     {
-                        text: '# DDT',
-                        dataIndex: 'num_ddt',
-                        flex: 1
+                        xtype: 'checkcolumn',
+                        text: 'Funzionario',
+                        dataIndex: 'funzionario',
+                        disabled: true,
+                        disabledCls : '',
+                        flex: 0.5
                     },
                     {
-                        xtype: 'datecolumn',
-                        text: 'Data DDT',
-                        dataIndex: 'data_ddt',
-                        flex: 1
+                        xtype: 'checkcolumn',
+                        text: 'Esterno',
+                        dataIndex: 'esterno',
+                        disabled: true,
+                        disabledCls : '',
+                        flex: 0.5
                     },
                     {
-                        text: 'Fornitore',
-                        dataIndex: 'fornitore',
-                        flex: 1
+                        xtype: 'checkcolumn',
+                        text: 'Inattivo',
+                        dataIndex: 'inattivo',
+                        disabled: true,
+                        disabledCls : '',
+                        flex: 0.5
                     },
                     {
                         dataIndex: 'note',
@@ -108,7 +125,7 @@ Ext.define('CL.view.acquisto.V_acquisto_list', {
                                 tooltip: 'Modifica',
                                 handler: function(grid, rowIndex, colIndex) {
                                     var rec = grid.getStore().getAt(rowIndex);
-                                    CL.app.getController("C_acquisto").onEdit(this.el,rec);
+                                    CL.app.getController("C_utente").onEdit(this.el,rec);
                                 }
                             },
                             {
@@ -116,7 +133,7 @@ Ext.define('CL.view.acquisto.V_acquisto_list', {
                                 tooltip: 'Elimina',
                                 handler: function(grid, rowIndex, colIndex) {
                                     var rec = grid.getStore().getAt(rowIndex);
-                                    CL.app.getController("C_acquisto").onDestroy(rec);
+                                    CL.app.getController("C_utente").onDestroy(rec);
                                 }
                             }
                         ]

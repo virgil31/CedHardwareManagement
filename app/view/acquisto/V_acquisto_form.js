@@ -8,17 +8,13 @@ Ext.define('CL.view.acquisto.V_acquisto_form', {
     modal: true,
     constrain: true,
     resizable: false,
-
     bodyStyle: 'backgroundColor: transparent',
-
     padding: 10,
-
     width: 400,
 
     initComponent: function() {
 
         var this_view = this;
-
         this_view.items = [
             {
                 xtype: 'form',
@@ -35,7 +31,7 @@ Ext.define('CL.view.acquisto.V_acquisto_form', {
                         xtype: 'datefield',
                         name: 'data_fattura',
                         fieldLabel: 'Data Fattura',
-                        submitFormat: 'm/d/Y'
+                        submitFormat: 'c'               //ISO 8601 date
                     },
                     {
                         xtype: 'textfield',
@@ -46,7 +42,7 @@ Ext.define('CL.view.acquisto.V_acquisto_form', {
                         xtype: 'datefield',
                         name: 'data_ddt',
                         fieldLabel: 'Data DDT',
-                        submitFormat: 'm/d/Y'
+                        submitFormat: 'c'               //ISO 8601 date
                     },
                     {
                         xtype: 'textfield',

@@ -4,7 +4,12 @@ Ext.define('CL.model.M_utente', {
         {name: 'id_utente',             type: 'string'},
         {name: 'nome',                  type: 'string'},
         {name: 'cognome',               type: 'string'},
-        {name: 'funzionario',           type: 'boolean'}
+        {name: 'funzionario',           type: 'boolean'},
+        {name: 'esterno',               type: 'boolean'},
+        {name: 'inattivo',              type: 'boolean'},
+        {name: 'email',                 type: 'string'},
+        {name: 'amministrazione',       type: 'string'},
+        {name: 'note',                  type: 'string'}
     ],
 
     proxy: {

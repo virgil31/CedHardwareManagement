@@ -3,9 +3,9 @@ Ext.define('CL.model.M_acquisto', {
     fields: [
         {name: 'id_acquisto',           type: 'string'},
         {name: 'num_fattura',           type: 'string'},
-        {name: 'data_fattura',          type: 'date',       serialize: null},
+        {name: 'data_fattura',          type: 'date',   serialize: null},
         {name: 'num_ddt',               type: 'string'},
-        {name: 'data_ddt',              type: 'date',       serialize: null},
+        {name: 'data_ddt',              type: 'date',   serialize: null},
         {name: 'fornitore',             type: 'string'},
         {name: 'note',                  type: 'string'}
     ],

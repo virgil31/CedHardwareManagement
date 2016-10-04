@@ -48,7 +48,7 @@ function lista($pdo){
     // SELECT / FROM
     $query .= "
         SELECT ute_id as id_utente, ute_nome as nome, ute_cognome as cognome,CONCAT(ute_cognome,' ',ute_nome) as utente_name,
-            ute_funzionario as funzionario, COUNT(*) OVER() as total
+            ute_funzionario as funzionario, ute_note as note, COUNT(*) OVER() as total
         FROM utenti
     ";
     // WHERE
@@ -65,7 +65,7 @@ function lista($pdo){
         $query .= $where;
     }
     // ORDER
-    $query .= " ORDER BY $property $direction ";
+    $query .= " ORDER BY $property $direction, nome ";
     if(!isset($_GET["flag_full"])) {
         $query .= " LIMIT $limit OFFSET $start ";
     }

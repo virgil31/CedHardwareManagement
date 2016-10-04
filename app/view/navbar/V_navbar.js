@@ -40,6 +40,10 @@ Ext.define('CL.view.navbar.V_navbar', {
                             route: 'acquisti'
                         },
                         {
+                            text: '<b>Utenti</b>',
+                            route: 'utenti'
+                        },
+                        {
                             text: 'Tipologie HW',
                             route: 'todo'
                         },
@@ -65,10 +69,6 @@ Ext.define('CL.view.navbar.V_navbar', {
                         },
                         {
                             text: 'Uffici',
-                            route: 'todo'
-                        },
-                        {
-                            text: 'Utenti',
                             route: 'todo'
                         }
                     ]

@@ -101,7 +101,7 @@ function lista($pdo){
 function crea($pdo){
     $data = json_decode($_POST['data'],true);
 
-    try{
+    try {
         $pdo->beginTransaction();
 
     	$s = $pdo->prepare("
@@ -114,9 +114,9 @@ function crea($pdo){
     	$success = $s->execute(array(
     		"id_acquisto" => $id,
             "num_fattura" => $data["num_fattura"],
-            "data_fattura" => ($data["data_fattura"] == "") ? null : $data["data_fattura"],
+            "data_fattura" => $data["data_fattura"],
             "num_ddt" => $data["num_ddt"],
-            "data_ddt" => ($data["data_ddt"] == "") ? null : $data["data_ddt"],
+            "data_ddt" => $data["data_ddt"],
             "fornitore" => $data["fornitore"],
     		"note" => $data["note"]
     	));
@@ -131,7 +131,7 @@ function crea($pdo){
             )
         ));
 
-    }catch(PDOException $e){
+    } catch (PDOException $e) {
         $pdo->rollBack();
 
     	echo json_encode(array(
@@ -165,9 +165,9 @@ function modifica($pdo){
         $success = $s->execute(array(
     		"id_acquisto" => $data["id_acquisto"],
     		"num_fattura" => $data["num_fattura"],
-    		"data_fattura" => ($data["data_fattura"] == "") ? null : $data["data_fattura"],
+    		"data_fattura" => $data["data_fattura"],
     		"num_ddt" => $data["num_ddt"],
-    		"data_ddt" => ($data["data_ddt"] == "") ? null : $data["data_ddt"],
+    		"data_ddt" => $data["data_ddt"],
     		"fornitore" => $data["fornitore"],
     		"note" => $data["note"]
     	));
