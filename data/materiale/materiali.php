@@ -47,12 +47,21 @@ function lista($pdo){
 
     // SELECT / FROM
     $query .= "
-        SELECT acq_id as id_acquisto, acq_num_fattura as num_fattura, acq_data_fattura as data_fattura,
-            acq_num_ddt as num_ddt, acq_data_ddt as data_ddt, acq_fornitore as fornitore, acq_note as note,
-            CONCAT(acq_fornitore,' ',acq_num_fattura) as testo_per_combobox , COUNT(*) OVER() as total
-        FROM acquisti
+        SELECT mat_id as id_materiale, mat_id_tipo as id_tipo,mat_id_acquisto as id_acquisto, mat_seriale as seriale, mat_caratteristiche as caratteristiche,
+            mat_collocazione as collocazione,  mat_stato as stato, mat_note as note, mat_non_funzionante as non_funzionante, mat_dismesso as dismesso,
+            mat_smaltito as smaltito, mat_non_trovato as non_trovato, mat_smarrito_rubato as smarrito_rubato,
+
+            tmt_tipo as tipo, tmt_marca as marca, tmt_modello as modello, tmt_caratteristiche as caratteristiche_tipo, tmt_note as note_tipo,
+
+            A.acq_num_fattura as num_fattura, A.acq_data_fattura as data_fattura, A.acq_num_ddt as num_ddt, A.acq_data_ddt as data_ddt, A.acq_fornitore as fornitore, A.acq_note as note_acquisto,
+            COUNT(*) OVER() as total
+
+        FROM materiali M
+            LEFT JOIN tipi_materiale TM ON M.mat_id_tipo = TM.tmt_id
+            LEFT JOIN acquisti A ON A.acq_id = M.mat_id_acquisto
     ";
     // WHERE
+    /*
     if(isset($_GET["num_fattura"])) {
         $where .= " AND acq_num_fattura = :num_fattura";
         $parametri['num_fattura'] = $_GET["num_fattura"];
@@ -76,9 +85,9 @@ function lista($pdo){
     if(strlen($where) > 0) {
         $where = " WHERE " . substr($where, 5);
         $query .= $where;
-    }
+    }*/
     // ORDER
-    $query .= " ORDER BY $property $direction ";
+    $query .= " ORDER BY $property $direction, marca, modello ";
     if(!isset($_GET["flag_full"])) {
         $query .= " LIMIT $limit OFFSET $start ";
     }
@@ -106,20 +115,28 @@ function crea($pdo){
         $pdo->beginTransaction();
 
     	$s = $pdo->prepare("
-    		INSERT INTO acquisti(acq_id, acq_num_fattura, acq_data_fattura, acq_num_ddt, acq_data_ddt, acq_fornitore, acq_note)
-    		VALUES(:id_acquisto, :num_fattura, :data_fattura, :num_ddt, :data_ddt, :fornitore, :note)
+    		INSERT INTO materiali(mat_id, mat_id_tipo, mat_seriale, mat_id_acquisto, mat_caratteristiche, mat_collocazione, mat_stato, mat_note,
+                mat_non_funzionante, mat_dismesso, mat_smaltito, mat_non_trovato, mat_smarrito_rubato)
+    		VALUES(:id_materiale, :id_tipo, :seriale, :id_acquisto, :caratteristiche, :collocazione, :stato, :note,
+                :non_funzionante, :dismesso, :smaltito, :non_trovato, :smarrito_rubato)
     	");
 
         $id = getGUID();
 
     	$success = $s->execute(array(
-    		"id_acquisto" => $id,
-            "num_fattura" => $data["num_fattura"],
-            "data_fattura" => $data["data_fattura"],
-            "num_ddt" => $data["num_ddt"],
-            "data_ddt" => $data["data_ddt"],
-            "fornitore" => $data["fornitore"],
-    		"note" => $data["note"]
+    		"id_materiale" => $id,
+            "id_tipo" => $data["id_tipo"],
+            "seriale" => $data["seriale"],
+            "id_acquisto" => $data["id_acquisto"],
+            "caratteristiche" => $data["caratteristiche"],
+            "collocazione" => $data["collocazione"],
+            "stato" => $data["stato"],
+            "note" => $data["note"],
+            "non_funzionante" => (int)$data["non_funzionante"],
+            "dismesso" => (int)$data["dismesso"],
+            "smaltito" => (int)$data["smaltito"],
+            "non_trovato" => (int)$data["non_trovato"],
+            "smarrito_rubato" => (int)$data["smarrito_rubato"]
     	));
 
         $pdo->commit();
@@ -200,12 +217,12 @@ function elimina($pdo){
         $pdo->beginTransaction();
 
     	$s = $pdo->prepare("
-    		DELETE FROM acquisti
-            WHERE acq_id = :id_acquisto
+    		DELETE FROM materiali
+            WHERE mat_id = :id_materiale
     	");
 
     	$success = $s->execute(array(
-    		"id_acquisto" => $data["id_acquisto"]
+    		"id_materiale" => $data["id_materiale"]
     	));
 
         $pdo->commit();

@@ -1,8 +1,8 @@
-Ext.define('CL.view.utente.V_utente_list', {
+Ext.define('CL.view.tipo_materiale.V_tipo_materiale_list', {
     extend: 'Ext.panel.Panel',
-    xtype: 'utente_list',
-    itemId: 'utente_list_id',
-    alias: 'widget.utente_list',
+    xtype: 'tipo_materiale_list',
+    itemId: 'tipo_materiale_list_id',
+    alias: 'widget.tipo_materiale_list',
 
     bodyStyle: 'backgroundColor: transparent',  //per rendere il corpo invisibile
 
@@ -18,7 +18,7 @@ Ext.define('CL.view.utente.V_utente_list', {
             {
                 xtype: 'grid',
                 border: true,
-                store: 'S_utente',
+                store: 'S_tipo_materiale',
                 height: '98%',
                 width: "100%",
                 autoscroll: true,
@@ -29,7 +29,7 @@ Ext.define('CL.view.utente.V_utente_list', {
 
                 dockedItems: [{
                     xtype: 'pagingtoolbar',
-                    store: 'S_utente', // same store GridPanel is using
+                    store: 'S_tipo_materiale', // same store GridPanel is using
                     dock: 'bottom',
                     displayInfo: true
                 }],
@@ -41,12 +41,12 @@ Ext.define('CL.view.utente.V_utente_list', {
                     items: [
                         {
                             xtype: 'label',
-                            html: '<b>Lista Acquisti</b>',
+                            html: '<b>Lista tipi materiale</b>',
                             style: 'color: #157fcc;font-size: 15px;font-weight: 300;font-family: helvetica, arial, verdana, sans-serif;line-height: 16px'
                         },
                         {
                             xtype: 'button',
-                            tooltip: 'Crea nuovo utente',
+                            tooltip: 'Crea nuovo tipo_materiale',
                             icon: 'resources/images/icon_plus.gif',
                             action: 'on_create'
                         }
@@ -55,54 +55,25 @@ Ext.define('CL.view.utente.V_utente_list', {
 
                 listeners: {
                     itemdblclick: function( grid, record, item, index, e, eOpts ){
-                        CL.app.getController("C_utente").onEdit(item,record);
+                        CL.app.getController("C_tipo_materiale").onEdit(item,record);
                     }
                 },
 
                 columns: [
                     {
-                        text: 'Cognome',
-                        dataIndex: 'cognome',
-                        flex: 0.7
-                    },
-                    {
-                        text: 'Nome',
-                        dataIndex: 'nome',
-                        flex: 0.7
-                    },
-                    {
-                        text: 'Email',
-                        dataIndex: 'email',
+                        text: 'Tipo',
+                        dataIndex: 'tipo',
                         flex: 1
                     },
                     {
-                        text: 'Amministrazione',
-                        dataIndex: 'amministrazione',
+                        text: 'Marca',
+                        dataIndex: 'marca',
                         flex: 1
                     },
                     {
-                        xtype: 'checkcolumn',
-                        text: 'Funzionario',
-                        dataIndex: 'funzionario',
-                        disabled: true,
-                        disabledCls : '',
-                        flex: 0.5
-                    },
-                    {
-                        xtype: 'checkcolumn',
-                        text: 'Esterno',
-                        dataIndex: 'esterno',
-                        disabled: true,
-                        disabledCls : '',
-                        flex: 0.5
-                    },
-                    {
-                        xtype: 'checkcolumn',
-                        text: 'Inattivo',
-                        dataIndex: 'inattivo',
-                        disabled: true,
-                        disabledCls : '',
-                        flex: 0.5
+                        text: 'Modello',
+                        dataIndex: 'modello',
+                        flex: 1
                     },
                     {
                         dataIndex: 'note',
@@ -125,7 +96,7 @@ Ext.define('CL.view.utente.V_utente_list', {
                                 tooltip: 'Modifica',
                                 handler: function(grid, rowIndex, colIndex) {
                                     var rec = grid.getStore().getAt(rowIndex);
-                                    CL.app.getController("C_utente").onEdit(this.el,rec);
+                                    CL.app.getController("C_tipo_materiale").onEdit(this.el,rec);
                                 }
                             },
                             {
@@ -133,7 +104,7 @@ Ext.define('CL.view.utente.V_utente_list', {
                                 tooltip: 'Elimina',
                                 handler: function(grid, rowIndex, colIndex) {
                                     var rec = grid.getStore().getAt(rowIndex);
-                                    CL.app.getController("C_utente").onDestroy(rec);
+                                    CL.app.getController("C_tipo_materiale").onDestroy(rec);
                                 }
                             }
                         ]

@@ -12,7 +12,7 @@ $pdo=new PDO("pgsql:host=".$ini_array['pdo_host'].";port=".$ini_array['pdo_port'
 if($_SERVER['REQUEST_METHOD'] === "GET"){
     lista($pdo);
 }
-/*
+
 // CREAZIONE
 else if($_SERVER['REQUEST_METHOD'] === "POST"){
     crea($pdo);
@@ -27,7 +27,7 @@ else if($_SERVER['REQUEST_METHOD'] === "PUT"){
 else if($_SERVER['REQUEST_METHOD'] === "DELETE"){
     elimina($pdo);
 }
-*/
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -48,7 +48,8 @@ function lista($pdo){
     // SELECT / FROM
     $query .= "
         SELECT ute_id as id_utente, ute_nome as nome, ute_cognome as cognome,CONCAT(ute_cognome,' ',ute_nome) as utente_name,
-            ute_funzionario as funzionario, ute_note as note, COUNT(*) OVER() as total
+            ute_funzionario as funzionario, ute_esterno as esterno, ute_inattivo as inattivo, ute_email as email, ute_amministrazione as amministrazione,
+            ute_note as note, COUNT(*) OVER() as total
         FROM utenti
     ";
     // WHERE
@@ -65,7 +66,7 @@ function lista($pdo){
         $query .= $where;
     }
     // ORDER
-    $query .= " ORDER BY $property $direction, nome ";
+    $query .= " ORDER BY $property $direction ";
     if(!isset($_GET["flag_full"])) {
         $query .= " LIMIT $limit OFFSET $start ";
     }
@@ -77,6 +78,7 @@ function lista($pdo){
 	if(count($result) != 0)
 		$total = $result[0]->total;
 
+
 	echo json_encode(array(
 		"result" => $result,
 		"total" => $total
@@ -84,7 +86,7 @@ function lista($pdo){
 }
 
 
-/*
+
 // CREAZIONE
 function crea($pdo){
     $data = json_decode($_POST['data'],true);
@@ -94,20 +96,24 @@ function crea($pdo){
         $pdo->beginTransaction();
 
     	$s = $pdo->prepare("
-    		INSERT INTO richieste(ric_id,ric_cod_sede,ric_destinazione,ric_id_responsabile,ric_id_richiedente,ric_motivazione,ric_oggetto,ric_data_presentazione,ric_stato)
-    		VALUES(:ric_id,:ric_cod_sede,:ric_destinazione,:ric_id_responsabile,:ric_id_richiedente,:ric_motivazione,:ric_oggetto,NOW(),'da_valutare')
+    		INSERT INTO utenti(ute_id, ute_nome, ute_cognome, ute_funzionario, ute_esterno, ute_inattivo, ute_email, ute_amministrazione, ute_note)
+    		VALUES(:id_utente, :nome, :cognome, :funzionario, :esterno, :inattivo, :email, :amministrazione, :note)
     	");
 
         $id = getGUID();
 
+
+
     	$success = $s->execute(array(
-    		"ric_id" => $id,
-    		"ric_cod_sede" => $data["ric_cod_sede"],
-    		"ric_destinazione" => $data["ric_destinazione"],
-    		"ric_id_responsabile" => $data["ric_id_responsabile"],
-    		"ric_id_richiedente" => $data["ric_id_richiedente"],
-    		"ric_motivazione" => $data["ric_motivazione"],
-    		"ric_oggetto" => $data["ric_oggetto"]
+    		"id_utente" => $id,
+            "nome" => $data["nome"],
+    		"cognome" => $data["cognome"],
+    		"funzionario" => (int)$data["funzionario"],
+    		"esterno" => (int)$data["esterno"],
+    		"inattivo" => (int)$data["inattivo"],
+    		"email" => $data["email"],
+    		"amministrazione" => $data["amministrazione"],
+    		"note" => $data["note"]
     	));
 
         $pdo->commit();
@@ -116,8 +122,7 @@ function crea($pdo){
             "success" => $success,
     		"eventual_error" => $pdo->errorInfo(),
             "result" => array(
-                "ric_id" => $id,
-                "ric_stato" => "da_valutare"
+                "ric_id" => $id
             )
         ));
 
@@ -142,25 +147,29 @@ function modifica($pdo){
         $pdo->beginTransaction();
 
     	$s = $pdo->prepare("
-    		UPDATE richieste
-    		SET ric_cod_sede = :ric_cod_sede,
-    			ric_destinazione = :ric_destinazione,
-    			ric_id_responsabile = :ric_id_responsabile,
-    			ric_id_richiedente = :ric_id_richiedente,
-    			ric_motivazione = :ric_motivazione,
-    			ric_oggetto = :ric_oggetto
+    		UPDATE utenti
+    		SET ute_nome = :nome,
+    			ute_cognome = :cognome,
+    			ute_funzionario = :funzionario,
+                ute_esterno = :esterno,
+                ute_inattivo = :inattivo,
+                ute_email = :email,
+                ute_amministrazione = :amministrazione,
+                ute_note = :note
 
-    		WHERE ric_id = :ric_id
+    		WHERE ute_id = :id_utente
     	");
 
     	$success = $s->execute(array(
-    		"ric_id" => $data["ric_id"],
-    		"ric_cod_sede" => $data["ric_cod_sede"],
-    		"ric_destinazione" => $data["ric_destinazione"],
-    		"ric_id_responsabile" => $data["ric_id_responsabile"],
-    		"ric_id_richiedente" => $data["ric_id_richiedente"],
-    		"ric_motivazione" => $data["ric_motivazione"],
-    		"ric_oggetto" => $data["ric_oggetto"]
+    		"id_utente" => $data["id_utente"],
+            "nome" => $data["nome"],
+    		"cognome" => $data["cognome"],
+    		"funzionario" => (int)$data["funzionario"],
+    		"esterno" => (int)$data["esterno"],
+    		"inattivo" => (int)$data["inattivo"],
+    		"email" => $data["email"],
+    		"amministrazione" => $data["amministrazione"],
+    		"note" => $data["note"]
     	));
 
         $pdo->commit();
@@ -190,12 +199,12 @@ function elimina($pdo){
         $pdo->beginTransaction();
 
     	$s = $pdo->prepare("
-    		DELETE FROM richieste
-            WHERE ric_id = :ric_id
+    		DELETE FROM utenti
+            WHERE ute_id = :id_utente
     	");
 
     	$success = $s->execute(array(
-    		"ric_id" => $data["ric_id"]
+    		"id_utente" => $data["id_utente"]
     	));
 
         $pdo->commit();
@@ -215,4 +224,3 @@ function elimina($pdo){
     }
 
 }
-*/

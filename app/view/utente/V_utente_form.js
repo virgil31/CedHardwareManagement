@@ -68,7 +68,6 @@ Ext.define('CL.view.utente.V_utente_form', {
                         inputValue: true,
                         uncheckedValue: false
                     },
-
                     {
                         xtype: 'checkbox',
                         name: 'esterno',
@@ -83,7 +82,6 @@ Ext.define('CL.view.utente.V_utente_form', {
                         inputValue: true,
                         uncheckedValue: false
                     },
-
                     {
                         xtype: 'textfield',
                         name: 'email',

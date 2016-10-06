@@ -17,7 +17,10 @@ Ext.application({
 
         'C_accessorio',
         'C_acquisto',
-        'C_utente_dominio'
+        'C_utente_dominio',
+
+        'C_materiale',
+        'C_tipo_materiale'
     ],
 
     // vv ROUTING

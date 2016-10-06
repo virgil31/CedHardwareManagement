@@ -23,11 +23,18 @@ function lista($pdo){
 	$property = $json[0]['property'];
 	$direction = $json[0]['direction'];
 
-
     // SELECT / FROM
     $query = "
-        SELECT DISTINCT acc_marca as marca
-        FROM accessori
+        SELECT DISTINCT marca
+        FROM(
+            SELECT acc_marca as marca
+            FROM accessori
+
+            UNION
+
+            SELECT tmt_marca as marca
+            FROM tipi_materiale
+        ) tmp
         ORDER BY $property $direction
     ";
 

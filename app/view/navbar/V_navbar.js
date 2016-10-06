@@ -28,16 +28,24 @@ Ext.define('CL.view.navbar.V_navbar', {
                     icon: "resources/images/icon_list.png",
                     menu:[
                         {
-                            text: '<b>Sedi</b>',
-                            route: 'sedi'
-                        },
-                        {
                             text: '<b>Accessori</b>',
                             route: 'accessori'
                         },
                         {
                             text: '<b>Acquisti</b>',
                             route: 'acquisti'
+                        },
+                        {
+                            text: '<b>Materiali</b>',
+                            route: 'materiali'
+                        },
+                        {
+                            text: '<b>Sedi</b>',
+                            route: 'sedi'
+                        },
+                        {
+                            text: '<b>Tipi Materiale</b>',
+                            route: 'tipi_materiale'
                         },
                         {
                             text: '<b>Utenti</b>',
@@ -75,15 +83,18 @@ Ext.define('CL.view.navbar.V_navbar', {
                 },
                 {
                     text:'Vista ad albero',
-                    icon: 'resources/images/icon_tree.png'
+                    icon: 'resources/images/icon_tree.png',
+                    disabled: true
                 },
                 {
                     text: 'Cerca materiale per utente',
-                    icon: "resources/images/icon_utente.png"
+                    icon: "resources/images/icon_utente.png",
+                    disabled: true
                 },
                 {
                     text: 'Cerca info seriale',
-                    icon: "resources/images/icon_serial.png"
+                    icon: "resources/images/icon_serial.png",
+                    disabled: true
                 }
     		]
         }
