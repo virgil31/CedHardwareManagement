@@ -116,7 +116,7 @@ Ext.define('CL.controller.C_materiale', {
                     Ext.getBody().unmask();
                     Ext.Msg.alert("Attenzione!","Errore interno. Si è pregati di riprovare più tardi.")
                 },
-                success: function(richiesta) {
+                success: function(record) {
                     Ext.getBody().unmask();
                     Ext.Msg.alert("Successo!","Il salvataggio è stata correttamente effettuato!");
                     win.close();

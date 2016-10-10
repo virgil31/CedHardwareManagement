@@ -101,10 +101,10 @@ Ext.define('CL.controller.C_richiesta', {
                         //store.rejectChanges();
                         Ext.Msg.alert("Attenzione!","Errore interno. Si è pregati di riprovare più tardi.")
                     },
-                    success: function(richiesta) {
+                    success: function(record) {
                         Ext.getBody().unmask();
                         // ricarico il form con il loadRecord per resettare il "dirty" del form (grazie al "trackResetOnLoad")
-                        form.loadRecord(richiesta);
+                        form.loadRecord(record);
                         Ext.Msg.alert("Successo!","Il salvataggio della richiesta è stata correttamente effettuato!");
                     }
                 });

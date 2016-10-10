@@ -95,7 +95,7 @@ Ext.define('CL.view.acquisto.V_acquisto_list', {
                                 return "";
                             }
                             else{
-                                return '<img title="Sono presenti delle note!" src="resources/images/icon_note.png" alt=" " height="16" width="16" >';
+                                return '<img title="Sono presenti delle note" src="resources/images/icon_note.png" alt=" " height="16" width="16" >';
                             }
                         }
                     },

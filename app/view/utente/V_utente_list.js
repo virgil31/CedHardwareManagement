@@ -41,7 +41,7 @@ Ext.define('CL.view.utente.V_utente_list', {
                     items: [
                         {
                             xtype: 'label',
-                            html: '<b>Lista Acquisti</b>',
+                            html: '<b>Lista Utenti</b>',
                             style: 'color: #157fcc;font-size: 15px;font-weight: 300;font-family: helvetica, arial, verdana, sans-serif;line-height: 16px'
                         },
                         {

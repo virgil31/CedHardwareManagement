@@ -53,6 +53,10 @@ function lista($pdo){
         FROM acquisti
     ";
     // WHERE
+    if(isset($_GET["id_acquisto"])) {
+        $where .= " AND acq_id = :id_acquisto";
+        $parametri['id_acquisto'] = $_GET["id_acquisto"];
+    }
     if(isset($_GET["num_fattura"])) {
         $where .= " AND acq_num_fattura = :num_fattura";
         $parametri['num_fattura'] = $_GET["num_fattura"];

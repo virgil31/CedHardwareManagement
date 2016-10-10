@@ -8,11 +8,8 @@ Ext.define('CL.view.sede.V_sede_form', {
     modal: true,
     constrain: true,
     resizable: false,
-
     bodyStyle: 'backgroundColor: transparent',
-
     padding: 10,
-
     width: 400,
 
     initComponent: function() {

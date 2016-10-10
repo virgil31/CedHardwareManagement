@@ -52,6 +52,10 @@ function lista($pdo){
         FROM accessori
     ";
     // WHERE
+    if(isset($_GET["id_accessorio"])) {
+        $where .= " AND acc_id = :id_accessorio";
+        $parametri['id_accessorio'] = $_GET["id_accessorio"];
+    }
     if(isset($_GET["tipo"])) {
         $where .= " AND acc_tipo = :tipo";
         $parametri['tipo'] = $_GET["tipo"];

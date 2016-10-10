@@ -54,10 +54,13 @@ Ext.define('CL.controller.C_acquisto', {
 
     // ON CREATE
     onCreate: function(btn) {
-        Ext.widget("acquisto_form", {
+        Ext.widget("acquisto_form",{
             animateTarget: btn.el,
+            azione: 'create',
             title: '<b>Crea nuova acquisto</b>',
-            action: 'create'
+            recordSalvato: function(record){
+                Ext.StoreManager.lookup("S_acquisto").reload();
+            }
         });
     },
 
@@ -65,11 +68,31 @@ Ext.define('CL.controller.C_acquisto', {
     onEdit: function(targetEl, rec) {
         var win = Ext.widget("acquisto_form", {
             animateTarget: targetEl,
+            azione: 'edit',
             title: '<b>Modifica acquisto</b>',
-            action: 'edit'
+            recordSalvato: function(record){
+                Ext.StoreManager.lookup("S_accessorio").reload();
+            }
         });
 
-        win.down("form").loadRecord(rec);
+        var store = Ext.create("CL.store.S_acquisto");
+        win.mask("Caricamento dati...");
+        store.load({
+            params: {
+                id_acquisto: rec.get("id_acquisto")
+            },
+            callback: function() {
+                win.unmask();
+                if (this.data.length == 0) {
+                    win.close();
+                    Ext.Msg.alert("<b>Attenzione</b>","Il record selezionato è stato eliminato");
+                    Ext.StoreManager.lookup("S_acquisto").reload();
+                }
+                else {
+                    win.down("form").loadRecord(this.getAt(0));
+                }
+            }
+        });
     },
 
     // SAVE FORM
@@ -81,7 +104,7 @@ Ext.define('CL.controller.C_acquisto', {
 
         if(form.isValid()) {
             // CREAZIONE
-            if(win.action == "create") {
+            if(win.azione == "create") {
                 record = Ext.create('CL.model.M_acquisto', values);
             }
             // MODIFICA
@@ -94,20 +117,20 @@ Ext.define('CL.controller.C_acquisto', {
                     Ext.getBody().unmask();
                     Ext.Msg.alert("Attenzione!","Errore interno. Si è pregati di riprovare più tardi.")
                 },
-                success: function(richiesta) {
+                success: function(record) {
                     Ext.getBody().unmask();
                     Ext.Msg.alert("Successo!","Il salvataggio è stata correttamente effettuato!");
                     win.close();
-                    Ext.StoreManager.lookup("S_acquisto").reload();
+                    win.recordSalvato(record);
                 }
             });
         }
     },
 
     // ON DESTROY
-    onDestroy: function(rec){
+    onDestroy: function(rec) {
         Ext.Msg.confirm("Attenzione","Sei sicuro di voler eliminare l'acquisto?",function(btnId){
-            if(btnId == "yes"){
+            if(btnId == "yes") {
                 rec.erase({
                     failure: function(record, operation) {
                         Ext.Msg.alert("Attenzione!","Errore interno. Si è pregati di riprovare più tardi.");

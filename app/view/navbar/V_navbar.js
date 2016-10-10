@@ -44,7 +44,7 @@ Ext.define('CL.view.navbar.V_navbar', {
                             route: 'sedi'
                         },
                         {
-                            text: '<b>Tipi Materiale</b>',
+                            text: '<b>**Tipi Materiale**</b>',
                             route: 'tipi_materiale'
                         },
                         {
@@ -98,8 +98,6 @@ Ext.define('CL.view.navbar.V_navbar', {
                 }
     		]
         }
-
-
 		this.callParent(arguments);
     }
 

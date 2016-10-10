@@ -29,9 +29,7 @@ function lista($pdo){
         FROM(
             SELECT acc_marca as marca
             FROM accessori
-
             UNION
-
             SELECT tmt_marca as marca
             FROM tipi_materiale
         ) tmp

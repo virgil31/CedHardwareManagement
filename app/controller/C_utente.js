@@ -53,21 +53,25 @@ Ext.define('CL.controller.C_utente', {
 
     // ON CREATE
     onCreate: function(btn) {
-        Ext.widget("utente_form", {
+        Ext.widget("accessorio_form",{
             animateTarget: btn.el,
+            azione: 'create',
             title: '<b>Cerca utente su Active Directory</b>',
-            azione: 'create'
+            recordSalvato: function(record){
+                Ext.StoreManager.lookup("S_utente").reload();
+            }
         });
-
-        Ext.StoreManager.lookup("S_utente_dominio").load();
     },
 
     // ON EDIT
     onEdit: function(targetEl, rec) {
         var win = Ext.widget("utente_form", {
             animateTarget: targetEl,
+            azione: 'edit',
             title: '<b>Modifica utente</b>',
-            azione: 'edit'
+            recordSalvato: function(record){
+                Ext.StoreManager.lookup("S_utente").reload();
+            }
         });
 
         Ext.ComponentQuery.query("utente_form combobox")[0].disable();
@@ -76,7 +80,24 @@ Ext.define('CL.controller.C_utente', {
         Ext.ComponentQuery.query("utente_form textfield[name=nome]")[0].show();
         Ext.ComponentQuery.query("utente_form textfield[name=cognome]")[0].show();
 
-        win.down("form").loadRecord(rec);
+        var store = Ext.create("CL.store.S_utente");
+        win.mask("Caricamento dati...");
+        store.load({
+            params: {
+                id_utente: rec.get("id_utente")
+            },
+            callback: function() {
+                win.unmask();
+                if (this.data.length == 0) {
+                    win.close();
+                    Ext.Msg.alert("<b>Attenzione</b>","Il record selezionato è stato eliminato");
+                    Ext.StoreManager.lookup("S_utente").reload();
+                }
+                else {
+                    win.down("form").loadRecord(this.getAt(0));
+                }
+            }
+        });
     },
 
     // SAVE FORM
@@ -101,11 +122,11 @@ Ext.define('CL.controller.C_utente', {
                     Ext.getBody().unmask();
                     Ext.Msg.alert("Attenzione!","Errore interno. Si è pregati di riprovare più tardi.")
                 },
-                success: function(richiesta) {
+                success: function(record) {
                     Ext.getBody().unmask();
                     Ext.Msg.alert("Successo!","Il salvataggio è stata correttamente effettuato!");
                     win.close();
-                    Ext.StoreManager.lookup("S_utente").reload();
+                    win.recordSalvato(record);
                 }
             });
         }

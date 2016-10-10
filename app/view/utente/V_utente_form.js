@@ -14,6 +14,8 @@ Ext.define('CL.view.utente.V_utente_form', {
 
     initComponent: function() {
 
+        Ext.StoreManager.lookup("S_utente_dominio").load();
+
         var this_view = this;
         this_view.items = [
             {

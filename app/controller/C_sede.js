@@ -58,8 +58,11 @@ Ext.define('CL.controller.C_sede', {
     onCreate: function(btn){
         Ext.widget("sede_form",{
             animateTarget: btn.el,
+            azione: 'create',
             title: '<b>Crea nuova sede</b>',
-            action: 'create'
+            recordSalvato: function(record){
+                Ext.StoreManager.lookup("S_sede").reload();
+            }
         });
     },
 
@@ -68,12 +71,32 @@ Ext.define('CL.controller.C_sede', {
         var win = Ext.widget("sede_form",{
             animateTarget: targetEl,
             title: '<b>Modifica sede</b>',
-            action: 'edit'
+            azione: 'edit',
+            recordSalvato: function(record){
+                Ext.StoreManager.lookup("S_sede").reload();
+            }
         });
 
         Ext.ComponentQuery.query("sede_form textfield[name=cod_sede]")[0].setReadOnly(true);
 
-        win.down("form").loadRecord(rec);
+        var store = Ext.create("CL.store.S_sede");
+        win.mask("Caricamento dati...");
+        store.load({
+            params: {
+                cod_sede: rec.get("cod_sede")
+            },
+            callback: function() {
+                win.unmask();
+                if (this.data.length == 0) {
+                    win.close();
+                    Ext.Msg.alert("<b>Attenzione</b>","Il record selezionato è stato eliminato");
+                    Ext.StoreManager.lookup("S_sede").reload();
+                }
+                else {
+                    win.down("form").loadRecord(this.getAt(0));
+                }
+            }
+        });
     },
 
     // SAVE FORM
@@ -85,7 +108,7 @@ Ext.define('CL.controller.C_sede', {
 
         if(form.isValid()){
             // CREAZIONE
-            if(win.action == "create"){
+            if(win.azione == "create"){
                 record = Ext.create('CL.model.M_sede', values);
             }
             // MODIFICA
@@ -98,20 +121,20 @@ Ext.define('CL.controller.C_sede', {
                     Ext.getBody().unmask();
                     Ext.Msg.alert("Attenzione!","Errore interno. Si è pregati di riprovare più tardi.")
                 },
-                success: function(richiesta) {
+                success: function(record) {
                     Ext.getBody().unmask();
                     Ext.Msg.alert("Successo!","Il salvataggio è stata correttamente effettuato!");
                     win.close();
-                    Ext.StoreManager.lookup("S_sede").reload();
+                    win.recordSalvato(record);
                 }
             });
         }
     },
 
     // ON DESTROY
-    onDestroy: function(rec){
+    onDestroy: function(rec) {
         Ext.Msg.confirm("Attenzione","Sei sicuro di voler eliminare la sede <strong>"+rec.get("descrizione")+"</strong>",function(btnId){
-            if(btnId == "yes"){
+            if(btnId == "yes") {
                 rec.erase({
                     failure: function(record, operation) {
                         Ext.Msg.alert("Attenzione!","Errore interno. Si è pregati di riprovare più tardi.");

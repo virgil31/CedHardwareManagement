@@ -47,12 +47,19 @@ function lista($pdo){
 
     // SELECT / FROM
     $query .= "
-        SELECT ute_id as id_utente, ute_nome as nome, ute_cognome as cognome,CONCAT(ute_cognome,' ',ute_nome) as utente_name,
-            ute_funzionario as funzionario, ute_esterno as esterno, ute_inattivo as inattivo, ute_email as email, ute_amministrazione as amministrazione,
+        SELECT ute_id as id_utente, ute_nome as nome, ute_cognome as cognome,
+            CONCAT(ute_cognome,' ',ute_nome) as utente_name,
+            ute_funzionario as funzionario, ute_esterno as esterno,
+            ute_inattivo as inattivo, ute_email as email,
+            ute_amministrazione as amministrazione,
             ute_note as note, COUNT(*) OVER() as total
         FROM utenti
     ";
     // WHERE
+    if(isset($_GET["id_utente"])) {
+        $where .= " AND ute_id = :id_utente";
+        $parametri['id_utente'] = $_GET["id_utente"];
+    }
     if(isset($_GET["nome"])) {
         $where .= " AND ute_nome = :nome";
         $parametri['nome'] = $_GET["nome"];
@@ -99,10 +106,7 @@ function crea($pdo){
     		INSERT INTO utenti(ute_id, ute_nome, ute_cognome, ute_funzionario, ute_esterno, ute_inattivo, ute_email, ute_amministrazione, ute_note)
     		VALUES(:id_utente, :nome, :cognome, :funzionario, :esterno, :inattivo, :email, :amministrazione, :note)
     	");
-
         $id = getGUID();
-
-
 
     	$success = $s->execute(array(
     		"id_utente" => $id,
@@ -122,19 +126,17 @@ function crea($pdo){
             "success" => $success,
     		"eventual_error" => $pdo->errorInfo(),
             "result" => array(
-                "ric_id" => $id
+                "id_utente" => $id
             )
         ));
 
-    }catch(PDOException $e){
+    } catch(PDOException $e) {
         $pdo->rollBack();
-
     	echo json_encode(array(
             "success" => false,
     		"ErrorMessage" => $e->getMessage()
         ));
     }
-
 }
 
 // MODIFICA
@@ -156,7 +158,6 @@ function modifica($pdo){
                 ute_email = :email,
                 ute_amministrazione = :amministrazione,
                 ute_note = :note
-
     		WHERE ute_id = :id_utente
     	");
 
@@ -179,9 +180,8 @@ function modifica($pdo){
     		"eventual_error" => $pdo->errorInfo()
         ));
 
-    }catch(PDOException $e){
+    } catch(PDOException $e) {
         $pdo->rollBack();
-
     	echo json_encode(array(
             "success" => false,
     		"ErrorMessage" => $e->getMessage()

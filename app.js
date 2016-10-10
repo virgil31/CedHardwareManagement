@@ -154,7 +154,7 @@ Ext.application({
             msgTarget: 'side',
             listeners: {
                 blur: function() {
-                    if(this.xtype != "datefield" && this.xtype != "combobox") {
+                    if(this.xtype != "datefield" && this.xtype != "combobox" && this.xtype != "numberfield") {
                         var value = this.getValue();
                         this.setValue(value.trim());
                     }
