@@ -37,7 +37,7 @@ Ext.define('CL.controller.C_utente', {
     //ROUTES
     showView: function() {
         if(Ext.util.Cookies.get("ced_logged") !== null) {
-            if(Ext.ComponentQuery.query('utente_list').length == 0) {
+            if(Ext.ComponentQuery.query('utente_list').length === 0) {
                 Ext.ComponentQuery.query('viewport panel[name=card]')[0].add({xtype: 'utente_list'});
             }
             Ext.ComponentQuery.query('viewport panel[name=card]')[0].getLayout().setActiveItem('utente_list_id');
@@ -53,7 +53,7 @@ Ext.define('CL.controller.C_utente', {
 
     // ON CREATE
     onCreate: function(btn) {
-        Ext.widget("accessorio_form",{
+        Ext.widget("utente_form",{
             animateTarget: btn.el,
             azione: 'create',
             title: '<b>Cerca utente su Active Directory</b>',
@@ -88,7 +88,7 @@ Ext.define('CL.controller.C_utente', {
             },
             callback: function() {
                 win.unmask();
-                if (this.data.length == 0) {
+                if (this.data.length === 0) {
                     win.close();
                     Ext.Msg.alert("<b>Attenzione</b>","Il record selezionato è stato eliminato");
                     Ext.StoreManager.lookup("S_utente").reload();
@@ -120,7 +120,7 @@ Ext.define('CL.controller.C_utente', {
             record.save({
                 failure: function(){
                     Ext.getBody().unmask();
-                    Ext.Msg.alert("Attenzione!","Errore interno. Si è pregati di riprovare più tardi.")
+                    Ext.Msg.alert("Attenzione!","Errore interno. Si è pregati di riprovare più tardi.");
                 },
                 success: function(record) {
                     Ext.getBody().unmask();

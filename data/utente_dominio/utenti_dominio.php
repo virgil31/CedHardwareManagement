@@ -2,7 +2,7 @@
 
 header('Content-Type: application/json');
 
-$ini_array = parse_ini_file("../config.ini");
+require_once("../util/util.php");
 
 // LISTA
 if($_SERVER['REQUEST_METHOD'] === "GET"){
@@ -36,13 +36,15 @@ function lista(){
             $result = array();
 
             foreach ($utenti as $utente) {
-                if(isset($utente["givenname"]) && isset($utente["sn"]) && isset($utente["samaccountname"]))
-                array_push($result, array(
-                    "nome" => $utente["givenname"][0],
-                    "cognome" => $utente["sn"][0],
-                    "username" => $utente["samaccountname"][0],
-                    "cognome_nome" => $utente["sn"][0]." ".$utente["givenname"][0]
-                ));
+                if(isset($utente["givenname"]) && isset($utente["sn"]) && isset($utente["samaccountname"])) {
+                    array_push($result, array(
+                        "nome" => $utente["givenname"][0],
+                        "cognome" => $utente["sn"][0],
+                        "username" => $utente["samaccountname"][0],
+                        "cognome_nome" => $utente["sn"][0]." ".$utente["givenname"][0],
+                        "guid" => GUIDtoStr($utente["objectguid"][0])
+                    ));
+                }
             }
 
             echo json_encode(array(

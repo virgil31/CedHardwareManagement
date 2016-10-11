@@ -29,3 +29,9 @@ function getGUID(){
         return $uuid;
     }
 }
+
+
+function GUIDtoStr($binary_guid) {
+  $unpacked = unpack('Va/v2b/n2c/Nd', $binary_guid);
+  return sprintf('%08x-%04x-%04x-%04x-%04x%08x', $unpacked['a'], $unpacked['b1'], $unpacked['b2'], $unpacked['c1'], $unpacked['c2'], $unpacked['d']);
+}
