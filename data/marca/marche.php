@@ -25,19 +25,26 @@ function lista($pdo){
 
     // SELECT / FROM
     $query = "
-        SELECT DISTINCT marca
-        FROM(
-            SELECT acc_marca as marca
-            FROM accessori
-            UNION
-            SELECT tmt_marca as marca
-            FROM tipi_materiale
-        ) tmp
-        ORDER BY $property $direction
+        SELECT DISTINCT mod_marca as marca
+        FROM modelli
     ";
+    $where = "";
+    $parametri = array();
+
+    // WHERE
+    if(isset($_GET["id_tipo"])) {
+        $where .= " AND mod_id_tipo = :id_tipo";
+        $parametri['id_tipo'] = $_GET["id_tipo"];
+    }
+    if(strlen($where) > 0) {
+        $where = " WHERE " . substr($where, 5);
+        $query .= $where;
+    }
+    // ORDER
+    $query .= " ORDER BY $property $direction ";
 
     $statement = $pdo->prepare($query);
-    $statement->execute();
+    $statement->execute($parametri);
     $result = $statement->fetchAll(PDO::FETCH_OBJ);
 
 	echo json_encode(array(

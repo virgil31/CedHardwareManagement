@@ -38,7 +38,7 @@ Ext.define('CL.controller.C_materiale', {
     //ROUTES
     showView: function() {
         if(Ext.util.Cookies.get("ced_logged") !== null) {
-            if(Ext.ComponentQuery.query('materiale_list').length == 0) {
+            if(Ext.ComponentQuery.query('materiale_list').length === 0) {
                 Ext.ComponentQuery.query('viewport panel[name=card]')[0].add({xtype: 'materiale_list'});
             }
             Ext.ComponentQuery.query('viewport panel[name=card]')[0].getLayout().setActiveItem('materiale_list_id');
@@ -57,17 +57,9 @@ Ext.define('CL.controller.C_materiale', {
         Ext.widget("materiale_form", {
             animateTarget: btn.el,
             title: '<b>Crea nuovo materiale</b>',
-            azione: 'create'
-        });
-
-        Ext.StoreManager.lookup("S_acquisto").load({
-            params: {
-                flag_full: true
-            }
-        });
-        Ext.StoreManager.lookup("S_tipo_materiale").load({
-            params: {
-                flag_full: true
+            azione: 'create',
+            recordSalvato: function(record){
+                Ext.StoreManager.lookup("S_materiale").reload();
             }
         });
     },
@@ -77,21 +69,33 @@ Ext.define('CL.controller.C_materiale', {
         var win = Ext.widget("materiale_form", {
             animateTarget: targetEl,
             title: '<b>Modifica materiale</b>',
-            azione: 'edit'
-        });
-
-        Ext.StoreManager.lookup("S_acquisto").load({
-            params: {
-                flag_full: true
-            }
-        });
-        Ext.StoreManager.lookup("S_tipo_materiale").load({
-            params: {
-                flag_full: true
+            azione: 'edit',
+            recordSalvato: function(record){
+                Ext.StoreManager.lookup("S_acquisto").reload();
             }
         });
 
-        win.down("form").loadRecord(rec);
+        Ext.ComponentQuery.query("materiale_form combobox[name=marca]")[0].enable();
+        Ext.ComponentQuery.query("materiale_form combobox[name=id_modello]")[0].enable();
+
+        var store = Ext.create("CL.store.S_materiale");
+        win.mask("Caricamento dati...");
+        store.load({
+            params: {
+                id_materiale: rec.get("id_materiale")
+            },
+            callback: function() {
+                win.unmask();
+                if (this.data.length === 0) {
+                    win.close();
+                    Ext.Msg.alert("<b>Attenzione</b>","Il record selezionato è stato eliminato");
+                    Ext.StoreManager.lookup("S_materiale").reload();
+                }
+                else {
+                    win.down("form").loadRecord(this.getAt(0));
+                }
+            }
+        });
     },
 
     // SAVE FORM
@@ -114,13 +118,13 @@ Ext.define('CL.controller.C_materiale', {
             record.save({
                 failure: function(){
                     Ext.getBody().unmask();
-                    Ext.Msg.alert("Attenzione!","Errore interno. Si è pregati di riprovare più tardi.")
+                    Ext.Msg.alert("Attenzione!","Errore interno. Si è pregati di riprovare più tardi.");
                 },
                 success: function(record) {
                     Ext.getBody().unmask();
                     Ext.Msg.alert("Successo!","Il salvataggio è stata correttamente effettuato!");
                     win.close();
-                    Ext.StoreManager.lookup("S_materiale").reload();
+                    win.recordSalvato(record);
                 }
             });
         }
@@ -128,7 +132,7 @@ Ext.define('CL.controller.C_materiale', {
 
     // ON DESTROY
     onDestroy: function(rec){
-        Ext.Msg.confirm("Attenzione","Sei sicuro di voler eliminare l'materiale?",function(btnId){
+        Ext.Msg.confirm("Attenzione","Sei sicuro di voler eliminare il materiale?",function(btnId){
             if(btnId == "yes"){
                 rec.erase({
                     failure: function(record, operation) {

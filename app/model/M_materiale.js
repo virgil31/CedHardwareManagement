@@ -2,12 +2,13 @@ Ext.define('CL.model.M_materiale', {
     extend: 'Ext.data.Model',
     fields: [
         {name: 'id_materiale',                  type: 'string'},
-        {name: 'id_tipo',                       type: 'string'},
+        {name: 'id_modello',                    type: 'string'},
         {name: 'id_acquisto',                   type: 'string'},
 
         {name: 'seriale',                       type: 'string'},
         {name: 'caratteristiche',               type: 'string'},
         {name: 'collocazione',                  type: 'string'},
+
         {name: 'stato',                         type: 'string'},
         {name: 'note',                          type: 'string'},
 
@@ -17,12 +18,11 @@ Ext.define('CL.model.M_materiale', {
         {name: 'non_trovato',                   type: 'boolean'},
         {name: 'smarrito_rubato',               type: 'boolean'},
 
-        // info da "tipi_materiale"
+        // info da "modelli"
+        {name: 'id_tipo',                       type: 'string'},
         {name: 'tipo',                          type: 'string'},
         {name: 'marca',                         type: 'string'},
-        {name: 'modello',                       type: 'string'},
-        {name: 'caratteristiche_tipo',          type: 'string'},
-        {name: 'note_tipo',                     type: 'string'},
+        {name: 'modello',                       type: 'string'}/*,
 
         //info da "acquisti"
         {name: 'num_fattura',                   type: 'string'},
@@ -30,7 +30,7 @@ Ext.define('CL.model.M_materiale', {
         {name: 'num_ddt',                       type: 'string'},
         {name: 'data_ddt',                      type: 'date',   serialize: null},
         {name: 'fornitore',                     type: 'string'},
-        {name: 'note_acquisto',                 type: 'string'}
+        {name: 'note_acquisto',                 type: 'string'}*/
     ],
 
     proxy: {

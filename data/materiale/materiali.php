@@ -47,47 +47,27 @@ function lista($pdo){
 
     // SELECT / FROM
     $query .= "
-        SELECT mat_id as id_materiale, mat_id_tipo as id_tipo,mat_id_acquisto as id_acquisto, mat_seriale as seriale, mat_caratteristiche as caratteristiche,
-            mat_collocazione as collocazione,  mat_stato as stato, mat_note as note, mat_non_funzionante as non_funzionante, mat_dismesso as dismesso,
-            mat_smaltito as smaltito, mat_non_trovato as non_trovato, mat_smarrito_rubato as smarrito_rubato,
-
-            tmt_tipo as tipo, tmt_marca as marca, tmt_modello as modello, tmt_caratteristiche as caratteristiche_tipo, tmt_note as note_tipo,
-
-            A.acq_num_fattura as num_fattura, A.acq_data_fattura as data_fattura, A.acq_num_ddt as num_ddt, A.acq_data_ddt as data_ddt, A.acq_fornitore as fornitore, A.acq_note as note_acquisto,
-            COUNT(*) OVER() as total
+        SELECT mat_id as id_materiale, mat_id_modello as id_modello, M2.mod_id_tipo as id_tipo, T.tmt_tipo as tipo,
+            M2.mod_marca as marca, M2.mod_modello as modello, mat_id_acquisto as id_acquisto, mat_seriale as seriale,
+            mat_caratteristiche as caratteristiche, mat_collocazione as collocazione, mat_non_funzionante as non_funzionante,
+            mat_dismesso as dismesso, mat_smaltito as smaltito, mat_smarrito_rubato as smarrito_rubato,
+            mat_non_trovato as non_trovato, mat_stato as stato, mat_note as note, COUNT(*) OVER() as total
 
         FROM materiali M
-            LEFT JOIN tipi_materiale TM ON M.mat_id_tipo = TM.tmt_id
-            LEFT JOIN acquisti A ON A.acq_id = M.mat_id_acquisto
+            LEFT JOIN modelli M2 ON M2.mod_id = M.mat_id_modello
+            LEFT JOIN tipi_materiale T ON T.tmt_id = M2.mod_id_tipo
     ";
     // WHERE
-    /*
-    if(isset($_GET["num_fattura"])) {
-        $where .= " AND acq_num_fattura = :num_fattura";
-        $parametri['num_fattura'] = $_GET["num_fattura"];
-    }
-    if(isset($_GET["data_fattura"])) {
-        $where .= " AND acq_data_fattura = :data_fattura";
-        $parametri['data_fattura'] = $_GET["data_fattura"];
-    }
-    if(isset($_GET["num_ddt"])) {
-        $where .= " AND acq_num_ddt = :num_ddt";
-        $parametri['num_ddt'] = $_GET["num_ddt"];
-    }
-    if(isset($_GET["data_ddt"])) {
-        $where .= " AND acq_data_ddt = :data_ddt";
-        $parametri['data_ddt'] = $_GET["data_ddt"];
-    }
-    if(isset($_GET["fornitore"])) {
-        $where .= " AND acq_fornitore = :fornitore";
-        $parametri['fornitore'] = $_GET["fornitore"];
+    if(isset($_GET["id_materiale"])) {
+        $where .= " AND mat_id = :id_materiale";
+        $parametri['id_materiale'] = $_GET["id_materiale"];
     }
     if(strlen($where) > 0) {
         $where = " WHERE " . substr($where, 5);
         $query .= $where;
-    }*/
+    }
     // ORDER
-    $query .= " ORDER BY $property $direction, marca, modello ";
+    $query .= " ORDER BY $property $direction ";
     if(!isset($_GET["flag_full"])) {
         $query .= " LIMIT $limit OFFSET $start ";
     }
@@ -115,9 +95,9 @@ function crea($pdo){
         $pdo->beginTransaction();
 
     	$s = $pdo->prepare("
-    		INSERT INTO materiali(mat_id, mat_id_tipo, mat_seriale, mat_id_acquisto, mat_caratteristiche, mat_collocazione, mat_stato, mat_note,
+    		INSERT INTO materiali(mat_id, mat_id_modello, mat_seriale, mat_id_acquisto, mat_caratteristiche, mat_collocazione, mat_stato, mat_note,
                 mat_non_funzionante, mat_dismesso, mat_smaltito, mat_non_trovato, mat_smarrito_rubato)
-    		VALUES(:id_materiale, :id_tipo, :seriale, :id_acquisto, :caratteristiche, :collocazione, :stato, :note,
+    		VALUES(:id_materiale, :id_modello, :seriale, :id_acquisto, :caratteristiche, :collocazione, :stato, :note,
                 :non_funzionante, :dismesso, :smaltito, :non_trovato, :smarrito_rubato)
     	");
 
@@ -125,7 +105,7 @@ function crea($pdo){
 
     	$success = $s->execute(array(
     		"id_materiale" => $id,
-            "id_tipo" => $data["id_tipo"],
+            "id_modello" => $data["id_modello"],
             "seriale" => $data["seriale"],
             "id_acquisto" => $data["id_acquisto"],
             "caratteristiche" => $data["caratteristiche"],
@@ -169,25 +149,36 @@ function modifica($pdo){
 
         $pdo->beginTransaction();
     	$s = $pdo->prepare("
-    		UPDATE acquisti
-    		SET acq_id = :id_acquisto,
-                acq_num_fattura = :num_fattura,
-                acq_data_fattura = :data_fattura,
-                acq_num_ddt = :num_ddt,
-                acq_data_ddt = :data_ddt,
-                acq_fornitore = :fornitore,
-                acq_note = :note
-    		WHERE acq_id = :id_acquisto
+    		UPDATE materiali
+    		SET mat_id_modello = :id_modello,
+                mat_seriale = :seriale,
+                mat_id_acquisto = :id_acquisto,
+                mat_caratteristiche = :caratteristiche,
+                mat_collocazione = :collocazione,
+                mat_stato = :stato,
+                mat_non_funzionante = :non_funzionante,
+                mat_dismesso = :dismesso,
+                mat_smaltito = :smaltito,
+                mat_non_trovato = :non_trovato,
+                mat_smarrito_rubato = :smarrito_rubato,
+                mat_note = :note
+    		WHERE mat_id = :id_materiale
     	");
 
         $success = $s->execute(array(
-    		"id_acquisto" => $data["id_acquisto"],
-    		"num_fattura" => $data["num_fattura"],
-    		"data_fattura" => $data["data_fattura"],
-    		"num_ddt" => $data["num_ddt"],
-    		"data_ddt" => $data["data_ddt"],
-    		"fornitore" => $data["fornitore"],
-    		"note" => $data["note"]
+    		"id_materiale" => $data["id_materiale"],
+            "id_modello" => $data["id_modello"],
+            "seriale" => $data["seriale"],
+            "id_acquisto" => $data["id_acquisto"],
+            "caratteristiche" => $data["caratteristiche"],
+            "collocazione" => $data["collocazione"],
+            "stato" => $data["stato"],
+            "note" => $data["note"],
+            "non_funzionante" => (int)$data["non_funzionante"],
+            "dismesso" => (int)$data["dismesso"],
+            "smaltito" => (int)$data["smaltito"],
+            "non_trovato" => (int)$data["non_trovato"],
+            "smarrito_rubato" => (int)$data["smarrito_rubato"]
     	));
 
         $pdo->commit();

@@ -38,7 +38,7 @@ Ext.define('CL.controller.C_acquisto', {
     //ROUTES
     showView: function() {
         if(Ext.util.Cookies.get("ced_logged") !== null) {
-            if(Ext.ComponentQuery.query('acquisto_list').length == 0) {
+            if(Ext.ComponentQuery.query('acquisto_list').length === 0) {
                 Ext.ComponentQuery.query('viewport panel[name=card]')[0].add({xtype: 'acquisto_list'});
             }
             Ext.ComponentQuery.query('viewport panel[name=card]')[0].getLayout().setActiveItem('acquisto_list_id');
@@ -71,7 +71,7 @@ Ext.define('CL.controller.C_acquisto', {
             azione: 'edit',
             title: '<b>Modifica acquisto</b>',
             recordSalvato: function(record){
-                Ext.StoreManager.lookup("S_accessorio").reload();
+                Ext.StoreManager.lookup("S_acquisto").reload();
             }
         });
 
@@ -83,7 +83,7 @@ Ext.define('CL.controller.C_acquisto', {
             },
             callback: function() {
                 win.unmask();
-                if (this.data.length == 0) {
+                if (this.data.length === 0) {
                     win.close();
                     Ext.Msg.alert("<b>Attenzione</b>","Il record selezionato è stato eliminato");
                     Ext.StoreManager.lookup("S_acquisto").reload();
@@ -115,7 +115,7 @@ Ext.define('CL.controller.C_acquisto', {
             record.save({
                 failure: function(){
                     Ext.getBody().unmask();
-                    Ext.Msg.alert("Attenzione!","Errore interno. Si è pregati di riprovare più tardi.")
+                    Ext.Msg.alert("Attenzione!","Errore interno. Si è pregati di riprovare più tardi.");
                 },
                 success: function(record) {
                     Ext.getBody().unmask();

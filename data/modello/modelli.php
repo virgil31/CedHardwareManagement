@@ -50,12 +50,16 @@ function lista($pdo){
         SELECT mod_id as id_modello, mod_id_tipo as id_tipo, T.tmt_tipo as tipo, mod_marca as marca, mod_modello as modello,
             mod_caratteristiche as caratteristiche, mod_note as note, COUNT(*) OVER() as total
         FROM modelli M
-    	   LEFT JOIN tipi_materiale T  ON M.mod_id_tipo::UUID = T.tmt_id
+    	   LEFT JOIN tipi_materiale T  ON M.mod_id_tipo = T.tmt_id
     ";
     // WHERE
     if(isset($_GET["id_modello"])) {
         $where .= " AND mod_id = :id_modello";
         $parametri['id_modello'] = $_GET["id_modello"];
+    }
+    if(isset($_GET["marca"])) {
+        $where .= " AND mod_marca = :marca";
+        $parametri['marca'] = $_GET["marca"];
     }
     if(strlen($where) > 0) {
         $where = " WHERE " . substr($where, 5);
