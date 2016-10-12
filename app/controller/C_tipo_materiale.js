@@ -38,7 +38,7 @@ Ext.define('CL.controller.C_tipo_materiale', {
     //ROUTES
     showView: function() {
         if(Ext.util.Cookies.get("ced_logged") !== null) {
-            if(Ext.ComponentQuery.query('tipo_materiale_list').length == 0) {
+            if(Ext.ComponentQuery.query('tipo_materiale_list').length === 0) {
                 Ext.ComponentQuery.query('viewport panel[name=card]')[0].add({xtype: 'tipo_materiale_list'});
             }
             Ext.ComponentQuery.query('viewport panel[name=card]')[0].getLayout().setActiveItem('tipo_materiale_list_id');
@@ -92,7 +92,7 @@ Ext.define('CL.controller.C_tipo_materiale', {
             record.save({
                 failure: function(){
                     Ext.getBody().unmask();
-                    Ext.Msg.alert("Attenzione!","Errore interno. Si è pregati di riprovare più tardi.")
+                    Ext.Msg.alert("Attenzione!","Errore interno. Si è pregati di riprovare più tardi.");
                 },
                 success: function(record) {
                     Ext.getBody().unmask();
@@ -106,7 +106,7 @@ Ext.define('CL.controller.C_tipo_materiale', {
 
     // ON DESTROY
     onDestroy: function(rec){
-        Ext.Msg.confirm("Attenzione","Sei sicuro di voler eliminare l'tipo_materiale?",function(btnId){
+        Ext.Msg.confirm("Attenzione","Sei sicuro di voler eliminare il tipo di materiale?",function(btnId){
             if(btnId == "yes"){
                 rec.erase({
                     failure: function(record, operation) {

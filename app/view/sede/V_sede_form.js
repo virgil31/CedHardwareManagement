@@ -38,8 +38,8 @@ Ext.define('CL.view.sede.V_sede_form', {
                     },
                     {
                         xtype: 'textfield',
-                        name: 'descrizione',
-                        fieldLabel: 'Descrizione',
+                        name: 'sede',
+                        fieldLabel: 'Sede',
                         allowBlank: false
                     },
                     {

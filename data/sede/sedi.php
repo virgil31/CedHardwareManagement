@@ -45,7 +45,7 @@ function lista($pdo){
 
     // SELECT / FROM
     $query .= "
-        SELECT sed_cod_sede as cod_sede, sed_descrizione as descrizione, sed_note as note, COUNT(*) OVER() as total
+        SELECT sed_cod_sede as cod_sede, sed_sede as sede, sed_note as note, COUNT(*) OVER() as total
         FROM sedi
     ";
     // WHERE
@@ -53,9 +53,9 @@ function lista($pdo){
         $where .= " AND sed_cod_sede = :cod_sede";
         $parametri['cod_sede'] = $_GET["cod_sede"];
     }
-    if(isset($_GET["descrizione"])) {
-        $where .= " AND sed_descrizione = :descrizione";
-        $parametri['descrizione'] = $_GET["descrizione"];
+    if(isset($_GET["sede"])) {
+        $where .= " AND sed_sede = :sede";
+        $parametri['sede'] = $_GET["sede"];
     }
     if(strlen($where) > 0) {
         $where = " WHERE " . substr($where, 5);
@@ -88,13 +88,13 @@ function crea($pdo){
         $pdo->beginTransaction();
 
     	$s = $pdo->prepare("
-    		INSERT INTO sedi(sed_cod_sede,sed_descrizione, sed_note)
-    		VALUES(:cod_sede,:descrizione,:note)
+    		INSERT INTO sedi(sed_cod_sede,sed_sede, sed_note)
+    		VALUES(:cod_sede,:sede,:note)
     	");
 
     	$success = $s->execute(array(
     		"cod_sede" => $data["cod_sede"],
-    		"descrizione" => $data["descrizione"],
+    		"sede" => $data["sede"],
     		"note" => $data["note"]
     	));
 
@@ -127,13 +127,13 @@ function modifica($pdo){
 
     	$s = $pdo->prepare("
     		UPDATE sedi
-    		SET sed_descrizione = :descrizione,
+    		SET sed_sede = :sede,
                 sed_note = :note
     		WHERE sed_cod_sede = :cod_sede
     	");
 
     	$success = $s->execute(array(
-    		"descrizione" => $data["descrizione"],
+    		"sede" => $data["sede"],
     		"note" => $data["note"],
     		"cod_sede" => $data["cod_sede"]
     	));

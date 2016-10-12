@@ -67,15 +67,15 @@ Ext.define('CL.view.sede.V_sede_list', {
                         width: 65
                     },
                     {
-                        text: 'Descrizione',
-                        dataIndex: 'descrizione',
+                        text: 'Sede',
+                        dataIndex: 'sede',
                         flex: 1
                     },
                     {
                         dataIndex: 'note',
                         width: 38,
                         renderer: function(value,metaData,record){
-                            if(record.get("note") === null || record.get("note").length == 0) {
+                            if(record.get("note") === null || record.get("note").length === 0) {
                                 return "";
                             }
                             else{

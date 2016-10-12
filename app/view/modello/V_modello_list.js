@@ -1,8 +1,8 @@
-Ext.define('CL.view.tipo_materiale.V_tipo_materiale_list', {
+Ext.define('CL.view.modello.V_modello_list', {
     extend: 'Ext.panel.Panel',
-    xtype: 'tipo_materiale_list',
-    itemId: 'tipo_materiale_list_id',
-    alias: 'widget.tipo_materiale_list',
+    xtype: 'modello_list',
+    itemId: 'modello_list_id',
+    alias: 'widget.modello_list',
 
     bodyStyle: 'backgroundColor: transparent',  //per rendere il corpo invisibile
 
@@ -14,11 +14,12 @@ Ext.define('CL.view.tipo_materiale.V_tipo_materiale_list', {
 
     initComponent: function() {
         var this_view = this;
+
         this_view.items = [
             {
                 xtype: 'grid',
                 border: true,
-                store: 'S_tipo_materiale',
+                store: 'S_modello',
                 height: '98%',
                 width: "100%",
                 autoscroll: true,
@@ -29,7 +30,7 @@ Ext.define('CL.view.tipo_materiale.V_tipo_materiale_list', {
 
                 dockedItems: [{
                     xtype: 'pagingtoolbar',
-                    store: 'S_tipo_materiale', // same store GridPanel is using
+                    store: 'S_modello', // same store GridPanel is using
                     dock: 'bottom',
                     displayInfo: true
                 }],
@@ -41,12 +42,12 @@ Ext.define('CL.view.tipo_materiale.V_tipo_materiale_list', {
                     items: [
                         {
                             xtype: 'label',
-                            html: '<b>Lista tipi materiale</b>',
+                            html: '<b>Lista Modelli</b>',
                             style: 'color: #157fcc;font-size: 15px;font-weight: 300;font-family: helvetica, arial, verdana, sans-serif;line-height: 16px'
                         },
                         {
                             xtype: 'button',
-                            tooltip: 'Crea nuovo tipo_materiale',
+                            tooltip: 'Crea nuovo modello',
                             icon: 'resources/images/icon_plus.gif',
                             action: 'on_create'
                         }
@@ -55,7 +56,7 @@ Ext.define('CL.view.tipo_materiale.V_tipo_materiale_list', {
 
                 listeners: {
                     itemdblclick: function( grid, record, item, index, e, eOpts ){
-                        CL.app.getController("C_tipo_materiale").onEdit(item,record);
+                        CL.app.getController("C_modello").onEdit(item,record);
                     }
                 },
 
@@ -66,8 +67,18 @@ Ext.define('CL.view.tipo_materiale.V_tipo_materiale_list', {
                         flex: 1
                     },
                     {
-                        text: 'Subtipo',
-                        dataIndex: 'subtipo',
+                        text: 'Marca',
+                        dataIndex: 'marca',
+                        flex: 1
+                    },
+                    {
+                        text: 'Modello',
+                        dataIndex: 'modello',
+                        flex: 1
+                    },
+                    {
+                        text: 'Caratteristiche',
+                        dataIndex: 'caratteristiche',
                         flex: 1
                     },
                     {
@@ -78,7 +89,7 @@ Ext.define('CL.view.tipo_materiale.V_tipo_materiale_list', {
                                 return "";
                             }
                             else{
-                                return '<img title="Sono presenti delle note!" src="resources/images/icon_note.png" alt=" " height="16" width="16" >';
+                                return '<img title="Sono presenti delle note" src="resources/images/icon_note.png" alt=" " height="16" width="16" >';
                             }
                         }
                     },
@@ -91,7 +102,7 @@ Ext.define('CL.view.tipo_materiale.V_tipo_materiale_list', {
                                 tooltip: 'Modifica',
                                 handler: function(grid, rowIndex, colIndex) {
                                     var rec = grid.getStore().getAt(rowIndex);
-                                    CL.app.getController("C_tipo_materiale").onEdit(this.el,rec);
+                                    CL.app.getController("C_modello").onEdit(this.el,rec);
                                 }
                             },
                             {
@@ -99,7 +110,7 @@ Ext.define('CL.view.tipo_materiale.V_tipo_materiale_list', {
                                 tooltip: 'Elimina',
                                 handler: function(grid, rowIndex, colIndex) {
                                     var rec = grid.getStore().getAt(rowIndex);
-                                    CL.app.getController("C_tipo_materiale").onDestroy(rec);
+                                    CL.app.getController("C_modello").onDestroy(rec);
                                 }
                             }
                         ]

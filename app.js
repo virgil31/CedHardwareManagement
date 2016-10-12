@@ -20,7 +20,8 @@ Ext.application({
         'C_utente_dominio',
 
         'C_materiale',
-        'C_tipo_materiale'
+        'C_tipo_materiale',
+        'C_modello'
     ],
 
     // vv ROUTING
@@ -37,7 +38,7 @@ Ext.application({
     },
 
     onUnmatchedRoute: function(hash) {
-        if(Ext.ComponentQuery.query('not_found').length == 0)
+        if(Ext.ComponentQuery.query('not_found').length === 0)
             Ext.ComponentQuery.query('viewport panel[name=card]')[0].add({xtype: 'not_found'});
 
         Ext.ComponentQuery.query('viewport panel[name=card]')[0].getLayout().setActiveItem('not_found_id');
@@ -99,7 +100,7 @@ Ext.application({
 
         window.onresize = function() {
             Ext.ComponentQuery.query('viewport panel[name=card]')[0].minHeight = window.innerHeight - 88 - 88;
-        }
+        };
 
     },
 

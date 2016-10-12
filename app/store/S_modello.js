@@ -1,13 +1,13 @@
-Ext.define('CL.store.S_sede',{
+Ext.define('CL.store.S_modello',{
     extend: 'Ext.data.Store',
 
     autoLoad: false,
     autoSync: false,
 
-    model: 'CL.model.M_sede',
+    model: 'CL.model.M_modello',
 
     pageSize: 50,
 
     remoteSort: true,
-    sorters: { property: 'sede', direction : 'ASC' }
+    sorters: { property: 'tipo', direction : 'ASC' }
 });

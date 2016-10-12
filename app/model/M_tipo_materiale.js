@@ -3,9 +3,7 @@ Ext.define('CL.model.M_tipo_materiale', {
     fields: [
         {name: 'id_tipo',                       type: 'string'},
         {name: 'tipo',                          type: 'string'},
-        {name: 'marca',                         type: 'string'},
-        {name: 'modello',                       type: 'string'},
-        {name: 'caratteristiche',               type: 'string'},
+        {name: 'subtipo',                         type: 'string'},
         {name: 'note',                          type: 'string'}
     ],
 

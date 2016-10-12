@@ -47,38 +47,22 @@ function lista($pdo){
 
     // SELECT / FROM
     $query .= "
-        SELECT tmt_id as id_tipo, tmt_tipo as tipo, tmt_subtipo as subtipo, tmt_note as note,
-            COUNT(*) OVER() as total
-        FROM tipi_materiale
+        SELECT mod_id as id_modello, mod_id_tipo as id_tipo, T.tmt_tipo as tipo, mod_marca as marca, mod_modello as modello,
+            mod_caratteristiche as caratteristiche, mod_note as note, COUNT(*) OVER() as total
+        FROM modelli M
+    	   LEFT JOIN tipi_materiale T  ON M.mod_id_tipo::UUID = T.tmt_id
     ";
-    /*
     // WHERE
-    if(isset($_GET["num_fattura"])) {
-        $where .= " AND acq_num_fattura = :num_fattura";
-        $parametri['num_fattura'] = $_GET["num_fattura"];
-    }
-    if(isset($_GET["data_fattura"])) {
-        $where .= " AND acq_data_fattura = :data_fattura";
-        $parametri['data_fattura'] = $_GET["data_fattura"];
-    }
-    if(isset($_GET["num_ddt"])) {
-        $where .= " AND acq_num_ddt = :num_ddt";
-        $parametri['num_ddt'] = $_GET["num_ddt"];
-    }
-    if(isset($_GET["data_ddt"])) {
-        $where .= " AND acq_data_ddt = :data_ddt";
-        $parametri['data_ddt'] = $_GET["data_ddt"];
-    }
-    if(isset($_GET["fornitore"])) {
-        $where .= " AND acq_fornitore = :fornitore";
-        $parametri['fornitore'] = $_GET["fornitore"];
+    if(isset($_GET["id_modello"])) {
+        $where .= " AND mod_id = :id_modello";
+        $parametri['id_modello'] = $_GET["id_modello"];
     }
     if(strlen($where) > 0) {
         $where = " WHERE " . substr($where, 5);
         $query .= $where;
-    }*/
+    }
     // ORDER
-    $query .= " ORDER BY $property $direction ";
+    $query .= " ORDER BY $property $direction, marca, modello ";
     if(!isset($_GET["flag_full"])) {
         $query .= " LIMIT $limit OFFSET $start ";
     }
@@ -106,17 +90,19 @@ function crea($pdo){
         $pdo->beginTransaction();
 
     	$s = $pdo->prepare("
-    		INSERT INTO tipi_materiale(tmt_id, tmt_tipo, tmt_subtipo, tmt_note)
-    		VALUES(:id_tipo, :tipo, :subtipo, :note)
+    		INSERT INTO modelli(mod_id, mod_id_tipo, mod_marca, mod_modello, mod_caratteristiche, mod_note)
+    		VALUES(:id_modello, :id_tipo, :marca, :modello, :caratteristiche, :note)
     	");
 
         $id = getGUID();
 
     	$success = $s->execute(array(
-    		"id_tipo" => $id,
-            "tipo" => $data["tipo"],
-            "subtipo" => $data["subtipo"],
-            "note" => $data["note"]
+    		"id_modello" => $id,
+            "id_tipo" => $data["id_tipo"],
+            "marca" => $data["marca"],
+            "modello" => $data["modello"],
+            "caratteristiche" => $data["caratteristiche"],
+    		"note" => $data["note"]
     	));
 
         $pdo->commit();
@@ -125,7 +111,7 @@ function crea($pdo){
             "success" => $success,
     		"eventual_error" => $pdo->errorInfo(),
             "result" => array(
-                "id_acquisto" => $id
+                "id_modello" => $id
             )
         ));
 
@@ -149,18 +135,22 @@ function modifica($pdo){
 
         $pdo->beginTransaction();
     	$s = $pdo->prepare("
-    		UPDATE tipi_materiale
-    		SET tmt_tipo = :tipo,
-                tmt_subtipo = :subtipo,
-                tmt_note = :note
-    		WHERE tmt_id = :id_tipo
+    		UPDATE modelli
+    		SET mod_id_tipo = :id_tipo,
+                mod_marca = :marca,
+                mod_modello = :modello,
+                mod_caratteristiche = :caratteristiche,
+                mod_note = :note
+    		WHERE mod_id = :id_modello
     	");
 
         $success = $s->execute(array(
-    		"id_tipo" => $data["id_tipo"],
-            "tipo" => $data["tipo"],
-            "subtipo" => $data["subtipo"],
-            "note" => $data["note"]
+    		"id_modello" => $data["id_modello"],
+            "id_tipo" => $data["id_tipo"],
+            "marca" => $data["marca"],
+            "modello" => $data["modello"],
+            "caratteristiche" => $data["caratteristiche"],
+    		"note" => $data["note"]
     	));
 
         $pdo->commit();
@@ -190,12 +180,12 @@ function elimina($pdo){
         $pdo->beginTransaction();
 
     	$s = $pdo->prepare("
-    		DELETE FROM tipi_materiale
-            WHERE tmt_id = :id_tipo
+    		DELETE FROM modelli
+            WHERE mod_id = :id_modello
     	");
 
     	$success = $s->execute(array(
-    		"id_tipo" => $data["id_tipo"]
+    		"id_modello" => $data["id_modello"]
     	));
 
         $pdo->commit();

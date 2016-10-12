@@ -36,48 +36,24 @@ Ext.define('CL.view.navbar.V_navbar', {
                             route: 'acquisti'
                         },
                         {
-                            text: '<b>Materiali</b>',
+                            text: '<b>**Materiali**</b>',
                             route: 'materiali'
+                        },
+                        {
+                            text: '<b>Modelli</b>',
+                            route: 'modelli'
                         },
                         {
                             text: '<b>Sedi</b>',
                             route: 'sedi'
                         },
                         {
-                            text: '<b>**Tipi Materiale**</b>',
+                            text: '<b>Tipi Materiale</b>',
                             route: 'tipi_materiale'
                         },
                         {
                             text: '<b>Utenti</b>',
                             route: 'utenti'
-                        },
-                        {
-                            text: 'Tipologie HW',
-                            route: 'todo'
-                        },
-                        {
-                            text: 'Marche HW',
-                            route: 'todo'
-                        },
-                        {
-                            text: 'Modelli HW',
-                            route: 'todo'
-                        },
-                        {
-                            text: 'Fatture',
-                            route: 'todo'
-                        },
-                        {
-                            text: 'Tipi di ditte',
-                            route: 'todo'
-                        },
-                        {
-                            text: 'Fornitori',
-                            route: 'todo'
-                        },
-                        {
-                            text: 'Uffici',
-                            route: 'todo'
                         }
                     ]
                 },
@@ -96,7 +72,7 @@ Ext.define('CL.view.navbar.V_navbar', {
                     icon: "resources/images/icon_serial.png",
                     disabled: true
                 }
-    		]
+    		];
         }
 		this.callParent(arguments);
     }
