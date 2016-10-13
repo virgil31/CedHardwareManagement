@@ -31,8 +31,7 @@ Ext.define('CL.view.tipo_materiale.V_tipo_materiale_form', {
                     {
                         xtype: 'textfield',
                         name: 'subtipo',
-                        fieldLabel: 'Subtipo',
-                        allowBlank: false
+                        fieldLabel: 'Subtipo'
                     },
                     {
                         xtype: 'textareafield',

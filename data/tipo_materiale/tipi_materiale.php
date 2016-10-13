@@ -108,7 +108,7 @@ function crea($pdo){
             "success" => $success,
     		"eventual_error" => $pdo->errorInfo(),
             "result" => array(
-                "id_acquisto" => $id
+                "id_tipo" => $id
             )
         ));
 
