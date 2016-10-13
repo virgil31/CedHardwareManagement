@@ -57,7 +57,7 @@ Ext.define('CL.controller.C_acquisto', {
         Ext.widget("acquisto_form",{
             animateTarget: btn.el,
             azione: 'create',
-            title: '<b>Crea nuova acquisto</b>',
+            title: '<b>Crea nuovo acquisto</b>',
             recordSalvato: function(record){
                 Ext.StoreManager.lookup("S_acquisto").reload();
             }

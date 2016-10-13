@@ -57,6 +57,10 @@ function lista($pdo){
         $where .= " AND mod_id = :id_modello";
         $parametri['id_modello'] = $_GET["id_modello"];
     }
+    if(isset($_GET["id_tipo"])) {
+        $where .= " AND tmt_id = :id_tipo";
+        $parametri['id_tipo'] = $_GET["id_tipo"];
+    }
     if(isset($_GET["marca"])) {
         $where .= " AND mod_marca = :marca";
         $parametri['marca'] = $_GET["marca"];

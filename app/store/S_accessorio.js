@@ -1,4 +1,4 @@
-Ext.define('CL.store.S_accessorio',{
+Ext.define('CL.store.S_accessorio', {
     extend: 'Ext.data.Store',
 
     autoLoad: false,
@@ -9,5 +9,8 @@ Ext.define('CL.store.S_accessorio',{
     pageSize: 50,
 
     remoteSort: true,
-    sorters: { property: 'tipo', direction : 'ASC' }
+    sorters: {
+        property: 'tipo',
+        direction: 'ASC'
+    }
 });

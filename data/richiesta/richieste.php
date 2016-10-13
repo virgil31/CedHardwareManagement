@@ -82,8 +82,7 @@ function lista($pdo){
 
 	echo json_encode(array(
 		"result" => $result,
-		"total" => $total,
-        "tmp" => $pdo->errorInfo()
+		"total" => $total
 	));
 }
 

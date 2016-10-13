@@ -22,15 +22,7 @@ Ext.define('CL.model.M_materiale', {
         {name: 'id_tipo',                       type: 'string'},
         {name: 'tipo',                          type: 'string'},
         {name: 'marca',                         type: 'string'},
-        {name: 'modello',                       type: 'string'}/*,
-
-        //info da "acquisti"
-        {name: 'num_fattura',                   type: 'string'},
-        {name: 'data_fattura',                  type: 'date',   serialize: null},
-        {name: 'num_ddt',                       type: 'string'},
-        {name: 'data_ddt',                      type: 'date',   serialize: null},
-        {name: 'fornitore',                     type: 'string'},
-        {name: 'note_acquisto',                 type: 'string'}*/
+        {name: 'modello',                       type: 'string'}
     ],
 
     proxy: {

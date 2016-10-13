@@ -23,6 +23,10 @@ Ext.define('CL.view.materiale.V_materiale_form', {
         this_view.items = [
             {
                 xtype: 'form',
+                layout:{
+                    type: 'vbox',
+                    align: 'center',
+                },
                 defaults:{
                     width: '100%'
                 },
@@ -72,6 +76,7 @@ Ext.define('CL.view.materiale.V_materiale_form', {
                                 Ext.ComponentQuery.query("materiale_form combobox[name=id_modello]")[0].enable();
                                 Ext.StoreManager.lookup("S_modello").load({
                                     params:{
+                                        id_tipo: Ext.ComponentQuery.query("materiale_form combobox[name=id_tipo]")[0].getValue(),
                                         marca: this.getValue()
                                     }
                                 });
@@ -99,25 +104,55 @@ Ext.define('CL.view.materiale.V_materiale_form', {
                         allowBlank: false
                     },
                     {
-                        xtype: 'combobox',
-                        name: 'id_acquisto',
-                        fieldLabel: 'Acquisto',
-                        store: 'S_acquisto',
-                        queryMode: 'local',
-                        anyMatch: true,
-                        forceSelection: true,
-                        valueField: 'id_acquisto',
-                        displayField: 'testo_per_combobox',
-                        tpl: Ext.create('Ext.XTemplate',
-                            '<tpl for=".">',
-                            '<div class="x-boundlist-item"><b>{fornitore} - Fattura #{num_fattura}</b> del <i>{data_fattura:date("d-m-Y")}</i></div>',
-                            '</tpl>'
-                        ),
-                        displayTpl: Ext.create('Ext.XTemplate',
-                            '<tpl for=".">',
-                            '{fornitore} - Fattura #{num_fattura} del {data_fattura:date("d-m-Y")}',
-                            '</tpl>'
-                        )
+                        xtype: 'panel',
+                        layout: 'hbox',
+                        margin: '0 0 5 0',
+                        items: [
+                            {
+                                xtype: 'combobox',
+                                name: 'id_acquisto',
+                                flex: 10,
+                                fieldLabel: 'Acquisto',
+                                store: 'S_acquisto',
+                                queryMode: 'local',
+                                anyMatch: true,
+                                forceSelection: true,
+                                valueField: 'id_acquisto',
+                                displayField: 'testo_per_combobox',
+                                tpl: Ext.create('Ext.XTemplate',
+                                    '<tpl for=".">',
+                                    '<div class="x-boundlist-item"><b>{fornitore} - Fattura #{num_fattura}</b> del <i>{data_fattura:date("d-m-Y")}</i></div>',
+                                    '</tpl>'
+                                ),
+                                displayTpl: Ext.create('Ext.XTemplate',
+                                    '<tpl for=".">',
+                                    '{fornitore} - Fattura #{num_fattura} del {data_fattura:date("d-m-Y")}',
+                                    '</tpl>'
+                                )
+                            },
+                            {
+                                xtype: 'button',
+                                text: '+',
+                                flex: 0.5,
+                                handler: function() {
+                                    Ext.widget("acquisto_form", {
+                                        animateTarget: this.el,
+                                        azione: 'create',
+                                        title: '<b>Crea nuovo acquisto</b>',
+                                        recordSalvato: function(record) {
+                                            Ext.StoreManager.lookup("S_acquisto").load({
+                                                params:{
+                                                    flag_full:true
+                                                },
+                                                callback: function() {
+                                                    Ext.ComponentQuery.query("materiale_form combobox[name=id_acquisto]")[0].setValue(record.get("id_acquisto"));
+                                                }
+                                            });
+                                        }
+                                    });
+                                }
+                            }
+                        ]
                     },
                     {
                         xtype: 'textareafield',
@@ -144,35 +179,40 @@ Ext.define('CL.view.materiale.V_materiale_form', {
                         name: 'non_funzionante',
                         fieldLabel: 'Non funzionante',
                         inputValue: true,
-                        uncheckedValue: false
+                        uncheckedValue: false,
+                        width: "25%"
                     },
                     {
                         xtype: 'checkbox',
                         name: 'dismesso',
                         fieldLabel: 'Dismesso',
                         inputValue: true,
-                        uncheckedValue: false
+                        uncheckedValue: false,
+                        width: "25%"
                     },
                     {
                         xtype: 'checkbox',
                         name: 'smaltito',
                         fieldLabel: 'Smaltito',
                         inputValue: true,
-                        uncheckedValue: false
+                        uncheckedValue: false,
+                        width: "25%"
                     },
                     {
                         xtype: 'checkbox',
                         name: 'non_trovato',
                         fieldLabel: 'Non Trovato',
                         inputValue: true,
-                        uncheckedValue: false
+                        uncheckedValue: false,
+                        width: "25%"
                     },
                     {
                         xtype: 'checkbox',
                         name: 'smarrito_rubato',
                         fieldLabel: 'Smarrito/Rubato',
                         inputValue: true,
-                        uncheckedValue: false
+                        uncheckedValue: false,
+                        width: "25%"
                     }
                 ],
                 buttonAlign: 'center',

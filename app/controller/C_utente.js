@@ -53,7 +53,7 @@ Ext.define('CL.controller.C_utente', {
 
     // ON CREATE
     onCreate: function(btn) {
-        Ext.widget("utente_form",{
+        Ext.widget("utente_form", {
             animateTarget: btn.el,
             azione: 'create',
             title: '<b>Cerca utente su Active Directory</b>',
