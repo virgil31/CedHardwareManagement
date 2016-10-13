@@ -12,22 +12,7 @@ $pdo=new PDO("pgsql:host=".$ini_array['pdo_host'].";port=".$ini_array['pdo_port'
 if($_SERVER['REQUEST_METHOD'] === "GET"){
     lista($pdo);
 }
-/*
-// CREAZIONE
-else if($_SERVER['REQUEST_METHOD'] === "POST"){
-    crea($pdo);
-}
 
-// MODIFICA
-else if($_SERVER['REQUEST_METHOD'] === "PUT"){
-    modifica($pdo);
-}
-
-// ELIMINAZIONE
-else if($_SERVER['REQUEST_METHOD'] === "DELETE"){
-    elimina($pdo);
-}
-*/
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -40,143 +25,9 @@ function lista($pdo){
     $result = array();
 
     foreach ($full_stati as $stato)
-        array_push($result,$stato);    
+        array_push($result,$stato);
 
 	echo json_encode(array(
 		"result" => $result
 	));
 }
-
-/*
-
-// CREAZIONE
-function crea($pdo){
-    $data = json_decode($_POST['data'],true);
-
-    try{
-
-        $pdo->beginTransaction();
-
-    	$s = $pdo->prepare("
-    		INSERT INTO richieste(ric_id,ric_cod_sede,ric_destinazione,ric_id_responsabile,ric_id_richiedente,ric_motivazione,ric_oggetto,ric_data_presentazione,ric_stato)
-    		VALUES(:ric_id,:ric_cod_sede,:ric_destinazione,:ric_id_responsabile,:ric_id_richiedente,:ric_motivazione,:ric_oggetto,NOW(),'da_valutare')
-    	");
-
-        $id = getGUID();
-
-    	$success = $s->execute(array(
-    		"ric_id" => $id,
-    		"ric_cod_sede" => $data["ric_cod_sede"],
-    		"ric_destinazione" => $data["ric_destinazione"],
-    		"ric_id_responsabile" => $data["ric_id_responsabile"],
-    		"ric_id_richiedente" => $data["ric_id_richiedente"],
-    		"ric_motivazione" => $data["ric_motivazione"],
-    		"ric_oggetto" => $data["ric_oggetto"]
-    	));
-
-        $pdo->commit();
-
-    	echo json_encode(array(
-            "success" => $success,
-    		"eventual_error" => $pdo->errorInfo(),
-            "result" => array(
-                "ric_id" => $id,
-                "ric_stato" => "da_valutare"
-            )
-        ));
-
-    }catch(PDOException $e){
-        $pdo->rollBack();
-
-    	echo json_encode(array(
-            "success" => false,
-    		"ErrorMessage" => $e->getMessage()
-        ));
-    }
-
-}
-
-// MODIFICA
-function modifica($pdo){
-    parse_str(file_get_contents("php://input"),$params);
-    $data = json_decode($params['data'],true);
-
-    try{
-
-        $pdo->beginTransaction();
-
-    	$s = $pdo->prepare("
-    		UPDATE richieste
-    		SET ric_cod_sede = :ric_cod_sede,
-    			ric_destinazione = :ric_destinazione,
-    			ric_id_responsabile = :ric_id_responsabile,
-    			ric_id_richiedente = :ric_id_richiedente,
-    			ric_motivazione = :ric_motivazione,
-    			ric_oggetto = :ric_oggetto
-
-    		WHERE ric_id = :ric_id
-    	");
-
-    	$success = $s->execute(array(
-    		"ric_id" => $data["ric_id"],
-    		"ric_cod_sede" => $data["ric_cod_sede"],
-    		"ric_destinazione" => $data["ric_destinazione"],
-    		"ric_id_responsabile" => $data["ric_id_responsabile"],
-    		"ric_id_richiedente" => $data["ric_id_richiedente"],
-    		"ric_motivazione" => $data["ric_motivazione"],
-    		"ric_oggetto" => $data["ric_oggetto"]
-    	));
-
-        $pdo->commit();
-
-    	echo json_encode(array(
-            "success" => $success,
-    		"eventual_error" => $pdo->errorInfo()
-        ));
-
-    }catch(PDOException $e){
-        $pdo->rollBack();
-
-    	echo json_encode(array(
-            "success" => false,
-    		"ErrorMessage" => $e->getMessage()
-        ));
-    }
-}
-
-// ELIMINA
-function elimina($pdo){
-    parse_str(file_get_contents("php://input"),$params);
-    $data = json_decode($params['data'],true);
-
-    try{
-
-        $pdo->beginTransaction();
-
-    	$s = $pdo->prepare("
-    		DELETE FROM richieste
-            WHERE ric_id = :ric_id
-    	");
-
-    	$success = $s->execute(array(
-    		"ric_id" => $data["ric_id"]
-    	));
-
-        $pdo->commit();
-
-    	echo json_encode(array(
-            "success" => $success,
-    		"eventual_error" => $pdo->errorInfo()
-        ));
-
-    }catch(PDOException $e){
-        $pdo->rollBack();
-
-        echo json_encode(array(
-            "success" => false,
-            "ErrorMessage" => $e->getMessage()
-        ));
-    }
-
-}
-*/

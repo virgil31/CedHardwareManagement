@@ -42,7 +42,7 @@ function lista($pdo){
     // SELECT / FROM
     $query .= "
         SELECT R.ric_id AS id_richiesta, R.ric_numero AS numero, U.ute_id as id_richiedente, CONCAT(U.ute_cognome, ' ' , U.ute_nome) as richiedente,
-            U1.ute_id as id_responsabile, CONCAT(U1.ute_cognome, ' ' ,U1.ute_nome) as responsabile,S.sed_cod_sede as cod_sede, S.sed_descrizione AS sede, ric_oggetto AS oggetto,
+            U1.ute_id as id_responsabile, CONCAT(U1.ute_cognome, ' ' ,U1.ute_nome) as responsabile,S.sed_cod_sede as cod_sede, S.sed_sede AS sede, ric_oggetto AS oggetto,
             ric_motivazione AS motivazione, ric_destinazione AS destinazione,ric_data_presentazione AS data_presentazione,
             ric_data_accettazione AS data_accettazione, ric_data_chiusura AS data_chiusura, ric_stato AS stato,
             ric_note_stato AS note_stato, ric_note AS note,COUNT(*) OVER() as total
@@ -82,7 +82,8 @@ function lista($pdo){
 
 	echo json_encode(array(
 		"result" => $result,
-		"total" => $total
+		"total" => $total,
+        "tmp" => $pdo->errorInfo()
 	));
 }
 

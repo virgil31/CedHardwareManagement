@@ -57,7 +57,10 @@ Ext.define('CL.controller.C_tipo_materiale', {
         Ext.widget("tipo_materiale_form", {
             animateTarget: btn.el,
             title: '<b>Crea nuova tipo_materiale</b>',
-            azione: 'create'
+            azione: 'create',
+            recordSalvato: function(record){
+                Ext.StoreManager.lookup("S_tipo_materiale").reload();
+            }
         });
     },
 
@@ -66,10 +69,30 @@ Ext.define('CL.controller.C_tipo_materiale', {
         var win = Ext.widget("tipo_materiale_form", {
             animateTarget: targetEl,
             title: '<b>Modifica tipo_materiale</b>',
-            azione: 'edit'
+            azione: 'edit',
+            recordSalvato: function(record){
+                Ext.StoreManager.lookup("S_tipo_materiale").reload();
+            }
         });
 
-        win.down("form").loadRecord(rec);
+        var store = Ext.create("CL.store.S_tipo_materiale");
+        win.mask("Caricamento dati...");
+        store.load({
+            params: {
+                id_tipo: rec.get("id_tipo")
+            },
+            callback: function() {
+                win.unmask();
+                if (this.data.length === 0) {
+                    win.close();
+                    Ext.Msg.alert("<b>Attenzione</b>","Il record selezionato è stato eliminato");
+                    Ext.StoreManager.lookup("S_tipo_materiale").reload();
+                }
+                else {
+                    win.down("form").loadRecord(this.getAt(0));
+                }
+            }
+        });
     },
 
     // SAVE FORM
@@ -98,7 +121,7 @@ Ext.define('CL.controller.C_tipo_materiale', {
                     Ext.getBody().unmask();
                     Ext.Msg.alert("Successo!","Il salvataggio è stata correttamente effettuato!");
                     win.close();
-                    Ext.StoreManager.lookup("S_tipo_materiale").reload();
+                    win.recordSalvato(record);
                 }
             });
         }

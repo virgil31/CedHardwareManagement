@@ -51,32 +51,15 @@ function lista($pdo){
             COUNT(*) OVER() as total
         FROM tipi_materiale
     ";
-    /*
     // WHERE
-    if(isset($_GET["num_fattura"])) {
-        $where .= " AND acq_num_fattura = :num_fattura";
-        $parametri['num_fattura'] = $_GET["num_fattura"];
-    }
-    if(isset($_GET["data_fattura"])) {
-        $where .= " AND acq_data_fattura = :data_fattura";
-        $parametri['data_fattura'] = $_GET["data_fattura"];
-    }
-    if(isset($_GET["num_ddt"])) {
-        $where .= " AND acq_num_ddt = :num_ddt";
-        $parametri['num_ddt'] = $_GET["num_ddt"];
-    }
-    if(isset($_GET["data_ddt"])) {
-        $where .= " AND acq_data_ddt = :data_ddt";
-        $parametri['data_ddt'] = $_GET["data_ddt"];
-    }
-    if(isset($_GET["fornitore"])) {
-        $where .= " AND acq_fornitore = :fornitore";
-        $parametri['fornitore'] = $_GET["fornitore"];
+    if(isset($_GET["id_tipo"])) {
+        $where .= " AND tmt_id = :id_tipo";
+        $parametri['id_tipo'] = $_GET["id_tipo"];
     }
     if(strlen($where) > 0) {
         $where = " WHERE " . substr($where, 5);
         $query .= $where;
-    }*/
+    }
     // ORDER
     $query .= " ORDER BY $property $direction ";
     if(!isset($_GET["flag_full"])) {
