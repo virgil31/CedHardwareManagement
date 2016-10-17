@@ -1,4 +1,4 @@
-Ext.define('CL.store.S_sede',{
+Ext.define('CL.store.S_sede', {
     extend: 'Ext.data.Store',
 
     autoLoad: false,
@@ -9,5 +9,8 @@ Ext.define('CL.store.S_sede',{
     pageSize: 50,
 
     remoteSort: true,
-    sorters: { property: 'sede', direction : 'ASC' }
+    sorters: {
+        property: 'sede',
+        direction: 'ASC'
+    }
 });

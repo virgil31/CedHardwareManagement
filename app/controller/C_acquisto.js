@@ -2,7 +2,7 @@ Ext.define('CL.controller.C_acquisto', {
     extend: 'Ext.app.Controller',
 
     routes: {
-        'acquisti': 'showView'
+        'acquisti' : 'showView'
     },
 
     stores: [

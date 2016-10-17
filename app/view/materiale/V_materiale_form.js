@@ -32,69 +32,130 @@ Ext.define('CL.view.materiale.V_materiale_form', {
                 },
                 items: [
                     {
-                        xtype: 'combobox',
-                        name: 'id_tipo',
-                        fieldLabel: 'Tipo',
-                        allowBlank: false,
-                        forceSelection: true,
-                        queryMode: 'local',
-                        anyMatch: true,
-                        store: 'S_tipo_materiale',
-                        displayField: 'tipo',
-                        valueField: 'id_tipo',
-                        listeners: {
-                            select: function(){
-                                Ext.ComponentQuery.query("materiale_form combobox[name=marca]")[0].reset();
-                                Ext.ComponentQuery.query("materiale_form combobox[name=marca]")[0].enable();
+                        xtype: 'panel',
+                        layout: {
+                            type: 'vbox',
+                            align: 'center'
+                        },
+                        bodyStyle: {
+                            background: "#dbebf7"
+                        },
+                        defaults:{
+                            width: '100%'
+                        },
+                        items:[
+                            {
+                                xtype: 'combobox',
+                                name: 'id_tipo',
+                                fieldLabel: 'Tipo',
+                                allowBlank: false,
+                                forceSelection: true,
+                                queryMode: 'local',
+                                anyMatch: true,
+                                store: 'S_tipo_materiale',
+                                displayField: 'tipo',
+                                valueField: 'id_tipo',
+                                listeners: {
+                                    select: function(){
+                                        Ext.ComponentQuery.query("materiale_form combobox[name=marca]")[0].reset();
+                                        Ext.ComponentQuery.query("materiale_form combobox[name=marca]")[0].enable();
 
-                                Ext.ComponentQuery.query("materiale_form combobox[name=id_modello]")[0].reset();
-                                Ext.ComponentQuery.query("materiale_form combobox[name=id_modello]")[0].disable();
+                                        Ext.ComponentQuery.query("materiale_form combobox[name=id_modello]")[0].reset();
+                                        Ext.ComponentQuery.query("materiale_form combobox[name=id_modello]")[0].disable();
 
-                                Ext.StoreManager.lookup("S_marca").load({
-                                    params:{
-                                        id_tipo: this.getValue()
+                                        Ext.StoreManager.lookup("S_marca").load({
+                                            params:{
+                                                id_tipo: this.getValue()
+                                            }
+                                        });
                                     }
-                                });
-                            }
-                        }
-                    },
-                    {
-                        xtype: 'combobox',
-                        name: 'marca',
-                        fieldLabel: 'Marca',
-                        allowBlank: false,
-                        forceSelection: true,
-                        queryMode: 'local',
-                        anyMatch: true,
-                        store: 'S_marca',
-                        displayField: 'marca',
-                        valueField: 'marca',
-                        disabled: true,
-                        listeners: {
-                            select: function(){
-                                Ext.ComponentQuery.query("materiale_form combobox[name=id_modello]")[0].reset();
-                                Ext.ComponentQuery.query("materiale_form combobox[name=id_modello]")[0].enable();
-                                Ext.StoreManager.lookup("S_modello").load({
-                                    params:{
-                                        id_tipo: Ext.ComponentQuery.query("materiale_form combobox[name=id_tipo]")[0].getValue(),
-                                        marca: this.getValue()
+                                }
+                            },
+                            {
+                                xtype: 'combobox',
+                                name: 'marca',
+                                fieldLabel: 'Marca',
+                                allowBlank: false,
+                                forceSelection: true,
+                                queryMode: 'local',
+                                anyMatch: true,
+                                store: 'S_marca',
+                                displayField: 'marca',
+                                valueField: 'marca',
+                                disabled: true,
+                                listeners: {
+                                    select: function(){
+                                        Ext.ComponentQuery.query("materiale_form combobox[name=id_modello]")[0].reset();
+                                        Ext.ComponentQuery.query("materiale_form combobox[name=id_modello]")[0].enable();
+                                        Ext.StoreManager.lookup("S_modello").load({
+                                            params:{
+                                                id_tipo: Ext.ComponentQuery.query("materiale_form combobox[name=id_tipo]")[0].getValue(),
+                                                marca: this.getValue()
+                                            }
+                                        });
                                     }
-                                });
+                                }
+                            },
+                            {
+                                xtype: 'combobox',
+                                name: 'id_modello',
+                                fieldLabel: 'Modello',
+                                allowBlank: false,
+                                forceSelection: true,
+                                queryMode: 'local',
+                                anyMatch: true,
+                                store: 'S_modello',
+                                displayField: 'modello',
+                                valueField: 'id_modello',
+                                disabled: true
+                            },
+                            {
+                                xtype: 'button',
+                                text: 'Inserisci un nuovo tipo/marca/modello',
+                                width: 150,
+                                margin: '0 0 5 0',
+                                handler: function() {
+                                    Ext.widget("modello_form", {
+                                        animateTarget: this.el,
+                                        azione: 'create',
+                                        title: '<b>Crea nuovo modello</b>',
+                                        recordSalvato: function(record) {
+                                            Ext.StoreManager.lookup("S_tipo_materiale").load({params:{flag_full:true}});
+                                            Ext.StoreManager.lookup("S_marca").load({
+                                                params:{
+                                                    id_tipo: record.get("id_tipo")
+                                                }
+                                            });
+                                            Ext.StoreManager.lookup("S_modello").load({
+                                                params:{
+                                                    id_tipo: record.get("id_tipo"),
+                                                    marca: record.get("marca")
+                                                }
+                                            });
+
+                                            Ext.ComponentQuery.query("materiale_form combobox[name=marca]")[0].enable();
+                                            Ext.ComponentQuery.query("materiale_form combobox[name=id_modello]")[0].enable();
+
+                                            Ext.ComponentQuery.query("materiale_form combobox[name=id_tipo]")[0].setValue(record.get("id_tipo"));
+                                            Ext.ComponentQuery.query("materiale_form combobox[name=marca]")[0].setValue(record.get("marca"));
+                                            Ext.ComponentQuery.query("materiale_form combobox[name=id_modello]")[0].setValue(record.get("id_modello"));
+
+
+                                        }
+                                    });
+
+                                    var id_tipo =  Ext.ComponentQuery.query("materiale_form combobox[name=id_tipo]")[0].getValue(),
+                                        marca = Ext.ComponentQuery.query("materiale_form combobox[name=marca]")[0].getValue();
+
+                                    if(id_tipo) {
+                                        Ext.ComponentQuery.query("modello_form combobox[name=id_tipo]")[0].setValue(id_tipo);
+                                    }
+                                    if(marca) {
+                                        Ext.ComponentQuery.query("modello_form textfield[name=marca]")[0].setValue(marca);
+                                    }
+                                }
                             }
-                        }
-                    },
-                    {
-                        xtype: 'combobox',
-                        name: 'id_modello',
-                        fieldLabel: 'Modello',
-                        allowBlank: false,
-                        forceSelection: true,
-                        queryMode: 'local',
-                        anyMatch: true,
-                        store: 'S_modello',
-                        displayField: 'modello',
-                        valueField: 'id_modello',
-                        disabled: true
+                        ]
                     },
                     {xtype: 'menuseparator'},
                     {
