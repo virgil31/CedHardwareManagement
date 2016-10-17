@@ -17,6 +17,20 @@ Ext.define('CL.view.navbar.V_navbar', {
 
             this_view.items = [
                 {
+                    text: 'test',
+                    handler: function(){
+                        Ext.create("Ext.window.Window",{
+                            autoShow: true,
+                            modal: true,
+                            items: [
+                                {
+                                    xtype: 'richiesta_form'
+                                }
+                            ]
+                        });                        
+                    }
+                },
+                {
                     icon: 'resources/images/icon_sede.png',
                     tooltip: 'Torna alla home',
                     handler: function(){

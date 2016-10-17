@@ -14,6 +14,7 @@ Ext.define('CL.controller.C_richiesta', {
         'CL.model.M_stato'
     ],
     views: [
+        'richiesta.V_richiesta_form',
         'richiesta.V_richiesta_form_da_esterno'
     ],
 
@@ -22,7 +23,7 @@ Ext.define('CL.controller.C_richiesta', {
         this.control({
 
             // DO RICHIESTA
-            'richiesta_form button[action=doRichiesta]': {
+            'richiesta_form_da_esterno button[action=doRichiesta]': {
                 click: this.doRichiesta
             }
 
@@ -33,42 +34,30 @@ Ext.define('CL.controller.C_richiesta', {
     //ROUTES
     showView: function() {
         if (Ext.util.Cookies.get("richiedente_id") !== null && Ext.util.Cookies.get("richiedente_nome") !== null && Ext.util.Cookies.get("richiedente_cognome") !== null) {
-            /*if(Ext.ComponentQuery.query('richiesta_form').length == 0)
-                Ext.ComponentQuery.query('viewport panel[name=card]')[0].add({xtype: 'richiesta_form'});*/
+            /*if(Ext.ComponentQuery.query('richiesta_form_da_esterno').length == 0)
+                Ext.ComponentQuery.query('viewport panel[name=card]')[0].add({xtype: 'richiesta_form_da_esterno'});*/
 
-            if (Ext.ComponentQuery.query('richiesta_form').length !== 0)
-                Ext.ComponentQuery.query('richiesta_form')[0].destroy();
+            if (Ext.ComponentQuery.query('richiesta_form_da_esterno').length !== 0){
+                Ext.ComponentQuery.query('richiesta_form_da_esterno')[0].destroy();
+            }
             Ext.ComponentQuery.query('viewport panel[name=card]')[0].add({
-                xtype: 'richiesta_form'
+                xtype: 'richiesta_form_da_esterno'
             });
 
-            Ext.ComponentQuery.query('viewport panel[name=card]')[0].getLayout().setActiveItem('richiesta_form_id');
+            Ext.ComponentQuery.query('viewport panel[name=card]')[0].getLayout().setActiveItem('richiesta_form_da_esterno_id');
 
             //
 
             //mi assicuro che il form sia pulito, e dato che ha il "trackResetOnLoad" devo farlo manualmente
-            /*Ext.ComponentQuery.query("richiesta_form form")[0].getForm().getFields().each(function(f){
+            /*Ext.ComponentQuery.query("richiesta_form_da_esterno form")[0].getForm().getFields().each(function(f){
                 f.originalValue=undefined;
             });*/
 
-            //carico gli store usati nel form adeguatamente
-            Ext.StoreManager.lookup("S_sede").load({
-                params: {
-                    flag_full: true
-                }
-            });
-            Ext.StoreManager.lookup("S_utente").load({
-                params: {
-                    flag_full: true
-                }
-            });
-
-            Ext.ComponentQuery.query("richiesta_form textfield[name=id_richiedente]")[0].setValue(Ext.util.Cookies.get("richiedente_id"));
-            Ext.ComponentQuery.query("richiesta_form textfield[name=cognome_nome_richiedente]")[0].setValue(Ext.util.Cookies.get("richiedente_cognome") + " " + Ext.util.Cookies.get("richiedente_nome"));
+            Ext.ComponentQuery.query("richiesta_form_da_esterno textfield[name=id_richiedente]")[0].setValue(Ext.util.Cookies.get("richiedente_id"));
+            Ext.ComponentQuery.query("richiesta_form_da_esterno textfield[name=cognome_nome_richiedente]")[0].setValue(Ext.util.Cookies.get("richiedente_cognome") + " " + Ext.util.Cookies.get("richiedente_nome"));
         } else {
             this.redirectTo('login');
         }
-
     },
 
     /////////////////////////////////////////////////
@@ -80,9 +69,10 @@ Ext.define('CL.controller.C_richiesta', {
             values = form.getValues(),
             to_save = false;
 
+
         if (form.isValid()) {
             //controllo se è una CREAZIONE (basandomi sulla presenza del "record_richiesta")
-            if (record_richiesta === null) {
+            if (record_richiesta === undefined) {
                 Ext.getBody().mask("Salvataggio richiesta in corso...");
                 record_richiesta = Ext.create('CL.model.M_richiesta', values);
                 to_save = true;
