@@ -141,8 +141,7 @@ Ext.define('CL.view.home.V_home', {
 
                 listeners:{
                     itemdblclick: function( grid, record, item, index, e, eOpts ){
-                        alert("todo doppio click => apro scheda richiesta");
-                        //CL.app.getController("C_richiesta").onEdit(item,record);
+                        CL.app.getController("C_universale").onEdit(item,record);
                     }
                 },
 
@@ -175,6 +174,29 @@ Ext.define('CL.view.home.V_home', {
                         text: 'Data presentazione richiesta',
                         dataIndex: 'data_presentazione',
                         flex: 1
+                    },
+                    {
+                        xtype:'actioncolumn',
+                        width:50,
+                        items: [
+                            {
+                                iconCls: 'x-fa fa-edit',
+                                tooltip: 'Modifica',
+                                handler: function(grid, rowIndex, colIndex) {
+                                    var rec = grid.getStore().getAt(rowIndex);
+                                    CL.app.getController("C_universale").onEdit(this.el,rec);
+                                }
+                            },
+                            {
+                                iconCls: 'x-fa fa-remove',
+                                tooltip: 'Elimina',
+                                handler: function(grid, rowIndex, colIndex) {
+                                    alert("todo");
+                                    //var rec = grid.getStore().getAt(rowIndex);
+                                    //CL.app.getController("C_materiale").onDestroy(rec);
+                                }
+                            }
+                        ]
                     }
                 ]
             }

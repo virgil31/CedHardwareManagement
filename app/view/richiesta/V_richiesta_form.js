@@ -48,7 +48,7 @@ Ext.define('CL.view.richiesta.V_richiesta_form', {
             },
             {
                 xtype: 'textfield',
-                name: 'cognome_nome_richiedente',
+                name: 'richiedente',
                 fieldLabel: 'Richiedente',
                 readOnly: true
             },

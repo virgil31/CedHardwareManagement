@@ -54,7 +54,7 @@ Ext.define('CL.controller.C_richiesta', {
             });*/
 
             Ext.ComponentQuery.query("richiesta_form_da_esterno textfield[name=id_richiedente]")[0].setValue(Ext.util.Cookies.get("richiedente_id"));
-            Ext.ComponentQuery.query("richiesta_form_da_esterno textfield[name=cognome_nome_richiedente]")[0].setValue(Ext.util.Cookies.get("richiedente_cognome") + " " + Ext.util.Cookies.get("richiedente_nome"));
+            Ext.ComponentQuery.query("richiesta_form_da_esterno textfield[name=richiedente]")[0].setValue(Ext.util.Cookies.get("richiedente_cognome") + " " + Ext.util.Cookies.get("richiedente_nome"));
         } else {
             this.redirectTo('login');
         }
@@ -68,7 +68,6 @@ Ext.define('CL.controller.C_richiesta', {
             record_richiesta = form.getRecord(),
             values = form.getValues(),
             to_save = false;
-
 
         if (form.isValid()) {
             //controllo se è una CREAZIONE (basandomi sulla presenza del "record_richiesta")

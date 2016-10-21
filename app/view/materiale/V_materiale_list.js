@@ -33,14 +33,7 @@ Ext.define('CL.view.materiale.V_materiale_list', {
                     dock: 'bottom',
                     displayInfo: true
                 }],
-
-                /*plugins: [
-                    {
-                        ptype: 'rowexpander',
-                        rowBodyTpl: '<b>inserisci TPL qui</b>'
-                    }
-                ],*/
-
+                
                 tbar: {
                     xtype: 'toolbar',
                     height: 38,

@@ -21,7 +21,10 @@ Ext.application({
 
         'C_materiale',
         'C_tipo_materiale',
-        'C_modello'
+        'C_modello',
+
+        'C_universale',
+        'C_materiale_richiesto'
     ],
 
     // vv ROUTING

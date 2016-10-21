@@ -53,6 +53,10 @@ function lista($pdo){
             LEFT JOIN sedi S ON S.sed_cod_sede = R.ric_cod_sede
     ";
     // WHERE
+    if(isset($_GET["id_richiesta"])) {
+        $where .= " AND ric_id = :id_richiesta";
+        $parametri['id_richiesta'] = $_GET["id_richiesta"];
+    }
     if(isset($_GET["id_richiedente"])) {
         $where .= " AND ric_id_richiedente = :id_richiedente";
         $parametri['id_richiedente'] = $_GET["id_richiedente"];

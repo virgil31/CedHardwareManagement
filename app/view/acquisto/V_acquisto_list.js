@@ -91,7 +91,7 @@ Ext.define('CL.view.acquisto.V_acquisto_list', {
                         dataIndex: 'note',
                         width: 38,
                         renderer: function(value,metaData,record){
-                            if(record.get("note") === null || record.get("note").length == 0) {
+                            if(record.get("note") === null || record.get("note").length === 0) {
                                 return "";
                             }
                             else{
