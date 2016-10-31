@@ -65,6 +65,8 @@ Ext.define('CL.controller.C_universale', {
             values = form.getValues();
 
         if (form.isValid()) {
+            alert("salvo qui!");
+            /*
             // CREAZIONE
             if (win.azione == "create") {
                 record = Ext.create('CL.model.M_universale', values);
@@ -86,6 +88,7 @@ Ext.define('CL.controller.C_universale', {
                     win.recordSalvato(record);
                 }
             });
+            */
         }
     }
 

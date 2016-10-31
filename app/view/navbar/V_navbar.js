@@ -36,7 +36,7 @@ Ext.define('CL.view.navbar.V_navbar', {
                             route: 'acquisti'
                         },
                         {
-                            text: '<b>**Materiali**</b>',
+                            text: '<b>Materiali</b>',
                             route: 'materiali'
                         },
                         {
